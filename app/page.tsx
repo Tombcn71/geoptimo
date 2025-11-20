@@ -107,153 +107,153 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-20 pb-32 px-4 sm:px-6 lg:px-8">
+      <section className="pt-12 sm:pt-20 pb-16 sm:pb-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full mb-8 border border-gray-200 dark:border-gray-800">
-            <Zap className="h-4 w-4" />
-            <span className="text-sm font-medium">Optimización para Motores Generativos de IA</span>
+          <div className="inline-flex items-center space-x-2 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 sm:px-4 py-2 rounded-full mb-6 sm:mb-8 border border-gray-200 dark:border-gray-800">
+            <Zap className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+            <span className="text-xs sm:text-sm font-medium">Optimización para Motores de IA</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 px-2">
             Sé Descubierto por
-            <span className="block bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 bg-clip-text text-transparent animate-gradient">
+            <span className="block mt-2 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 bg-clip-text text-transparent animate-gradient">
               Motores de IA
             </span>
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto">
+          <p className="text-base sm:text-xl text-gray-600 dark:text-gray-400 mb-8 sm:mb-12 max-w-3xl mx-auto px-4">
             Optimiza tu contenido para ser citado y recomendado por ChatGPT, Claude, Perplexity, 
             Google AI y otros motores de búsqueda generativos.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
             <Link
               href="/dashboard"
-              className="bg-black dark:bg-white text-white dark:text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors shadow-lg"
+              className="bg-black dark:bg-white text-white dark:text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors shadow-lg"
             >
               Comenzar Gratis
             </Link>
             <Link
               href="#features"
-              className="bg-white dark:bg-black text-gray-900 dark:text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors border-2 border-gray-200 dark:border-gray-800"
+              className="bg-white dark:bg-black text-gray-900 dark:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors border-2 border-gray-200 dark:border-gray-800"
             >
               Ver Demo
             </Link>
           </div>
 
           {/* Logo Carousel */}
-          <div className="mt-16">
+          <div className="mt-12 sm:mt-16">
             <LogoCarousel />
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 max-w-4xl mx-auto">
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
-              <div className="text-4xl font-bold text-black dark:text-white mb-2">50M+</div>
-              <div className="text-gray-600 dark:text-gray-400">Búsquedas de IA Monitoreadas</div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 mt-12 sm:mt-20 max-w-4xl mx-auto px-4">
+            <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
+              <div className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">50M+</div>
+              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Búsquedas de IA Monitoreadas</div>
             </div>
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
-              <div className="text-4xl font-bold text-black dark:text-white mb-2">98%</div>
-              <div className="text-gray-600 dark:text-gray-400">Tasa de Mejora</div>
+            <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
+              <div className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">98%</div>
+              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Tasa de Mejora</div>
             </div>
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
-              <div className="text-4xl font-bold text-black dark:text-white mb-2">500+</div>
-              <div className="text-gray-600 dark:text-gray-400">Marcas Confiando</div>
+            <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
+              <div className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">500+</div>
+              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Marcas Confiando</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-gray-50 dark:bg-gray-950 transition-colors">
+      <section id="features" className="py-12 sm:py-20 bg-gray-50 dark:bg-gray-950 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
               Características Potentes de GEO
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <p className="text-base sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-4">
               Todo lo que necesitas para optimizar tu presencia en motores de búsqueda de IA
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
             {/* Feature 1 */}
-            <div className="p-8 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-800">
-              <div className="bg-black dark:bg-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <Search className="h-6 w-6 text-white dark:text-black" />
+            <div className="p-5 sm:p-8 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-800">
+              <div className="bg-black dark:bg-white w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+                <Search className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
                 Monitoreo de IA en Tiempo Real
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Rastrea menciones de tu marca en ChatGPT, Claude, Perplexity y más. 
                 Recibe alertas instantáneas cuando tu marca es citada.
               </p>
             </div>
 
             {/* Feature 2 */}
-            <div className="p-8 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-800">
-              <div className="bg-black dark:bg-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <FileSearch className="h-6 w-6 text-white dark:text-black" />
+            <div className="p-5 sm:p-8 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-800">
+              <div className="bg-black dark:bg-white w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+                <FileSearch className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
                 Auditoría de Sitio Web
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Análisis profundo de tu sitio para optimización de IA. Identifica problemas 
                 y obtén recomendaciones accionables.
               </p>
             </div>
 
             {/* Feature 3 */}
-            <div className="p-8 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-800">
-              <div className="bg-black dark:bg-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <Rocket className="h-6 w-6 text-white dark:text-black" />
+            <div className="p-5 sm:p-8 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-800">
+              <div className="bg-black dark:bg-white w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+                <Rocket className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
                 Optimización de Contenido
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Optimiza tu contenido para mejor comprensión y citación por IA. 
                 Análisis NLP avanzado y sugerencias.
               </p>
             </div>
 
             {/* Feature 4 */}
-            <div className="p-8 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-800">
-              <div className="bg-black dark:bg-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <BarChart3 className="h-6 w-6 text-white dark:text-black" />
+            <div className="p-5 sm:p-8 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-800">
+              <div className="bg-black dark:bg-white w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+                <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
                 Panel de Análisis
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Visualiza menciones, tendencias y rendimiento en todos los motores de IA. 
                 Compara con competidores.
               </p>
             </div>
 
             {/* Feature 5 */}
-            <div className="p-8 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-800">
-              <div className="bg-black dark:bg-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <Target className="h-6 w-6 text-white dark:text-black" />
+            <div className="p-5 sm:p-8 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-800">
+              <div className="bg-black dark:bg-white w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+                <Target className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
                 Investigación de Palabras Clave
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Descubre qué consultas activan menciones de tu marca. Identifica brechas 
                 de contenido y oportunidades.
               </p>
             </div>
 
             {/* Feature 6 */}
-            <div className="p-8 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-800">
-              <div className="bg-black dark:bg-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <TrendingUp className="h-6 w-6 text-white dark:text-black" />
+            <div className="p-5 sm:p-8 bg-white dark:bg-gray-900 rounded-xl hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-800">
+              <div className="bg-black dark:bg-white w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+                <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
                 Análisis de Competidores
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Compara tu rendimiento con competidores. Ve qué funciona en tu industria 
                 y mantente adelante.
               </p>
@@ -263,18 +263,18 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-black transition-colors">
+      <section className="py-12 sm:py-20 bg-black transition-colors">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <Shield className="h-16 w-16 text-white mx-auto mb-6" />
-          <h2 className="text-4xl font-bold text-white mb-6">
+          <Shield className="h-12 w-12 sm:h-16 sm:w-16 text-white mx-auto mb-4 sm:mb-6" />
+          <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4 sm:mb-6">
             Listo para Optimizar tu Presencia en IA?
           </h2>
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-base sm:text-xl text-gray-300 mb-6 sm:mb-8 px-4">
             Únete a cientos de marcas que ya están dominando la optimización de motores generativos
           </p>
           <Link
             href="/dashboard"
-            className="inline-block bg-white text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+            className="inline-block bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
           >
             Comenzar Prueba Gratuita
           </Link>
