@@ -217,7 +217,7 @@ export default function AnalyticsPage() {
                       {citation.source}
                     </span>
                     <span className="text-gray-900 font-medium">
-                      "{citation.context}"
+                      &quot;{citation.context}&quot;
                     </span>
                   </div>
                 </div>
