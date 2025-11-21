@@ -144,72 +144,117 @@ export default function DashboardPage() {
         </CardContent>
       </Card>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Stats Grid - 7 Core Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Visibility Score */}
         <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
-              Total de Menciones
+              Visibility Score
             </CardTitle>
             <Eye className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">1,284</div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center mt-1">
-              <TrendingUp className="h-3 w-3 text-green-600 mr-1" />
-              <span className="text-green-600">+12.5%</span>
-              <span className="ml-1">desde el mes pasado</span>
+            <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">73/100</div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              Detection + Ranking + Top 3
             </p>
           </CardContent>
         </Card>
 
+        {/* Brand Sentiment */}
         <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
-              Sentimiento Positivo
+              Brand Sentiment
             </CardTitle>
             <MessageSquare className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">87%</div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center mt-1">
-              <TrendingUp className="h-3 w-3 text-green-600 mr-1" />
-              <span className="text-green-600">+3.2%</span>
-              <span className="ml-1">desde el mes pasado</span>
+            <div className="text-3xl font-bold text-green-600">92%</div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              Positively mentioned
             </p>
           </CardContent>
         </Card>
 
+        {/* Top Three Visibility */}
         <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
-              Posición Promedio
+              Top 3 Visibility
             </CardTitle>
             <Award className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">#2.4</div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center mt-1">
-              <TrendingUp className="h-3 w-3 text-green-600 mr-1" />
-              <span className="text-green-600">Mejoró 0.8</span>
-              <span className="ml-1">posiciones</span>
+            <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">68%</div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              In top 3 results
             </p>
           </CardContent>
         </Card>
 
+        {/* Total Mentions */}
         <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
-              Puntuación GEO
+              Total Mentions
             </CardTitle>
             <TrendingUp className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">8.6/10</div>
+            <div className="text-3xl font-bold text-gray-900 dark:text-white">1,284</div>
             <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center mt-1">
               <TrendingUp className="h-3 w-3 text-green-600 mr-1" />
-              <span className="text-green-600">+0.4</span>
-              <span className="ml-1">este mes</span>
+              <span className="text-green-600">+12.5%</span>
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Average Position */}
+        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
+              Average Position
+            </CardTitle>
+            <Award className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-gray-900 dark:text-white">#2.4</div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              When mentioned
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Detection Rate */}
+        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
+              Detection Rate
+            </CardTitle>
+            <Eye className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-gray-900 dark:text-white">45%</div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              Of tracked prompts
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Domain Citations */}
+        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
+              Domain Citations
+            </CardTitle>
+            <TrendingUp className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">156</div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              Your site as source
             </p>
           </CardContent>
         </Card>
