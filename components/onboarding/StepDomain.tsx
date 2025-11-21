@@ -72,9 +72,9 @@ export default function StepDomain({ data, onNext }: Props) {
             </div>
           )}
         </div>
-        <CardTitle className="text-2xl">What's your brand's domain?</CardTitle>
+        <CardTitle className="text-2xl">What&apos;s your brand&apos;s domain?</CardTitle>
         <CardDescription className="text-base">
-          We'll use this to fetch your brand logo and analyze your web presence
+          We&apos;ll use this to fetch your brand logo and analyze your web presence
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -108,7 +108,7 @@ export default function StepDomain({ data, onNext }: Props) {
         </button>
 
         <p className="text-xs text-center text-gray-500 dark:text-gray-500">
-          Don't worry, you can change this later in settings
+          Don&apos;t worry, you can change this later in settings
         </p>
       </CardContent>
     </Card>

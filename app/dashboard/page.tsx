@@ -263,7 +263,7 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Check your content's AI visibility score and get improvement suggestions
+                Check your content&apos;s AI visibility score and get improvement suggestions
               </p>
               <div className="mt-4 flex items-center text-purple-600 dark:text-purple-400 text-sm font-medium">
                 Open Content Checker

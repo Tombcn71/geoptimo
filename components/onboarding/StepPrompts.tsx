@@ -25,6 +25,7 @@ export default function StepPrompts({ data, onNext, onBack }: Props) {
 
   useEffect(() => {
     fetchPromptSuggestions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchPromptSuggestions = async () => {
