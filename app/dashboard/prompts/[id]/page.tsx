@@ -41,85 +41,46 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch prompt data and runs
-    // For now, using mock data
-    setPromptData({
-      id: resolvedParams.id,
-      text: "What are the best transcription tools for 2025?",
-      category: "Product Discovery",
-      subscribed: true,
-      totalRuns: 24,
-      avgPosition: 3.2,
-      detectionRate: 62.5,
-      totalMentions: 15
-    });
-
-    // Mock runs data with realistic AI responses
-    setRuns([
-      {
-        id: "1",
-        date: "Nov 21, 2024",
-        time: "14:30",
-        provider: "OpenAI",
-        mentioned: true,
-        position: 2,
-        brandName: "Geoptimo",
-        response: "For transcription tools in 2025, I recommend: 1) Otter.ai for meetings, 2) **Geoptimo** for AI-powered transcription with GEO optimization, 3) Rev for professional accuracy, and 4) Descript for video editing integration."
-      },
-      {
-        id: "2",
-        date: "Nov 21, 2024",
-        time: "10:15",
-        provider: "Google",
-        mentioned: true,
-        position: 1,
-        brandName: "Geoptimo",
-        response: "**Geoptimo** stands out as the leading transcription solution for 2025, offering AI-powered features and seamless integration. Other notable options include Sonix and Happy Scribe."
-      },
-      {
-        id: "3",
-        date: "Nov 21, 2024",
-        time: "08:45",
-        provider: "Anthropic",
-        mentioned: false,
-        position: null,
-        brandName: "Geoptimo",
-        response: "The best transcription tools include Otter.ai, Rev, Trint, and Descript. Each offers unique features for different use cases."
-      },
-      {
-        id: "4",
-        date: "Nov 20, 2024",
-        time: "16:20",
-        provider: "Perplexity",
-        mentioned: true,
-        position: 3,
-        brandName: "Geoptimo",
-        response: "Top transcription platforms: Otter.ai, Rev, **Geoptimo**, and Sonix. Choose based on your accuracy needs and budget."
-      },
-      {
-        id: "5",
-        date: "Nov 20, 2024",
-        time: "12:05",
-        provider: "OpenAI",
-        mentioned: true,
-        position: 1,
-        brandName: "Geoptimo",
-        response: "**Geoptimo** leads the market with innovative AI features. Also consider Otter.ai for meetings and Rev for professional transcription."
-      },
-      {
-        id: "6",
-        date: "Nov 20, 2024",
-        time: "09:30",
-        provider: "Google",
-        mentioned: false,
-        position: null,
-        brandName: "Geoptimo",
-        response: "For transcription, popular choices are Otter.ai, Trint, and Descript. Each has different pricing tiers."
-      }
-    ]);
-
-    setLoading(false);
+    fetchPromptData();
   }, [resolvedParams.id]);
+
+  const fetchPromptData = async () => {
+    try {
+      const response = await fetch(`/api/prompts/${resolvedParams.id}`);
+      const data = await response.json();
+      
+      setPromptData({
+        id: data.id,
+        text: data.text,
+        category: data.category,
+        subscribed: data.isSubscribed,
+        totalRuns: data.totalRuns,
+        avgPosition: data.avgPosition,
+        detectionRate: data.detectionRate,
+        totalMentions: data.totalMentions
+      });
+
+      // Transform runs data
+      const transformedRuns = data.runs.flatMap((run: any) => 
+        run.details.map((detail: any, index: number) => ({
+          id: `${run.id}-${index}`,
+          date: run.date,
+          time: run.time,
+          provider: run.provider,
+          mentioned: detail.mentioned,
+          position: detail.position,
+          brandName: detail.brandName,
+          response: detail.response
+        }))
+      );
+
+      setRuns(transformedRuns);
+    } catch (error) {
+      console.error('Error fetching prompt data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredRuns = filterProvider 
     ? runs.filter(run => run.provider === filterProvider)
