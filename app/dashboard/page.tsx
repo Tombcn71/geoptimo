@@ -7,33 +7,30 @@ import {
   Eye, 
   MessageSquare, 
   Award,
-  ArrowUpRight
+  ArrowUpRight,
+  Target,
+  Users,
+  Search
 } from "lucide-react";
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 const mentionsData = [
-  { date: "Lun", menciones: 45 },
-  { date: "Mar", menciones: 52 },
-  { date: "Mié", menciones: 48 },
-  { date: "Jue", menciones: 61 },
-  { date: "Vie", menciones: 55 },
-  { date: "Sáb", menciones: 67 },
-  { date: "Dom", menciones: 58 },
-];
-
-const platformData = [
-  { name: "ChatGPT", value: 45, color: "#000000" },
-  { name: "Claude", value: 30, color: "#404040" },
-  { name: "Perplexity", value: 15, color: "#808080" },
-  { name: "Google AI", value: 10, color: "#C0C0C0" },
+  { date: "Mon", mentions: 45 },
+  { date: "Tue", mentions: 52 },
+  { date: "Wed", mentions: 48 },
+  { date: "Thu", mentions: 61 },
+  { date: "Fri", mentions: 55 },
+  { date: "Sat", mentions: 67 },
+  { date: "Sun", mentions: 58 },
 ];
 
 const topQueries = [
-  { query: "mejores herramientas de marketing IA", mentions: 23, trend: "up" },
-  { query: "plataformas de optimización SEO", mentions: 18, trend: "up" },
-  { query: "software de análisis de contenido", mentions: 15, trend: "down" },
-  { query: "herramientas de monitoreo de marca", mentions: 12, trend: "up" },
+  { query: "best AI marketing tools", mentions: 23, trend: "up" },
+  { query: "SEO optimization platforms", mentions: 18, trend: "up" },
+  { query: "content analysis software", mentions: 15, trend: "down" },
+  { query: "brand monitoring tools", mentions: 12, trend: "up" },
 ];
 
 interface Metrics {
@@ -66,242 +63,107 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Loading...</div>
+        <div className="text-xl text-gray-600 dark:text-gray-400">Loading metrics...</div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Panel Principal</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Vista general de tu rendimiento en motores de IA
+          Your AI search visibility performance at a glance
         </p>
       </div>
 
-      {/* Getting Started Checklist */}
-      <Card className="border-2 border-purple-200 dark:border-purple-900 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <span>🚀 Comienza con Geoptimo</span>
-          </CardTitle>
-          <CardDescription>
-            Completa estos pasos para optimizar tu presencia en motores de IA
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <label className="flex items-start space-x-3 p-3 rounded-lg hover:bg-white/50 dark:hover:bg-gray-900/50 cursor-pointer transition-colors group">
-              <input type="checkbox" className="mt-1 h-5 w-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500" />
-              <div className="flex-1">
-                <p className="font-medium text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400">
-                  Configura tu perfil de marca y rastrea visibilidad en IA
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Define tu marca, productos y palabras clave objetivo</p>
-              </div>
-            </label>
-
-            <label className="flex items-start space-x-3 p-3 rounded-lg hover:bg-white/50 dark:hover:bg-gray-900/50 cursor-pointer transition-colors group">
-              <input type="checkbox" className="mt-1 h-5 w-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500" />
-              <div className="flex-1">
-                <p className="font-medium text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400">
-                  Suscríbete a prompts relevantes que tus clientes preguntan
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Monitorea consultas clave en ChatGPT, Claude y más</p>
-              </div>
-            </label>
-
-            <label className="flex items-start space-x-3 p-3 rounded-lg hover:bg-white/50 dark:hover:bg-gray-900/50 cursor-pointer transition-colors group">
-              <input type="checkbox" className="mt-1 h-5 w-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500" />
-              <div className="flex-1">
-                <p className="font-medium text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400">
-                  Monitorea el rendimiento de tu marca en múltiples proveedores de IA
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Rastrea menciones en todos los motores de búsqueda de IA</p>
-              </div>
-            </label>
-
-            <label className="flex items-start space-x-3 p-3 rounded-lg hover:bg-white/50 dark:hover:bg-gray-900/50 cursor-pointer transition-colors group">
-              <input type="checkbox" className="mt-1 h-5 w-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500" />
-              <div className="flex-1">
-                <p className="font-medium text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400">
-                  Analiza rankings de competidores en resultados de búsqueda de IA
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Compara tu rendimiento con líderes de la industria</p>
-              </div>
-            </label>
-
-            <label className="flex items-start space-x-3 p-3 rounded-lg hover:bg-white/50 dark:hover:bg-gray-900/50 cursor-pointer transition-colors group">
-              <input type="checkbox" className="mt-1 h-5 w-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500" />
-              <div className="flex-1">
-                <p className="font-medium text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400">
-                  Descubre fuentes de citación de alta autoridad
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Identifica sitios que los modelos de IA citan frecuentemente</p>
-              </div>
-            </label>
-
-            <label className="flex items-start space-x-3 p-3 rounded-lg hover:bg-white/50 dark:hover:bg-gray-900/50 cursor-pointer transition-colors group">
-              <input type="checkbox" className="mt-1 h-5 w-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500" />
-              <div className="flex-1">
-                <p className="font-medium text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400">
-                  Audita tus páginas web para optimización GEO
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Escanea tu sitio y recibe recomendaciones accionables</p>
-              </div>
-            </label>
-
-            <label className="flex items-start space-x-3 p-3 rounded-lg hover:bg-white/50 dark:hover:bg-gray-900/50 cursor-pointer transition-colors group">
-              <input type="checkbox" className="mt-1 h-5 w-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500" />
-              <div className="flex-1">
-                <p className="font-medium text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400">
-                  Crea contenido optimizado para IA con feedback en tiempo real
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Usa nuestro editor para crear contenido que los modelos de IA aman</p>
-              </div>
-            </label>
-          </div>
-
-          <div className="mt-6 flex items-center justify-between p-4 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800">
-            <div>
-              <p className="text-sm font-medium text-gray-900 dark:text-white">Progreso de Configuración</p>
-              <p className="text-xs text-gray-600 dark:text-gray-400">0 de 7 completados</p>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                <div className="bg-purple-600 h-2 rounded-full" style={{ width: '0%' }}></div>
-              </div>
-              <span className="text-sm font-semibold text-gray-900 dark:text-white">0%</span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Stats Grid - 7 Core Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Key Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Visibility Score */}
-        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
-              Visibility Score
+        <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 border-purple-200 dark:border-purple-800">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-purple-700 dark:text-purple-300 flex items-center space-x-2">
+              <Eye className="h-4 w-4" />
+              <span>AI Visibility Score</span>
             </CardTitle>
-            <Eye className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
-              {metrics?.visibilityScore}/100
+            <div className="text-3xl font-bold text-purple-900 dark:text-purple-100">
+              {metrics?.visibilityScore || 0}%
             </div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-              Detection + Ranking + Top 3
+            <p className="text-xs text-purple-600 dark:text-purple-400 mt-2 flex items-center">
+              <TrendingUp className="h-3 w-3 mr-1" />
+              +12% from last week
+            </p>
+            <p className="text-xs text-purple-600/70 dark:text-purple-400/70 mt-2">
+              How often your brand appears in AI responses
             </p>
           </CardContent>
         </Card>
 
-        {/* Brand Sentiment */}
-        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
-              Brand Sentiment
+        {/* Mentions */}
+        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-blue-700 dark:text-blue-300 flex items-center space-x-2">
+              <MessageSquare className="h-4 w-4" />
+              <span>Total Mentions</span>
             </CardTitle>
-            <MessageSquare className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-green-600">{metrics?.sentiment}%</div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-              Positively mentioned
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Top Three Visibility */}
-        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
-              Top 3 Visibility
-            </CardTitle>
-            <Award className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-              {metrics?.topThreeVis}%
+            <div className="text-3xl font-bold text-blue-900 dark:text-blue-100">
+              {metrics?.mentions || 0}
             </div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-              In top 3 results
+            <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 flex items-center">
+              <TrendingUp className="h-3 w-3 mr-1" />
+              +8% from last week
             </p>
-          </CardContent>
-        </Card>
-
-        {/* Total Mentions */}
-        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
-              Total Mentions
-            </CardTitle>
-            <TrendingUp className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">
-              {metrics?.mentions.toLocaleString()}
-            </div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center mt-1">
-              <TrendingUp className="h-3 w-3 text-green-600 mr-1" />
-              <span className="text-green-600">+12.5%</span>
+            <p className="text-xs text-blue-600/70 dark:text-blue-400/70 mt-2">
+              Times your brand was mentioned this week
             </p>
           </CardContent>
         </Card>
 
         {/* Average Position */}
-        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
-              Average Position
+        <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 border-green-200 dark:border-green-800">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-green-700 dark:text-green-300 flex items-center space-x-2">
+              <Award className="h-4 w-4" />
+              <span>Avg Position</span>
             </CardTitle>
-            <Award className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">
-              #{metrics?.avgPosition}
+            <div className="text-3xl font-bold text-green-900 dark:text-green-100">
+              #{metrics?.avgPosition || 0}
             </div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-              When mentioned
+            <p className="text-xs text-green-600 dark:text-green-400 mt-2 flex items-center">
+              <TrendingUp className="h-3 w-3 mr-1" />
+              Improved by 2 spots
+            </p>
+            <p className="text-xs text-green-600/70 dark:text-green-400/70 mt-2">
+              Your average ranking in AI results
             </p>
           </CardContent>
         </Card>
 
-        {/* Detection Rate */}
-        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
-              Detection Rate
+        {/* Top 3 Visibility */}
+        <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 border-orange-200 dark:border-orange-800">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-orange-700 dark:text-orange-300 flex items-center space-x-2">
+              <Target className="h-4 w-4" />
+              <span>Top 3 Appearances</span>
             </CardTitle>
-            <Eye className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">
-              {metrics?.detectionRate}%
+            <div className="text-3xl font-bold text-orange-900 dark:text-orange-100">
+              {metrics?.topThreeVis || 0}%
             </div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-              Of tracked prompts
+            <p className="text-xs text-orange-600 dark:text-orange-400 mt-2 flex items-center">
+              <TrendingUp className="h-3 w-3 mr-1" />
+              +5% from last week
             </p>
-          </CardContent>
-        </Card>
-
-        {/* Domain Citations */}
-        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
-              Domain Citations
-            </CardTitle>
-            <TrendingUp className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
-              {metrics?.domainCitations}
-            </div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-              Your site as source
+            <p className="text-xs text-orange-600/70 dark:text-orange-400/70 mt-2">
+              How often you rank in top 3 results
             </p>
           </CardContent>
         </Card>
@@ -309,100 +171,135 @@ export default function DashboardPage() {
 
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Mentions Chart */}
-        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
+        {/* Mentions Trend */}
+        <Card>
           <CardHeader>
-            <CardTitle className="text-gray-900 dark:text-white">Menciones en los Últimos 7 Días</CardTitle>
-            <CardDescription className="text-gray-600 dark:text-gray-400">
-              Tendencia de menciones de tu marca
+            <CardTitle>Mention Trends (Last 7 Days)</CardTitle>
+            <CardDescription>
+              Track how often your brand is mentioned by AI engines
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={250}>
               <LineChart data={mentionsData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.1} />
+                <XAxis dataKey="date" stroke="#6B7280" fontSize={12} />
+                <YAxis stroke="#6B7280" fontSize={12} />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: '#1F2937', 
+                    border: 'none', 
+                    borderRadius: '8px',
+                    color: '#fff'
+                  }}
+                />
                 <Line 
                   type="monotone" 
-                  dataKey="menciones" 
-                  stroke="#000000" 
-                  strokeWidth={2}
-                  dot={{ fill: "#000000" }}
+                  dataKey="mentions" 
+                  stroke="#8B5CF6" 
+                  strokeWidth={3}
+                  dot={{ fill: '#8B5CF6', r: 4 }}
+                  activeDot={{ r: 6 }}
                 />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        {/* Platform Distribution */}
-        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
+        {/* Top Queries */}
+        <Card>
           <CardHeader>
-            <CardTitle className="text-gray-900 dark:text-white">Distribución por Plataforma</CardTitle>
-            <CardDescription className="text-gray-600 dark:text-gray-400">
-              Menciones por motor de IA
+            <CardTitle>Top Queries Mentioning You</CardTitle>
+            <CardDescription>
+              Most common searches where your brand appears
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={platformData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {platformData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+            <div className="space-y-4">
+              {topQueries.map((item, index) => (
+                <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      {item.query}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      {item.mentions} mentions
+                    </p>
+                  </div>
+                  {item.trend === 'up' ? (
+                    <TrendingUp className="h-5 w-5 text-green-500" />
+                  ) : (
+                    <TrendingDown className="h-5 w-5 text-red-500" />
+                  )}
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Top Queries */}
-      <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
-        <CardHeader>
-          <CardTitle className="text-gray-900 dark:text-white">Consultas Principales</CardTitle>
-          <CardDescription className="text-gray-600 dark:text-gray-400">
-            Búsquedas que más mencionan tu marca
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {topQueries.map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              >
-                <div className="flex-1">
-                  <p className="font-medium text-gray-900 dark:text-white">{item.query}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                    {item.mentions} menciones esta semana
-                  </p>
-                </div>
-                <div className="flex items-center space-x-2">
-                  {item.trend === "up" ? (
-                    <TrendingUp className="h-5 w-5 text-green-600" />
-                  ) : (
-                    <TrendingDown className="h-5 w-5 text-red-600" />
-                  )}
-                  <ArrowUpRight className="h-5 w-5 text-gray-400" />
-                </div>
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Link href="/dashboard/content">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-purple-500">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 text-lg">
+                <Search className="h-5 w-5 text-purple-600" />
+                <span>Optimize Content</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Check your content's AI visibility score and get improvement suggestions
+              </p>
+              <div className="mt-4 flex items-center text-purple-600 dark:text-purple-400 text-sm font-medium">
+                Open Content Checker
+                <ArrowUpRight className="h-4 w-4 ml-1" />
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link href="/dashboard/prompts">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-blue-500">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 text-lg">
+                <MessageSquare className="h-5 w-5 text-blue-600" />
+                <span>Monitor Prompts</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Track how your brand appears across different AI queries
+              </p>
+              <div className="mt-4 flex items-center text-blue-600 dark:text-blue-400 text-sm font-medium">
+                View Prompt Results
+                <ArrowUpRight className="h-4 w-4 ml-1" />
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link href="/dashboard/competitors">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-green-500">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 text-lg">
+                <Users className="h-5 w-5 text-green-600" />
+                <span>Competitor Analysis</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                See how you stack up against competitors in AI search
+              </p>
+              <div className="mt-4 flex items-center text-green-600 dark:text-green-400 text-sm font-medium">
+                Compare Performance
+                <ArrowUpRight className="h-4 w-4 ml-1" />
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+      </div>
     </div>
   );
 }
-

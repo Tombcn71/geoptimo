@@ -1,3 +1,9 @@
+import { config } from 'dotenv'
+import { resolve } from 'path'
+
+// Load .env.local
+config({ path: resolve(process.cwd(), '.env.local') })
+
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 
