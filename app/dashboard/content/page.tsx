@@ -12,36 +12,17 @@ import {
 import { useState } from "react";
 
 const defaultScores = {
-  geoScore: 78,
-  citationLikelihood: 82,
-  readability: 75,
-  structure: 88,
-  entityCoverage: 71,
-  factualDensity: 79,
-  sourceQuality: 80,
+  geoScore: 0,
+  citationLikelihood: 0,
+  readability: 0,
+  structure: 0,
+  entityCoverage: 0,
+  factualDensity: 0,
+  sourceQuality: 0,
   suggestions: []
 };
 
-const suggestions = [
-  {
-    type: "high",
-    category: "Structuur",
-    message: "Voeg meer tussenkoppen toe zodat AI jouw content beter begrijpt",
-    impact: "+8 punten"
-  },
-  {
-    type: "medium",
-    category: "Duidelijkheid",
-    message: "Leg belangrijke vaktermen uit - niet iedereen kent ze",
-    impact: "+5 punten"
-  },
-  {
-    type: "low",
-    category: "Bronnen",
-    message: "Link naar 2-3 betrouwbare bronnen om geloofwaardigheid te verhogen",
-    impact: "+3 punten"
-  }
-];
+// No default suggestions - only show real AI suggestions
 
 export default function ContentStudioPage() {
   const [content, setContent] = useState(`Waarom AI Optimalisatie Belangrijk Is
@@ -86,16 +67,22 @@ Check jouw huidige website teksten met deze tool. Je ziet direct wat goed is en 
       
       if (response.ok) {
         const data = await response.json();
-        console.log('Analysis data:', data);
+        console.log('✅ Analysis successful:', data);
         setAnalysis(data);
       } else {
-        const errorText = await response.text();
-        console.error('API error:', response.status, errorText);
-        alert('Analysis failed: ' + response.status);
+        const errorData = await response.json();
+        console.error('❌ API error:', response.status, errorData);
+        
+        let errorMessage = errorData.error || 'Er ging iets mis';
+        if (errorData.message) {
+          errorMessage += '\n\n' + errorData.message;
+        }
+        
+        alert('⚠️ Analyse mislukt\n\n' + errorMessage);
       }
     } catch (error) {
-      console.error('Analysis error:', error);
-      alert('Error: ' + (error as Error).message);
+      console.error('❌ Network error:', error);
+      alert('⚠️ Netwerkfout\n\nKon geen verbinding maken met de server. Check je internetverbinding.');
     } finally {
       console.log('Analysis complete');
       setAnalyzing(false);
@@ -182,6 +169,7 @@ Wij checken dan hoe goed AI zoekmachines zoals ChatGPT jouw content kunnen vinde
                 <div className="mt-4 p-3 bg-white dark:bg-gray-900 rounded-lg">
                   <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     {analyzing ? '⏳ Bezig met analyseren...' : 
+                     analysis.geoScore === 0 ? '👆 Klik op "Check Mijn Score" om te beginnen' :
                      analysis.geoScore >= 80 ? '🎉 Uitstekend! AI vindt jouw content makkelijk' :
                      analysis.geoScore >= 60 ? '👍 Goed! Nog ruimte voor verbetering' :
                      '💡 Check de tips hieronder voor betere resultaten'}
@@ -296,8 +284,9 @@ Wij checken dan hoe goed AI zoekmachines zoals ChatGPT jouw content kunnen vinde
               <CardDescription>Direct toepasbare verbeterpunten</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3">
-                {(analysis.suggestions && analysis.suggestions.length > 0 ? analysis.suggestions : suggestions).map((suggestion: any, index: number) => (
+              {analysis.suggestions && analysis.suggestions.length > 0 ? (
+                <div className="space-y-3">
+                  {analysis.suggestions.map((suggestion: any, index: number) => (
                   <div
                     key={index}
                     className={`p-4 rounded-xl border-2 ${
@@ -339,8 +328,15 @@ Wij checken dan hoe goed AI zoekmachines zoals ChatGPT jouw content kunnen vinde
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 dark:text-gray-400">
+                    ⬆️ Klik op "Check Mijn Score" om AI suggesties te krijgen
+                  </p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

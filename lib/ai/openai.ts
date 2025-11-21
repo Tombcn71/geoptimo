@@ -36,78 +36,66 @@ export async function runPromptOnChatGPT(prompt: string) {
 }
 
 export async function analyzeContentForGEO(content: string) {
-  if (!process.env.OPENAI_API_KEY) {
-    // Try Gemini as fallback
+  // Try OpenAI first
+  if (process.env.OPENAI_API_KEY) {
+    try {
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4",
+        messages: [
+          {
+            role: "system",
+            content: `Je bent een GEO (Generative Engine Optimization) expert. Analyseer content en geef scores (0-100) voor:
+            - citationLikelihood: Hoe waarschijnlijk AI modellen deze content zullen citeren
+            - readability: Hoe makkelijk het is voor AI om te begrijpen
+            - structure: Organisatie en hiërarchie van de content
+            - entityCoverage: Dekking van belangrijke concepten en termen
+            - factualDensity: Hoeveelheid verifieerbare feiten
+            - sourceQuality: Kwaliteit van externe bronnen
+            
+            Geef ook 2-4 concrete verbetersuggestions in het Nederlands.
+            Return ALLEEN valid JSON met deze exacte structuur:
+            {
+              "citationLikelihood": 85,
+              "readability": 80,
+              "structure": 90,
+              "entityCoverage": 75,
+              "factualDensity": 80,
+              "sourceQuality": 85,
+              "suggestions": [
+                {"type": "high", "category": "Structuur", "message": "Concrete tip in Nederlands", "impact": "+8 punten"}
+              ]
+            }`
+          },
+          {
+            role: "user",
+            content: `Analyseer deze content:\n\n${content.substring(0, 4000)}`
+          }
+        ],
+        response_format: { type: "json_object" },
+        temperature: 0.3,
+      })
+
+      const result = JSON.parse(completion.choices[0].message.content || '{}')
+      console.log('OpenAI analysis successful:', result)
+      return result
+    } catch (error) {
+      console.error('OpenAI error, trying Gemini:', error)
+    }
+  }
+
+  // Try Gemini as second option
+  if (process.env.GOOGLE_AI_API_KEY) {
     const { analyzeContentWithGemini } = await import('./gemini')
     const geminiResult = await analyzeContentWithGemini(content)
     
     if (geminiResult) {
+      console.log('Gemini analysis successful')
       return geminiResult
-    }
-
-    // Return default if no API keys
-    return {
-      citationLikelihood: 80,
-      readability: 75,
-      structure: 85,
-      entityCoverage: 70,
-      factualDensity: 75,
-      sourceQuality: 80,
-      suggestions: [
-        { type: 'high', category: 'Structure', message: 'Add more descriptive subheadings', impact: '+8 points' },
-        { type: 'medium', category: 'Entities', message: 'Include definitions for key terms', impact: '+5 points' },
-      ]
     }
   }
 
-  try {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4",
-      messages: [
-        {
-          role: "system",
-          content: `You are a GEO (Generative Engine Optimization) expert. Analyze content and provide scores (0-100) for:
-          - citationLikelihood: How likely AI models will cite this
-          - readability: How easy for AI to understand
-          - structure: Organization and hierarchy
-          - entityCoverage: Coverage of key entities/concepts
-          - factualDensity: Amount of verifiable facts
-          - sourceQuality: Quality of external sources
-          
-          Return JSON with scores and actionable suggestions array.`
-        },
-        {
-          role: "user",
-          content: `Analyze this content:\n\n${content.substring(0, 3000)}`
-        }
-      ],
-      response_format: { type: "json_object" },
-      temperature: 0.3,
-    })
-
-    const result = JSON.parse(completion.choices[0].message.content || '{}')
-    return result
-  } catch (error) {
-    console.error('Content analysis error:', error)
-    // Try Gemini as fallback
-    const { analyzeContentWithGemini } = await import('./gemini')
-    const geminiResult = await analyzeContentWithGemini(content)
-    
-    if (geminiResult) {
-      return geminiResult
-    }
-
-    // Return default scores
-    return {
-      citationLikelihood: 80,
-      readability: 75,
-      structure: 85,
-      entityCoverage: 70,
-      factualDensity: 75,
-      sourceQuality: 80,
-      suggestions: []
-    }
-  }
+  // No API keys configured
+  throw new Error('Geen API keys geconfigureerd. Voeg OPENAI_API_KEY of GOOGLE_AI_API_KEY toe.')
 }
 
 export async function generatePromptSuggestions(industry: string, description: string) {

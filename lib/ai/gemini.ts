@@ -84,50 +84,60 @@ Do not include any other text, only the JSON.`
 
 export async function analyzeContentWithGemini(content: string) {
   if (!process.env.GOOGLE_AI_API_KEY) {
-    return null
+    throw new Error('GOOGLE_AI_API_KEY niet geconfigureerd')
   }
 
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-pro" })
     
-    const prompt = `You are a GEO (Generative Engine Optimization) expert. Analyze this content and provide scores (0-100) for:
-- citationLikelihood: How likely AI models will cite this
-- readability: How easy for AI to understand
-- structure: Organization and hierarchy
-- entityCoverage: Coverage of key entities/concepts
-- factualDensity: Amount of verifiable facts
-- sourceQuality: Quality of external sources
+    const prompt = `Je bent een GEO (Generative Engine Optimization) expert. Analyseer deze content en geef scores (0-100) voor:
+- citationLikelihood: Hoe waarschijnlijk AI modellen deze content zullen citeren
+- readability: Hoe makkelijk het is voor AI om te begrijpen
+- structure: Organisatie en hiërarchie van de content
+- entityCoverage: Dekking van belangrijke concepten en termen
+- factualDensity: Hoeveelheid verifieerbare feiten
+- sourceQuality: Kwaliteit van externe bronnen
 
-Also provide 2-3 actionable suggestions with: type (high/medium/low), category, message, impact.
+Geef ook 2-4 concrete verbetersuggestions in het Nederlands met type (high/medium/low), category, message, en impact.
 
-Return ONLY valid JSON with this structure:
+Return ALLEEN valid JSON met deze exacte structuur (geen extra tekst):
 {
-  "citationLikelihood": 80,
-  "readability": 75,
-  "structure": 85,
-  "entityCoverage": 70,
-  "factualDensity": 75,
-  "sourceQuality": 80,
+  "citationLikelihood": 85,
+  "readability": 80,
+  "structure": 90,
+  "entityCoverage": 75,
+  "factualDensity": 80,
+  "sourceQuality": 85,
   "suggestions": [
-    {"type": "high", "category": "Structure", "message": "Add more headings", "impact": "+8 points"}
+    {"type": "high", "category": "Structuur", "message": "Concrete tip in Nederlands", "impact": "+8 punten"}
   ]
 }
 
-Content to analyze:
-${content.substring(0, 3000)}`
+Content om te analyseren:
+${content.substring(0, 4000)}`
 
     const result = await model.generateContent(prompt)
     const analysisText = result.response.text()
     
+    console.log('Gemini raw response:', analysisText)
+    
+    // Extract JSON from response
     const jsonMatch = analysisText.match(/\{[\s\S]*\}/)
     if (jsonMatch) {
-      return JSON.parse(jsonMatch[0])
+      const parsed = JSON.parse(jsonMatch[0])
+      
+      // Validate required fields
+      if (!parsed.citationLikelihood || !parsed.readability || !parsed.structure) {
+        throw new Error('Gemini returned incomplete data')
+      }
+      
+      return parsed
     }
 
-    return null
+    throw new Error('Gemini returned invalid JSON format')
   } catch (error) {
     console.error('Gemini content analysis error:', error)
-    return null
+    throw error
   }
 }
 
