@@ -35,86 +35,79 @@ export async function POST(request: Request) {
         analysis.sourceQuality) / 6
     )
 
-    // Format dimensions
+    // Format dimensions with UNIQUE suggestions per dimension
+    const usedSuggestions = new Set<string>();
+    
     const dimensions = [
       {
         name: 'Citation Likelihood',
         score: analysis.citationLikelihood,
         status: analysis.citationLikelihood >= 85 ? 'excellent' : analysis.citationLikelihood >= 70 ? 'good' : 'fair',
         description: 'Probability that AI models will cite this content',
-        issues: analysis.suggestions
-          .filter(s => s.category.toLowerCase().includes('citation') || s.category.toLowerCase().includes('bronnen'))
-          .map(s => ({ text: s.message, priority: s.type })),
-        strengths: analysis.citationLikelihood >= 70 ? ['Good citation potential'] : []
+        issues: [],
+        strengths: analysis.citationLikelihood >= 70 ? ['Good citation potential', 'Content is AI-friendly'] : []
       },
       {
         name: 'Readability',
         score: analysis.readability,
         status: analysis.readability >= 85 ? 'excellent' : analysis.readability >= 70 ? 'good' : 'fair',
         description: 'How easy it is for AI to understand your content',
-        issues: analysis.suggestions
-          .filter(s => s.category.toLowerCase().includes('leesbaarheid') || s.category.toLowerCase().includes('tekst'))
-          .map(s => ({ text: s.message, priority: s.type })),
-        strengths: analysis.readability >= 70 ? ['Clear and understandable text'] : []
+        issues: [],
+        strengths: analysis.readability >= 70 ? ['Clear and understandable text', 'Good sentence structure'] : []
       },
       {
         name: 'Structure',
         score: analysis.structure,
         status: analysis.structure >= 85 ? 'excellent' : analysis.structure >= 70 ? 'good' : 'fair',
         description: 'Content organization and hierarchy',
-        issues: analysis.suggestions
-          .filter(s => s.category.toLowerCase().includes('structuur'))
-          .map(s => ({ text: s.message, priority: s.type })),
-        strengths: analysis.structure >= 70 ? ['Well-organized content'] : []
+        issues: [],
+        strengths: analysis.structure >= 70 ? ['Well-organized content', 'Logical flow'] : []
       },
       {
         name: 'Entity Coverage',
         score: analysis.entityCoverage,
         status: analysis.entityCoverage >= 85 ? 'excellent' : analysis.entityCoverage >= 70 ? 'good' : 'fair',
         description: 'Coverage of key concepts and terms',
-        issues: analysis.suggestions
-          .filter(s => s.category.toLowerCase().includes('entiteit') || s.category.toLowerCase().includes('termen'))
-          .map(s => ({ text: s.message, priority: s.type })),
-        strengths: analysis.entityCoverage >= 70 ? ['Good keyword coverage'] : []
+        issues: [],
+        strengths: analysis.entityCoverage >= 70 ? ['Good keyword coverage', 'Relevant terminology'] : []
       },
       {
         name: 'Factual Density',
         score: analysis.factualDensity,
         status: analysis.factualDensity >= 85 ? 'excellent' : analysis.factualDensity >= 70 ? 'good' : 'fair',
         description: 'Amount of verifiable facts and data',
-        issues: analysis.suggestions
-          .filter(s => s.category.toLowerCase().includes('feiten') || s.category.toLowerCase().includes('data'))
-          .map(s => ({ text: s.message, priority: s.type })),
-        strengths: analysis.factualDensity >= 70 ? ['Good use of data and facts'] : []
+        issues: [],
+        strengths: analysis.factualDensity >= 70 ? ['Good use of data and facts', 'Evidence-based content'] : []
       },
       {
         name: 'Source Quality',
         score: analysis.sourceQuality,
         status: analysis.sourceQuality >= 85 ? 'excellent' : analysis.sourceQuality >= 70 ? 'good' : 'fair',
         description: 'Quality of external sources cited',
-        issues: analysis.suggestions
-          .filter(s => s.category.toLowerCase().includes('bron'))
-          .map(s => ({ text: s.message, priority: s.type })),
-        strengths: analysis.sourceQuality >= 70 ? ['Links to reputable sources'] : []
+        issues: [],
+        strengths: analysis.sourceQuality >= 70 ? ['Links to reputable sources', 'Good source diversity'] : []
       }
     ]
 
-    // Add any remaining suggestions as general issues
-    const categorizedSuggestions = new Set(
-      dimensions.flatMap(d => d.issues.map(i => i.text))
-    )
-    
-    dimensions.forEach(dim => {
-      const remainingSuggestions = analysis.suggestions.filter(
-        s => !categorizedSuggestions.has(s.message)
-      )
-      if (remainingSuggestions.length > 0 && dim.issues.length === 0) {
-        dim.issues.push({
-          text: remainingSuggestions[0].message,
-          priority: remainingSuggestions[0].type
-        })
+    // Distribute suggestions UNIQUELY across dimensions (max 2 per dimension)
+    let suggestionIndex = 0;
+    for (let i = 0; i < dimensions.length && suggestionIndex < analysis.suggestions.length; i++) {
+      const dim = dimensions[i];
+      let added = 0;
+      
+      while (added < 2 && suggestionIndex < analysis.suggestions.length) {
+        const suggestion = analysis.suggestions[suggestionIndex];
+        if (!usedSuggestions.has(suggestion.message)) {
+          dim.issues.push({
+            text: suggestion.message,
+            priority: suggestion.type
+          });
+          usedSuggestions.add(suggestion.message);
+          added++;
+        }
+        suggestionIndex++;
       }
-    })
+    }
 
     return NextResponse.json({
       score: overallScore,
