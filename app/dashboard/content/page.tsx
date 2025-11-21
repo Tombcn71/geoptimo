@@ -51,10 +51,12 @@ Check jouw huidige website teksten met deze tool. Je ziet direct wat goed is en 
 
   const [analyzing, setAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState(defaultScores);
+  const [error, setError] = useState<{ title: string; message: string; details?: string } | null>(null);
 
   const handleAnalyze = async () => {
     console.log('Starting analysis...', { contentLength: content.length });
     setAnalyzing(true);
+    setError(null); // Clear previous errors
     
     try {
       const response = await fetch('/api/content/analyze', {
@@ -69,20 +71,24 @@ Check jouw huidige website teksten met deze tool. Je ziet direct wat goed is en 
         const data = await response.json();
         console.log('✅ Analysis successful:', data);
         setAnalysis(data);
+        setError(null);
       } else {
         const errorData = await response.json();
         console.error('❌ API error:', response.status, errorData);
         
-        let errorMessage = errorData.error || 'Er ging iets mis';
-        if (errorData.message) {
-          errorMessage += '\n\n' + errorData.message;
-        }
-        
-        alert('⚠️ Analyse mislukt\n\n' + errorMessage);
+        setError({
+          title: errorData.error || 'Analyse mislukt',
+          message: errorData.message || 'Er ging iets mis tijdens het analyseren',
+          details: errorData.details || errorData.stack
+        });
       }
     } catch (error) {
       console.error('❌ Network error:', error);
-      alert('⚠️ Netwerkfout\n\nKon geen verbinding maken met de server. Check je internetverbinding.');
+      setError({
+        title: 'Netwerkfout',
+        message: 'Kon geen verbinding maken met de server. Check of de dev server draait.',
+        details: (error as Error).message
+      });
     } finally {
       console.log('Analysis complete');
       setAnalyzing(false);
@@ -108,6 +114,42 @@ Check jouw huidige website teksten met deze tool. Je ziet direct wat goed is en 
           <span>{analyzing ? 'Bezig met analyseren...' : 'Check Mijn Score'}</span>
         </button>
       </div>
+
+      {/* Error Display - Kopeerbaar! */}
+      {error && (
+        <Card className="bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2 text-red-600 dark:text-red-400">
+              <AlertTriangle className="h-6 w-6" />
+              <span>{error.title}</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-red-700 dark:text-red-300 text-lg font-medium">
+              {error.message}
+            </p>
+            {error.details && (
+              <div className="bg-red-100 dark:bg-red-950 p-4 rounded-lg border border-red-300 dark:border-red-700">
+                <p className="text-sm text-red-800 dark:text-red-200 font-mono whitespace-pre-wrap">
+                  {error.details}
+                </p>
+              </div>
+            )}
+            <div className="flex items-start space-x-2 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+              <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+              <div className="text-sm text-blue-700 dark:text-blue-300">
+                <p className="font-semibold mb-2">💡 Oplossing:</p>
+                <ol className="list-decimal list-inside space-y-1">
+                  <li>Maak een bestand <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">.env.local</code> aan in je project root</li>
+                  <li>Voeg toe: <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">GOOGLE_AI_API_KEY=jouw_key</code></li>
+                  <li>Haal je key op van: <a href="https://aistudio.google.com/apikey" target="_blank" className="underline font-medium">aistudio.google.com/apikey</a></li>
+                  <li>Herstart de dev server (Ctrl+C en dan <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">npm run dev</code>)</li>
+                </ol>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Editor */}
