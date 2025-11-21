@@ -163,16 +163,16 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
               Sentimiento Positivo
             </CardTitle>
-            <MessageSquare className="h-4 w-4 text-muted-foreground" />
+            <MessageSquare className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">87%</div>
-            <p className="text-xs text-muted-foreground flex items-center mt-1">
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">87%</div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center mt-1">
               <TrendingUp className="h-3 w-3 text-green-600 mr-1" />
               <span className="text-green-600">+3.2%</span>
               <span className="ml-1">desde el mes pasado</span>
@@ -180,16 +180,16 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
               Posición Promedio
             </CardTitle>
-            <Award className="h-4 w-4 text-muted-foreground" />
+            <Award className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">#2.4</div>
-            <p className="text-xs text-muted-foreground flex items-center mt-1">
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">#2.4</div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center mt-1">
               <TrendingUp className="h-3 w-3 text-green-600 mr-1" />
               <span className="text-green-600">Mejoró 0.8</span>
               <span className="ml-1">posiciones</span>
@@ -197,16 +197,16 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">
               Puntuación GEO
             </CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <TrendingUp className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">8.6/10</div>
-            <p className="text-xs text-muted-foreground flex items-center mt-1">
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">8.6/10</div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center mt-1">
               <TrendingUp className="h-3 w-3 text-green-600 mr-1" />
               <span className="text-green-600">+0.4</span>
               <span className="ml-1">este mes</span>
@@ -218,10 +218,10 @@ export default function DashboardPage() {
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Mentions Chart */}
-        <Card>
+        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader>
-            <CardTitle>Menciones en los Últimos 7 Días</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-gray-900 dark:text-white">Menciones en los Últimos 7 Días</CardTitle>
+            <CardDescription className="text-gray-600 dark:text-gray-400">
               Tendencia de menciones de tu marca
             </CardDescription>
           </CardHeader>
@@ -245,10 +245,10 @@ export default function DashboardPage() {
         </Card>
 
         {/* Platform Distribution */}
-        <Card>
+        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader>
-            <CardTitle>Distribución por Plataforma</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-gray-900 dark:text-white">Distribución por Plataforma</CardTitle>
+            <CardDescription className="text-gray-600 dark:text-gray-400">
               Menciones por motor de IA
             </CardDescription>
           </CardHeader>
@@ -277,10 +277,10 @@ export default function DashboardPage() {
       </div>
 
       {/* Top Queries */}
-      <Card>
+      <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
         <CardHeader>
-          <CardTitle>Consultas Principales</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-gray-900 dark:text-white">Consultas Principales</CardTitle>
+          <CardDescription className="text-gray-600 dark:text-gray-400">
             Búsquedas que más mencionan tu marca
           </CardDescription>
         </CardHeader>
@@ -289,11 +289,11 @@ export default function DashboardPage() {
             {topQueries.map((item, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               >
                 <div className="flex-1">
-                  <p className="font-medium text-gray-900">{item.query}</p>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="font-medium text-gray-900 dark:text-white">{item.query}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                     {item.mentions} menciones esta semana
                   </p>
                 </div>
