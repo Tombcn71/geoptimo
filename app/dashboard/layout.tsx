@@ -11,18 +11,22 @@ import {
   Settings,
   Menu,
   X,
-  Sparkles
+  Sparkles,
+  Users,
+  Link as LinkIcon,
+  Edit
 } from "lucide-react";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const navigation = [
-  { name: "Panel Principal", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Monitoreo de IA", href: "/dashboard/monitoring", icon: Search },
-  { name: "Auditoría de Sitio", href: "/dashboard/audit", icon: FileSearch },
-  { name: "Optimización", href: "/dashboard/optimization", icon: Sparkles },
-  { name: "Análisis", href: "/dashboard/analytics", icon: BarChart3 },
-  { name: "Configuración", href: "/dashboard/settings", icon: Settings },
+  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Prompt Explorer", href: "/dashboard/prompts", icon: Sparkles },
+  { name: "Competitors", href: "/dashboard/competitors", icon: Users },
+  { name: "Citations", href: "/dashboard/citations", icon: LinkIcon },
+  { name: "Content Studio", href: "/dashboard/content", icon: Edit },
+  { name: "Audit", href: "/dashboard/audit", icon: FileSearch },
+  { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
 export default function DashboardLayout({
