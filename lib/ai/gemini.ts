@@ -1,6 +1,8 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import { GoogleGenAI } from '@google/genai'
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || '')
+const ai = new GoogleGenAI({
+  apiKey: process.env.GOOGLE_AI_API_KEY || '',
+})
 
 export async function runPromptOnGemini(prompt: string) {
   if (!process.env.GOOGLE_AI_API_KEY) {
@@ -9,12 +11,25 @@ export async function runPromptOnGemini(prompt: string) {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" })
-    const result = await model.generateContent(prompt)
-    const response = result.response.text()
+    const model = 'gemini-flash-lite-latest'
+    const contents = [
+      {
+        role: 'user' as const,
+        parts: [
+          {
+            text: prompt,
+          },
+        ],
+      },
+    ]
+
+    const response = await ai.models.generateContent({
+      model,
+      contents,
+    })
 
     return {
-      response,
+      response: response.text,
       provider: 'Gemini',
       mentioned: false, // Will be analyzed
       position: null,
@@ -36,7 +51,7 @@ export async function analyzeBrandMention(response: string, brandName: string) {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" })
+    const model = 'gemini-flash-lite-latest'
     
     const prompt = `Analyze this AI response for mentions of "${brandName}":
 
@@ -52,8 +67,23 @@ Return ONLY valid JSON with this exact structure:
 
 Do not include any other text, only the JSON.`
 
-    const result = await model.generateContent(prompt)
-    const analysisText = result.response.text()
+    const contents = [
+      {
+        role: 'user' as const,
+        parts: [
+          {
+            text: prompt,
+          },
+        ],
+      },
+    ]
+
+    const result = await ai.models.generateContent({
+      model,
+      contents,
+    })
+    
+    const analysisText = result.text
     
     // Clean up the response to extract JSON
     const jsonMatch = analysisText.match(/\{[\s\S]*\}/)
@@ -88,7 +118,7 @@ export async function analyzeContentWithGemini(content: string) {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" })
+    const model = 'gemini-flash-lite-latest'
     
     const prompt = `Je bent een GEO (Generative Engine Optimization) expert. Analyseer deze content en geef scores (0-100) voor:
 - citationLikelihood: Hoe waarschijnlijk AI modellen deze content zullen citeren
@@ -116,8 +146,28 @@ Return ALLEEN valid JSON met deze exacte structuur (geen extra tekst):
 Content om te analyseren:
 ${content.substring(0, 4000)}`
 
-    const result = await model.generateContent(prompt)
-    const analysisText = result.response.text()
+    const contents = [
+      {
+        role: 'user' as const,
+        parts: [
+          {
+            text: prompt,
+          },
+        ],
+      },
+    ]
+
+    const config = {
+      responseModalities: ['TEXT' as const],
+    }
+
+    const result = await ai.models.generateContent({
+      model,
+      contents,
+      config,
+    })
+    
+    const analysisText = result.text
     
     console.log('Gemini raw response:', analysisText)
     
@@ -140,4 +190,3 @@ ${content.substring(0, 4000)}`
     throw error
   }
 }
-
