@@ -10,6 +10,7 @@ import {
   ArrowUpRight
 } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { useState, useEffect } from "react";
 
 const mentionsData = [
   { date: "Lun", menciones: 45 },
@@ -35,7 +36,41 @@ const topQueries = [
   { query: "herramientas de monitoreo de marca", mentions: 12, trend: "up" },
 ];
 
+interface Metrics {
+  visibilityScore: number;
+  sentiment: number;
+  topThreeVis: number;
+  mentions: number;
+  avgPosition: number;
+  detectionRate: number;
+  domainCitations: number;
+}
+
 export default function DashboardPage() {
+  const [metrics, setMetrics] = useState<Metrics | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/dashboard/metrics')
+      .then(res => res.json())
+      .then(data => {
+        setMetrics(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching metrics:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-xl text-gray-600 dark:text-gray-400">Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -155,7 +190,9 @@ export default function DashboardPage() {
             <Eye className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">73/100</div>
+            <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
+              {metrics?.visibilityScore}/100
+            </div>
             <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
               Detection + Ranking + Top 3
             </p>
@@ -171,7 +208,7 @@ export default function DashboardPage() {
             <MessageSquare className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-green-600">92%</div>
+            <div className="text-3xl font-bold text-green-600">{metrics?.sentiment}%</div>
             <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
               Positively mentioned
             </p>
@@ -187,7 +224,9 @@ export default function DashboardPage() {
             <Award className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">68%</div>
+            <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+              {metrics?.topThreeVis}%
+            </div>
             <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
               In top 3 results
             </p>
@@ -203,7 +242,9 @@ export default function DashboardPage() {
             <TrendingUp className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">1,284</div>
+            <div className="text-3xl font-bold text-gray-900 dark:text-white">
+              {metrics?.mentions.toLocaleString()}
+            </div>
             <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center mt-1">
               <TrendingUp className="h-3 w-3 text-green-600 mr-1" />
               <span className="text-green-600">+12.5%</span>
@@ -220,7 +261,9 @@ export default function DashboardPage() {
             <Award className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">#2.4</div>
+            <div className="text-3xl font-bold text-gray-900 dark:text-white">
+              #{metrics?.avgPosition}
+            </div>
             <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
               When mentioned
             </p>
@@ -236,7 +279,9 @@ export default function DashboardPage() {
             <Eye className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">45%</div>
+            <div className="text-3xl font-bold text-gray-900 dark:text-white">
+              {metrics?.detectionRate}%
+            </div>
             <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
               Of tracked prompts
             </p>
@@ -252,7 +297,9 @@ export default function DashboardPage() {
             <TrendingUp className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">156</div>
+            <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
+              {metrics?.domainCitations}
+            </div>
             <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
               Your site as source
             </p>

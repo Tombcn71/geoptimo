@@ -1,0 +1,63 @@
+import { NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
+
+export async function GET() {
+  try {
+    const brand = await prisma.brand.findFirst({
+      where: { companyName: 'Geoptimo' }
+    })
+
+    if (!brand) {
+      return NextResponse.json({ error: 'Brand not found' }, { status: 404 })
+    }
+
+    const prompts = await prisma.prompt.findMany({
+      where: { brandId: brand.id },
+      orderBy: { impressions: 'desc' }
+    })
+
+    return NextResponse.json(prompts)
+  } catch (error) {
+    console.error('Error fetching prompts:', error)
+    return NextResponse.json(
+      { error: 'Failed to fetch prompts' },
+      { status: 500 }
+    )
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json()
+    const { text, category, providers, isCustom } = body
+
+    const brand = await prisma.brand.findFirst({
+      where: { companyName: 'Geoptimo' }
+    })
+
+    if (!brand) {
+      return NextResponse.json({ error: 'Brand not found' }, { status: 404 })
+    }
+
+    const prompt = await prisma.prompt.create({
+      data: {
+        brandId: brand.id,
+        text,
+        category: category || 'Custom',
+        providers: providers || ['ChatGPT', 'Claude', 'Perplexity', 'Gemini'],
+        isCustom: isCustom !== undefined ? isCustom : true,
+        isSubscribed: true,
+        impressions: 0,
+      }
+    })
+
+    return NextResponse.json(prompt, { status: 201 })
+  } catch (error) {
+    console.error('Error creating prompt:', error)
+    return NextResponse.json(
+      { error: 'Failed to create prompt' },
+      { status: 500 }
+    )
+  }
+}
+
