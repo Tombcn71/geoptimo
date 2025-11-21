@@ -5,9 +5,10 @@ import { runPromptOnGemini, analyzeBrandMention } from '@/lib/ai/gemini'
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params
     const prompt = await prisma.prompt.findUnique({
       where: { id: params.id },
       include: {
