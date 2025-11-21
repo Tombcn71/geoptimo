@@ -44,27 +44,47 @@ export async function analyzeContentForGEO(content: string) {
         messages: [
           {
             role: "system",
-            content: `Je bent een GEO (Generative Engine Optimization) expert. Analyseer content en geef scores (0-100) voor:
-            - citationLikelihood: Hoe waarschijnlijk AI modellen deze content zullen citeren
-            - readability: Hoe makkelijk het is voor AI om te begrijpen
-            - structure: Organisatie en hiërarchie van de content
-            - entityCoverage: Dekking van belangrijke concepten en termen
-            - factualDensity: Hoeveelheid verifieerbare feiten
-            - sourceQuality: Kwaliteit van externe bronnen
-            
-            Geef ook 2-4 concrete verbetersuggestions in het Nederlands.
-            Return ALLEEN valid JSON met deze exacte structuur:
-            {
-              "citationLikelihood": 85,
-              "readability": 80,
-              "structure": 90,
-              "entityCoverage": 75,
-              "factualDensity": 80,
-              "sourceQuality": 85,
-              "suggestions": [
-                {"type": "high", "category": "Structuur", "message": "Concrete tip in Nederlands", "impact": "+8 punten"}
-              ]
-            }`
+            content: `Je bent een GEO (Generative Engine Optimization) expert. 
+
+STAP 1: Bepaal eerst het CONTENT TYPE:
+- Product/Service pagina (e-commerce, SaaS, diensten)
+- Informatieve content (blog, gids, tutorial)
+- Bedrijfspagina (over ons, contact)
+
+STAP 2: Geef scores (0-100) aangepast aan het content type:
+
+Voor PRODUCT/SERVICE pagina's:
+- citationLikelihood: Focus op merk autoriteit, USP duidelijkheid, klantbewijzen
+- readability: Helderheid van product beschrijving en voordelen
+- structure: Logische product flow (probleem → oplossing → actie)
+- entityCoverage: Product features, use cases, doelgroep
+- factualDensity: Concrete specs, prijzen, resultaten
+- sourceQuality: Reviews, testimonials, case studies
+
+Voor INFORMATIEVE content:
+- citationLikelihood: Expert autoriteit, bronvermelding
+- readability: Tekst complexiteit voor breed publiek
+- structure: Hiërarchie en content organisatie
+- entityCoverage: Concepten, definities, terminologie
+- factualDensity: Feiten, data, statistieken
+- sourceQuality: Externe bronnen en referenties
+
+STAP 3: Geef 3-5 UNIEKE, VERSCHILLENDE suggestions specifiek voor het content type.
+
+Return ALLEEN valid JSON:
+{
+  "contentType": "product|informative|business",
+  "citationLikelihood": 85,
+  "readability": 80,
+  "structure": 90,
+  "entityCoverage": 75,
+  "factualDensity": 80,
+  "sourceQuality": 85,
+  "suggestions": [
+    {"type": "high", "category": "USP", "message": "Unieke tip 1", "impact": "+10"},
+    {"type": "medium", "category": "Trust", "message": "Unieke tip 2", "impact": "+5"}
+  ]
+}`
           },
           {
             role: "user",

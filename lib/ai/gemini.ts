@@ -120,18 +120,36 @@ export async function analyzeContentWithGemini(content: string) {
   try {
     const model = 'gemini-flash-lite-latest'
     
-    const prompt = `Je bent een GEO (Generative Engine Optimization) expert. Analyseer deze content en geef scores (0-100) voor:
-- citationLikelihood: Hoe waarschijnlijk AI modellen deze content zullen citeren
-- readability: Hoe makkelijk het is voor AI om te begrijpen
-- structure: Organisatie en hiërarchie van de content
-- entityCoverage: Dekking van belangrijke concepten en termen
-- factualDensity: Hoeveelheid verifieerbare feiten
-- sourceQuality: Kwaliteit van externe bronnen
+    const prompt = `Je bent een GEO (Generative Engine Optimization) expert.
 
-Geef ook 2-4 concrete verbetersuggestions in het Nederlands met type (high/medium/low), category, message, en impact.
+STAP 1: Bepaal eerst het CONTENT TYPE:
+- Product/Service pagina (e-commerce, SaaS, diensten, apps)
+- Informatieve content (blog, gids, tutorial, artikel)
+- Bedrijfspagina (over ons, contact, team)
 
-Return ALLEEN valid JSON met deze exacte structuur (geen extra tekst):
+STAP 2: Geef scores (0-100) aangepast aan het content type:
+
+Voor PRODUCT/SERVICE pagina's (zoals apps, diensten):
+- citationLikelihood: Focus op merk autoriteit, USP duidelijkheid, sociale bewijzen (70-90 verwacht)
+- readability: Helderheid van product beschrijving en voordelen (70-95 verwacht)
+- structure: Logische product flow - probleem → oplossing → actie (65-90 verwacht)
+- entityCoverage: Product features, use cases, doelgroep beschrijving (60-85 verwacht)
+- factualDensity: Concrete specs, prijzen, resultaten, voorbeelden (50-80 verwacht)
+- sourceQuality: Reviews, testimonials, case studies, social proof (40-75 verwacht)
+
+Voor INFORMATIEVE content:
+- citationLikelihood: Expert autoriteit, bronvermelding, diepgang (60-95 verwacht)
+- readability: Tekst complexiteit voor breed publiek (70-95 verwacht)
+- structure: Hiërarchie en content organisatie (70-95 verwacht)
+- entityCoverage: Concepten, definities, terminologie (65-90 verwacht)
+- factualDensity: Feiten, data, statistieken (60-90 verwacht)
+- sourceQuality: Externe bronnen en referenties (50-85 verwacht)
+
+STAP 3: Geef 3-5 UNIEKE, VERSCHILLENDE suggestions specifiek voor het content type. GEEN DUPLICATEN!
+
+Return ALLEEN valid JSON (geen markdown, geen extra tekst):
 {
+  "contentType": "product|informative|business",
   "citationLikelihood": 85,
   "readability": 80,
   "structure": 90,
@@ -139,7 +157,9 @@ Return ALLEEN valid JSON met deze exacte structuur (geen extra tekst):
   "factualDensity": 80,
   "sourceQuality": 85,
   "suggestions": [
-    {"type": "high", "category": "Structuur", "message": "Concrete tip in Nederlands", "impact": "+8 punten"}
+    {"type": "high", "category": "USP", "message": "Unieke tip 1", "impact": "+10"},
+    {"type": "medium", "category": "Trust", "message": "Unieke tip 2", "impact": "+5"},
+    {"type": "low", "category": "SEO", "message": "Unieke tip 3", "impact": "+3"}
   ]
 }
 

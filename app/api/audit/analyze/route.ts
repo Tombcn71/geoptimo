@@ -112,6 +112,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       score: overallScore,
       title: title || 'Your Content',
+      contentType: analysis.contentType || 'unknown',
       dimensions
     })
 

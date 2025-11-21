@@ -300,6 +300,11 @@ export default function AuditPage() {
                     GEO Audit Score
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400">{auditResults.title}</p>
+                  {auditResults.contentType && (
+                    <p className="text-sm text-purple-600 dark:text-purple-400 mt-1">
+                      Content Type: {auditResults.contentType === 'product' ? '📦 Product/Service' : auditResults.contentType === 'informative' ? '📚 Informative' : '🏢 Business'}
+                    </p>
+                  )}
                 </div>
                 <div className="text-center">
                   <div className="text-7xl font-bold text-purple-600 dark:text-purple-400">
