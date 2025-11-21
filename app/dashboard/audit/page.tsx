@@ -21,7 +21,8 @@ const progressSteps = [
 ];
 
 export default function AuditPage() {
-  const [url, setUrl] = useState("");
+  const [content, setContent] = useState("");
+  const [title, setTitle] = useState("");
   const [isAuditing, setIsAuditing] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -63,7 +64,7 @@ export default function AuditPage() {
     fetch('/api/audit/analyze', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url })
+      body: JSON.stringify({ content, title })
     })
       .then(res => res.json())
       .then(data => {
@@ -86,7 +87,7 @@ export default function AuditPage() {
         setError('Failed to analyze the page. Please try again.');
         setIsAuditing(false);
       });
-  }, [isAuditing, url]);
+  }, [isAuditing, content, title]);
 
   const handleAudit = () => {
     setError(null);
@@ -108,41 +109,56 @@ export default function AuditPage() {
       {/* Audit Input */}
       <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
         <CardHeader>
-          <CardTitle>Iniciar Nueva Auditoría</CardTitle>
+          <CardTitle>Start New GEO Audit</CardTitle>
           <CardDescription>
-            Ingresa la URL de tu sitio web para análisis completo
+            Paste your content below for a comprehensive GEO analysis
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1 relative">
-              <Globe className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <input
-                type="url"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                placeholder="https://tuempresa.com"
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-            </div>
-            <button
-              onClick={handleAudit}
-              disabled={isAuditing || !url}
-              className="bg-black dark:bg-white text-white dark:text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-            >
-              {isAuditing ? (
-                <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  <span>Analizando...</span>
-                </>
-              ) : (
-                <>
-                  <Search className="h-5 w-5" />
-                  <span>Auditar Sitio</span>
-                </>
-              )}
-            </button>
+        <CardContent className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Content Title (Optional)
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="e.g., Homepage, Blog Post, Product Page"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
           </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Content to Analyze
+            </label>
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="Paste your webpage content, blog post, or any text you want to optimize for AI search engines..."
+              rows={12}
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+            />
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              {content.length} characters {content.length < 100 ? `(minimum 100 required)` : ''}
+            </p>
+          </div>
+          <button
+            onClick={handleAudit}
+            disabled={isAuditing || content.length < 100}
+            className="w-full bg-black dark:bg-white text-white dark:text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+          >
+            {isAuditing ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <span>Analyzing...</span>
+              </>
+            ) : (
+              <>
+                <Search className="h-5 w-5" />
+                <span>Analyze Content</span>
+              </>
+            )}
+          </button>
         </CardContent>
       </Card>
 
@@ -241,7 +257,7 @@ export default function AuditPage() {
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                     GEO Audit Score
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400">{auditResults.url}</p>
+                  <p className="text-gray-600 dark:text-gray-400">{auditResults.title}</p>
                 </div>
                 <div className="text-center">
                   <div className="text-7xl font-bold text-purple-600 dark:text-purple-400">

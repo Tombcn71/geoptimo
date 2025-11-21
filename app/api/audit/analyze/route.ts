@@ -3,50 +3,20 @@ import { analyzeContentForGEO } from '@/lib/ai/openai'
 
 export async function POST(request: Request) {
   try {
-    const { url } = await request.json()
+    const { content, title } = await request.json()
 
-    if (!url) {
-      return NextResponse.json({ error: 'URL is required' }, { status: 400 })
+    if (!content) {
+      return NextResponse.json({ error: 'Content is required' }, { status: 400 })
     }
 
-    // Fetch the webpage content
-    let pageContent = ''
-    try {
-      const response = await fetch(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; Geoptimo/1.0; +https://geoptimo.com)'
-        }
-      })
-      
-      if (!response.ok) {
-        throw new Error(`Failed to fetch: ${response.status}`)
-      }
-
-      const html = await response.text()
-      
-      // Extract text content (simple HTML stripping)
-      pageContent = html
-        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-        .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
-        .replace(/<[^>]+>/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim()
-        .substring(0, 8000) // Limit to 8000 chars for API
-
-    } catch (fetchError) {
-      console.error('Error fetching URL:', fetchError)
+    if (content.length < 100) {
       return NextResponse.json(
-        { error: 'Could not fetch the URL. Please check if it is accessible.' },
+        { error: 'Content is too short. Please provide at least 100 characters.' },
         { status: 400 }
       )
     }
 
-    if (!pageContent || pageContent.length < 100) {
-      return NextResponse.json(
-        { error: 'Not enough content found on the page' },
-        { status: 400 }
-      )
-    }
+    const pageContent = content.substring(0, 8000) // Limit to 8000 chars for API
 
     // Analyze with AI
     const analysis = await analyzeContentForGEO(pageContent)
@@ -148,7 +118,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       score: overallScore,
-      url,
+      title: title || 'Your Content',
       dimensions
     })
 
