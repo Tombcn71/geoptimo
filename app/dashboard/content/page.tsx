@@ -63,10 +63,26 @@ GEO focuses on optimizing your content to be discovered, cited, and recommended 
 To implement GEO effectively...`);
 
   const [analyzing, setAnalyzing] = useState(false);
+  const [analysis, setAnalysis] = useState(geoScore);
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     setAnalyzing(true);
-    setTimeout(() => setAnalyzing(false), 1500);
+    try {
+      const response = await fetch('/api/content/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setAnalysis(data);
+      }
+    } catch (error) {
+      console.error('Analysis error:', error);
+    } finally {
+      setAnalyzing(false);
+    }
   };
 
   return (
@@ -127,7 +143,7 @@ To implement GEO effectively...`);
             <CardContent>
               <div className="text-center">
                 <div className="text-6xl font-bold text-purple-600 dark:text-purple-400 mb-2">
-                  {geoScore.overall}
+                  {analysis.geoScore || geoScore.overall}
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                   out of 100
@@ -135,11 +151,11 @@ To implement GEO effectively...`);
                 <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3 mb-4">
                   <div
                     className="bg-gradient-to-r from-purple-600 to-blue-600 h-3 rounded-full transition-all duration-500"
-                    style={{ width: `${geoScore.overall}%` }}
+                    style={{ width: `${analysis.geoScore || geoScore.overall}%` }}
                   />
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Good! Tu contenido está bien optimizado
+                  {analyzing ? 'Analyzing...' : 'Good! Tu contenido está bien optimizado'}
                 </p>
               </div>
             </CardContent>
@@ -155,12 +171,12 @@ To implement GEO effectively...`);
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-gray-700 dark:text-gray-300">Citation Likelihood</span>
-                    <span className="font-bold text-gray-900 dark:text-white">{geoScore.citationLikelihood}</span>
+                    <span className="font-bold text-gray-900 dark:text-white">{analysis.citationLikelihood || geoScore.citationLikelihood}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
                     <div
-                      className="bg-green-600 h-2 rounded-full"
-                      style={{ width: `${geoScore.citationLikelihood}%` }}
+                      className="bg-green-600 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${analysis.citationLikelihood || geoScore.citationLikelihood}%` }}
                     />
                   </div>
                 </div>
@@ -168,12 +184,12 @@ To implement GEO effectively...`);
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-gray-700 dark:text-gray-300">Structure</span>
-                    <span className="font-bold text-gray-900 dark:text-white">{geoScore.structure}</span>
+                    <span className="font-bold text-gray-900 dark:text-white">{analysis.structure || geoScore.structure}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
                     <div
-                      className="bg-blue-600 h-2 rounded-full"
-                      style={{ width: `${geoScore.structure}%` }}
+                      className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${analysis.structure || geoScore.structure}%` }}
                     />
                   </div>
                 </div>
@@ -181,12 +197,12 @@ To implement GEO effectively...`);
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-gray-700 dark:text-gray-300">Factual Density</span>
-                    <span className="font-bold text-gray-900 dark:text-white">{geoScore.factualDensity}</span>
+                    <span className="font-bold text-gray-900 dark:text-white">{analysis.factualDensity || geoScore.factualDensity}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
                     <div
-                      className="bg-purple-600 h-2 rounded-full"
-                      style={{ width: `${geoScore.factualDensity}%` }}
+                      className="bg-purple-600 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${analysis.factualDensity || geoScore.factualDensity}%` }}
                     />
                   </div>
                 </div>
@@ -194,12 +210,12 @@ To implement GEO effectively...`);
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-gray-700 dark:text-gray-300">Readability</span>
-                    <span className="font-bold text-gray-900 dark:text-white">{geoScore.readability}</span>
+                    <span className="font-bold text-gray-900 dark:text-white">{analysis.readability || geoScore.readability}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
                     <div
-                      className="bg-yellow-600 h-2 rounded-full"
-                      style={{ width: `${geoScore.readability}%` }}
+                      className="bg-yellow-600 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${analysis.readability || geoScore.readability}%` }}
                     />
                   </div>
                 </div>
@@ -207,12 +223,12 @@ To implement GEO effectively...`);
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-gray-700 dark:text-gray-300">Entity Coverage</span>
-                    <span className="font-bold text-gray-900 dark:text-white">{geoScore.entityCoverage}</span>
+                    <span className="font-bold text-gray-900 dark:text-white">{analysis.entityCoverage || geoScore.entityCoverage}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
                     <div
-                      className="bg-orange-600 h-2 rounded-full"
-                      style={{ width: `${geoScore.entityCoverage}%` }}
+                      className="bg-orange-600 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${analysis.entityCoverage || geoScore.entityCoverage}%` }}
                     />
                   </div>
                 </div>
@@ -220,12 +236,12 @@ To implement GEO effectively...`);
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-gray-700 dark:text-gray-300">Source Quality</span>
-                    <span className="font-bold text-gray-900 dark:text-white">{geoScore.sourceQuality}</span>
+                    <span className="font-bold text-gray-900 dark:text-white">{analysis.sourceQuality || geoScore.sourceQuality}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
                     <div
-                      className="bg-cyan-600 h-2 rounded-full"
-                      style={{ width: `${geoScore.sourceQuality}%` }}
+                      className="bg-cyan-600 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${analysis.sourceQuality || geoScore.sourceQuality}%` }}
                     />
                   </div>
                 </div>
@@ -243,7 +259,7 @@ To implement GEO effectively...`);
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {suggestions.map((suggestion, index) => (
+                {(analysis.suggestions || suggestions).map((suggestion, index) => (
                   <div
                     key={index}
                     className={`p-3 rounded-lg border ${
