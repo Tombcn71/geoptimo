@@ -22,7 +22,7 @@ const topURLs = [
     url: "techcrunch.com/2024/best-geo-tools",
     title: "The Best GEO Tools for 2024",
     references: 89,
-    providers: ["ChatGPT", "Claude", "Perplexity"]
+    providers: ["ChatGPT", "Gemini", "Perplexity"]
   },
   {
     url: "forbes.com/ai-search-optimization-guide",
@@ -34,7 +34,7 @@ const topURLs = [
     url: "venturebeat.com/geo-marketing-strategies",
     title: "GEO Marketing Strategies That Work",
     references: 64,
-    providers: ["Claude", "Perplexity"]
+    providers: ["Gemini", "Perplexity"]
   },
 ];
 
@@ -70,7 +70,7 @@ const brandMentions = [
     mentions: "Geoptimo",
     snippet: "...Geoptimo offers comprehensive AI search monitoring...",
     citations: 34,
-    providers: ["ChatGPT", "Claude"]
+    providers: ["ChatGPT", "Gemini"]
   },
   {
     source: "forbes.com/geo-tools-comparison",

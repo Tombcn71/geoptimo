@@ -56,7 +56,7 @@ const subscribedPrompts = [
     lastRun: "2 hours ago",
     mentions: 12,
     position: 2,
-    providers: ["ChatGPT", "Claude", "Perplexity", "Gemini"]
+    providers: ["ChatGPT", "Gemini", "Perplexity"]
   },
   {
     id: 102,
@@ -64,7 +64,7 @@ const subscribedPrompts = [
     lastRun: "5 hours ago",
     mentions: 8,
     position: 1,
-    providers: ["ChatGPT", "Claude"]
+    providers: ["ChatGPT", "Gemini"]
   },
 ];
 
@@ -218,7 +218,7 @@ export default function PromptsPage() {
                   AI Providers
                 </label>
                 <div className="grid grid-cols-2 gap-3">
-                  {["ChatGPT", "Claude", "Perplexity", "Gemini"].map((provider) => (
+                  {["ChatGPT", "Gemini", "Perplexity"].map((provider) => (
                     <label key={provider} className="flex items-center space-x-2 p-3 border rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900">
                       <input type="checkbox" className="rounded" defaultChecked />
                       <span>{provider}</span>

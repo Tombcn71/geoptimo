@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { runPromptOnChatGPT } from '@/lib/ai/openai'
-import { runPromptOnClaude, analyzeBrandMention } from '@/lib/ai/anthropic'
+import { runPromptOnGemini, analyzeBrandMention } from '@/lib/ai/gemini'
 
 export async function POST(
   request: Request,
@@ -27,10 +27,12 @@ export async function POST(
 
       if (provider === 'ChatGPT') {
         result = await runPromptOnChatGPT(prompt.text)
+      } else if (provider === 'Gemini') {
+        result = await runPromptOnGemini(prompt.text)
       } else if (provider === 'Claude') {
-        result = await runPromptOnClaude(prompt.text)
+        result = await runPromptOnGemini(prompt.text) // Use Gemini for Claude too
       }
-      // Add Perplexity and Gemini when APIs available
+      // Add Perplexity when API available
 
       if (result && result.response) {
         // Analyze if brand is mentioned

@@ -37,8 +37,16 @@ export async function runPromptOnChatGPT(prompt: string) {
 
 export async function analyzeContentForGEO(content: string) {
   if (!process.env.OPENAI_API_KEY) {
+    // Try Gemini as fallback
+    const { analyzeContentWithGemini } = await import('./gemini')
+    const geminiResult = await analyzeContentWithGemini(content)
+    
+    if (geminiResult) {
+      return geminiResult
+    }
+
+    // Return default if no API keys
     return {
-      geoScore: 75,
       citationLikelihood: 80,
       readability: 75,
       structure: 85,
@@ -59,18 +67,18 @@ export async function analyzeContentForGEO(content: string) {
         {
           role: "system",
           content: `You are a GEO (Generative Engine Optimization) expert. Analyze content and provide scores (0-100) for:
-          - Citation Likelihood: How likely AI models will cite this
-          - Readability: How easy for AI to understand
-          - Structure: Organization and hierarchy
-          - Entity Coverage: Coverage of key entities/concepts
-          - Factual Density: Amount of verifiable facts
-          - Source Quality: Quality of external sources
+          - citationLikelihood: How likely AI models will cite this
+          - readability: How easy for AI to understand
+          - structure: Organization and hierarchy
+          - entityCoverage: Coverage of key entities/concepts
+          - factualDensity: Amount of verifiable facts
+          - sourceQuality: Quality of external sources
           
-          Return JSON with scores and actionable suggestions.`
+          Return JSON with scores and actionable suggestions array.`
         },
         {
           role: "user",
-          content: `Analyze this content:\n\n${content}`
+          content: `Analyze this content:\n\n${content.substring(0, 3000)}`
         }
       ],
       response_format: { type: "json_object" },
@@ -81,9 +89,16 @@ export async function analyzeContentForGEO(content: string) {
     return result
   } catch (error) {
     console.error('Content analysis error:', error)
+    // Try Gemini as fallback
+    const { analyzeContentWithGemini } = await import('./gemini')
+    const geminiResult = await analyzeContentWithGemini(content)
+    
+    if (geminiResult) {
+      return geminiResult
+    }
+
     // Return default scores
     return {
-      geoScore: 75,
       citationLikelihood: 80,
       readability: 75,
       structure: 85,

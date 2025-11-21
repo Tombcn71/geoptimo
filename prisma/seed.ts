@@ -134,6 +134,7 @@ async function main() {
         category: 'Product Discovery',
         impressions: 2340,
         isSubscribed: false,
+        providers: ['ChatGPT', 'Gemini', 'Perplexity'],
       },
     }),
     prisma.prompt.create({
@@ -143,6 +144,7 @@ async function main() {
         category: 'How-To',
         impressions: 1890,
         isSubscribed: true,
+        providers: ['ChatGPT', 'Gemini'],
       },
     }),
     prisma.prompt.create({
@@ -153,6 +155,7 @@ async function main() {
         impressions: 1560,
         isSubscribed: true,
         isCustom: true,
+        providers: ['ChatGPT', 'Gemini', 'Perplexity'],
       },
     }),
   ])
@@ -169,7 +172,7 @@ async function main() {
         sourceDomain: 'techcrunch.com',
         domainAuthority: 94,
         snippet: 'Geoptimo offers comprehensive AI search monitoring...',
-        providers: ['ChatGPT', 'Claude', 'Perplexity'],
+        providers: ['ChatGPT', 'Gemini', 'Perplexity'],
         citationCount: 89,
       },
     }),
