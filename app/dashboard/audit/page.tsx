@@ -23,12 +23,49 @@ const progressSteps = [
 export default function AuditPage() {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
+  const [url, setUrl] = useState("");
+  const [isFetching, setIsFetching] = useState(false);
   const [isAuditing, setIsAuditing] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [progress, setProgress] = useState(0);
   const [auditResults, setAuditResults] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const fetchUrlContent = async () => {
+    if (!url) return;
+    
+    setIsFetching(true);
+    setError(null);
+    
+    try {
+      // Use a CORS proxy or client-side fetch
+      const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+      const data = await response.json();
+      
+      if (data.contents) {
+        // Extract text from HTML
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data.contents, 'text/html');
+        
+        // Remove scripts and styles
+        doc.querySelectorAll('script, style, nav, footer, header').forEach(el => el.remove());
+        
+        const text = doc.body.textContent || '';
+        const cleanText = text.replace(/\s+/g, ' ').trim();
+        
+        setContent(cleanText);
+        setTitle(doc.title || url);
+      } else {
+        throw new Error('Could not fetch content');
+      }
+    } catch (err) {
+      console.error('Fetch error:', err);
+      setError('Could not fetch URL. Try pasting the content directly instead.');
+    } finally {
+      setIsFetching(false);
+    }
+  };
 
   useEffect(() => {
     if (!isAuditing) return;
@@ -111,13 +148,61 @@ export default function AuditPage() {
         <CardHeader>
           <CardTitle>Start New GEO Audit</CardTitle>
           <CardDescription>
-            Paste your content below for a comprehensive GEO analysis
+            Enter a URL to fetch content automatically, or paste your content directly
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
+          {/* URL Input Section */}
+          <div className="p-4 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30 rounded-lg border-2 border-purple-200 dark:border-purple-900">
+            <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2 flex items-center space-x-2">
+              <Globe className="h-4 w-4 text-purple-600" />
+              <span>Option 1: Fetch from URL</span>
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="url"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://example.com/your-page"
+                className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+              <button
+                onClick={fetchUrlContent}
+                disabled={isFetching || !url}
+                className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+              >
+                {isFetching ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    <span>Fetching...</span>
+                  </>
+                ) : (
+                  <>
+                    <ArrowRight className="h-5 w-5" />
+                    <span>Fetch</span>
+                  </>
+                )}
+              </button>
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
+              We&apos;ll automatically extract the text content from the URL
+            </p>
+          </div>
+
+          {/* Divider */}
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300 dark:border-gray-700"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">OR</span>
+            </div>
+          </div>
+
+          {/* Content Input Section */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Content Title (Optional)
+              Option 2: Title (Optional)
             </label>
             <input
               type="text"
@@ -129,7 +214,7 @@ export default function AuditPage() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Content to Analyze
+              Paste Content Directly
             </label>
             <textarea
               value={content}
