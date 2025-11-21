@@ -40,33 +40,29 @@ export default function AuditPage() {
     setShowResults(false);
     
     try {
-      // Use a CORS proxy or client-side fetch
-      const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+      // Use server-side API to fetch URL (no CORS issues)
+      const response = await fetch('/api/audit/fetch-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+      
       const data = await response.json();
       
-      if (data.contents) {
-        // Extract text from HTML
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data.contents, 'text/html');
-        
-        // Remove scripts and styles
-        doc.querySelectorAll('script, style, nav, footer, header').forEach(el => el.remove());
-        
-        const text = doc.body.textContent || '';
-        const cleanText = text.replace(/\s+/g, ' ').trim();
-        
-        setContent(cleanText);
-        setTitle(doc.title || url);
-        
-        // Automatically start audit after fetching
-        setIsFetching(false);
-        handleAudit();
-      } else {
-        throw new Error('Could not fetch content');
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to fetch URL');
       }
+      
+      setContent(data.content);
+      setTitle(data.title);
+      
+      // Automatically start audit after fetching
+      setIsFetching(false);
+      handleAudit();
+      
     } catch (err) {
       console.error('Fetch error:', err);
-      setError('Could not fetch URL. The page might be blocked by CORS or inaccessible.');
+      setError((err as Error).message || 'Could not fetch URL. Please check if the URL is accessible.');
       setIsFetching(false);
     }
   };
