@@ -9,7 +9,7 @@ export async function runPromptOnGemini(prompt: string) {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" })
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
     const result = await model.generateContent(prompt)
     const response = result.response.text()
 
@@ -36,7 +36,7 @@ export async function analyzeBrandMention(response: string, brandName: string) {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" })
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
     
     const prompt = `Analyze this AI response for mentions of "${brandName}":
 
@@ -88,7 +88,7 @@ export async function analyzeContentWithGemini(content: string) {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" })
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
     
     const prompt = `Je bent een GEO (Generative Engine Optimization) expert. Analyseer deze content en geef scores (0-100) voor:
 - citationLikelihood: Hoe waarschijnlijk AI modellen deze content zullen citeren
