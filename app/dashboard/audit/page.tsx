@@ -37,6 +37,7 @@ export default function AuditPage() {
     
     setIsFetching(true);
     setError(null);
+    setShowResults(false);
     
     try {
       // Use a CORS proxy or client-side fetch
@@ -56,13 +57,16 @@ export default function AuditPage() {
         
         setContent(cleanText);
         setTitle(doc.title || url);
+        
+        // Automatically start audit after fetching
+        setIsFetching(false);
+        handleAudit();
       } else {
         throw new Error('Could not fetch content');
       }
     } catch (err) {
       console.error('Fetch error:', err);
-      setError('Could not fetch URL. Try pasting the content directly instead.');
-    } finally {
+      setError('Could not fetch URL. The page might be blocked by CORS or inaccessible.');
       setIsFetching(false);
     }
   };
@@ -146,106 +150,60 @@ export default function AuditPage() {
       {/* Audit Input */}
       <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
         <CardHeader>
-          <CardTitle>Start New GEO Audit</CardTitle>
+          <CardTitle>Website GEO Audit</CardTitle>
           <CardDescription>
-            Enter a URL to fetch content automatically, or paste your content directly
+            Analyze any webpage by entering its URL - we&apos;ll fetch and audit the content automatically
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          {/* URL Input Section */}
-          <div className="p-4 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30 rounded-lg border-2 border-purple-200 dark:border-purple-900">
-            <label className="block text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center space-x-2">
-              <Globe className="h-5 w-5 text-purple-600" />
-              <span className="text-base">Enter Website URL</span>
-            </label>
-            <div className="flex gap-2">
-              <input
-                type="url"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                placeholder="https://example.com"
-                className="flex-1 px-4 py-3 border-2 border-purple-300 dark:border-purple-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-base"
-              />
-              <button
-                onClick={fetchUrlContent}
-                disabled={isFetching || !url}
-                className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 whitespace-nowrap"
-              >
-                {isFetching ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    <span>Loading...</span>
-                  </>
-                ) : (
-                  <>
-                    <Search className="h-5 w-5" />
-                    <span>Analyze URL</span>
-                  </>
-                )}
-              </button>
-            </div>
-            <p className="text-sm text-purple-700 dark:text-purple-300 mt-3 flex items-start space-x-2">
-              <span>💡</span>
-              <span>We&apos;ll automatically fetch and extract the content from your URL</span>
-            </p>
-          </div>
-
-          {/* Divider */}
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t-2 border-gray-300 dark:border-gray-700"></div>
-            </div>
-            <div className="relative flex justify-center text-base">
-              <span className="px-4 bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 font-medium">OR PASTE CONTENT</span>
-            </div>
-          </div>
-
-          {/* Content Input Section */}
+        <CardContent>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Content Name (Optional)
+              <label className="block text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center space-x-2">
+                <Globe className="h-6 w-6 text-purple-600" />
+                <span>Enter Website URL</span>
               </label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g., Homepage, Blog Post, Product Page"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
+              <div className="flex gap-3">
+                <input
+                  type="url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  placeholder="https://example.com/your-page"
+                  className="flex-1 px-5 py-4 border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-lg"
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && url && !isFetching) {
+                      fetchUrlContent();
+                    }
+                  }}
+                />
+                <button
+                  onClick={fetchUrlContent}
+                  disabled={isFetching || !url}
+                  className="px-10 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg font-bold text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 whitespace-nowrap shadow-lg"
+                >
+                  {isFetching ? (
+                    <>
+                      <Loader2 className="h-6 w-6 animate-spin" />
+                      <span>Fetching...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Search className="h-6 w-6" />
+                      <span>Audit Page</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Your Content
-              </label>
-              <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Paste your content here: webpage text, blog post, product description, etc."
-                rows={10}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
-              />
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                {content.length} characters {content.length < 100 ? `(minimum 100 characters required)` : '✓ Ready to analyze'}
+            
+            <div className="p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-900">
+              <p className="text-sm text-blue-900 dark:text-blue-300 flex items-start space-x-2">
+                <span className="text-lg">💡</span>
+                <span>
+                  <strong>Tip:</strong> This will fetch the entire webpage and analyze it across 6 GEO dimensions. 
+                  For quick content checks, use <a href="/dashboard/content" className="underline font-semibold">Content Checker</a> instead.
+                </span>
               </p>
             </div>
-            <button
-              onClick={handleAudit}
-              disabled={isAuditing || content.length < 100}
-              className="w-full bg-black dark:bg-white text-white dark:text-black px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-            >
-              {isAuditing ? (
-                <>
-                  <Loader2 className="h-6 w-6 animate-spin" />
-                  <span>Analyzing Content...</span>
-                </>
-              ) : (
-                <>
-                  <Search className="h-6 w-6" />
-                  <span>Analyze Pasted Content</span>
-                </>
-              )}
-            </button>
           </div>
         </CardContent>
       </Card>
