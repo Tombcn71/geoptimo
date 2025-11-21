@@ -154,96 +154,99 @@ export default function AuditPage() {
         <CardContent className="space-y-6">
           {/* URL Input Section */}
           <div className="p-4 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30 rounded-lg border-2 border-purple-200 dark:border-purple-900">
-            <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2 flex items-center space-x-2">
-              <Globe className="h-4 w-4 text-purple-600" />
-              <span>Option 1: Fetch from URL</span>
+            <label className="block text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center space-x-2">
+              <Globe className="h-5 w-5 text-purple-600" />
+              <span className="text-base">Enter Website URL</span>
             </label>
             <div className="flex gap-2">
               <input
                 type="url"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                placeholder="https://example.com/your-page"
-                className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                placeholder="https://example.com"
+                className="flex-1 px-4 py-3 border-2 border-purple-300 dark:border-purple-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-base"
               />
               <button
                 onClick={fetchUrlContent}
                 disabled={isFetching || !url}
-                className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 whitespace-nowrap"
               >
                 {isFetching ? (
                   <>
                     <Loader2 className="h-5 w-5 animate-spin" />
-                    <span>Fetching...</span>
+                    <span>Loading...</span>
                   </>
                 ) : (
                   <>
-                    <ArrowRight className="h-5 w-5" />
-                    <span>Fetch</span>
+                    <Search className="h-5 w-5" />
+                    <span>Analyze URL</span>
                   </>
                 )}
               </button>
             </div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
-              We&apos;ll automatically extract the text content from the URL
+            <p className="text-sm text-purple-700 dark:text-purple-300 mt-3 flex items-start space-x-2">
+              <span>💡</span>
+              <span>We&apos;ll automatically fetch and extract the content from your URL</span>
             </p>
           </div>
 
           {/* Divider */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300 dark:border-gray-700"></div>
+              <div className="w-full border-t-2 border-gray-300 dark:border-gray-700"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">OR</span>
+            <div className="relative flex justify-center text-base">
+              <span className="px-4 bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 font-medium">OR PASTE CONTENT</span>
             </div>
           </div>
 
           {/* Content Input Section */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Option 2: Title (Optional)
-            </label>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g., Homepage, Blog Post, Product Page"
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Content Name (Optional)
+              </label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="e.g., Homepage, Blog Post, Product Page"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Your Content
+              </label>
+              <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="Paste your content here: webpage text, blog post, product description, etc."
+                rows={10}
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+              />
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                {content.length} characters {content.length < 100 ? `(minimum 100 characters required)` : '✓ Ready to analyze'}
+              </p>
+            </div>
+            <button
+              onClick={handleAudit}
+              disabled={isAuditing || content.length < 100}
+              className="w-full bg-black dark:bg-white text-white dark:text-black px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            >
+              {isAuditing ? (
+                <>
+                  <Loader2 className="h-6 w-6 animate-spin" />
+                  <span>Analyzing Content...</span>
+                </>
+              ) : (
+                <>
+                  <Search className="h-6 w-6" />
+                  <span>Analyze Pasted Content</span>
+                </>
+              )}
+            </button>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Paste Content Directly
-            </label>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Paste your webpage content, blog post, or any text you want to optimize for AI search engines..."
-              rows={12}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
-            />
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-              {content.length} characters {content.length < 100 ? `(minimum 100 required)` : ''}
-            </p>
-          </div>
-          <button
-            onClick={handleAudit}
-            disabled={isAuditing || content.length < 100}
-            className="w-full bg-black dark:bg-white text-white dark:text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-          >
-            {isAuditing ? (
-              <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                <span>Analyzing...</span>
-              </>
-            ) : (
-              <>
-                <Search className="h-5 w-5" />
-                <span>Analyze Content</span>
-              </>
-            )}
-          </button>
         </CardContent>
       </Card>
 
