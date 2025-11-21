@@ -7,9 +7,11 @@ import {
   Search,
   TrendingUp,
   Check,
-  X
+  X,
+  ArrowRight
 } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 const aiSuggestedPrompts = [
   { 
@@ -82,13 +84,22 @@ export default function PromptsPage() {
             Descubre y suscríbete a prompts relevantes para tu marca
           </p>
         </div>
-        <button
-          onClick={() => setShowCustomPrompt(true)}
-          className="bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center space-x-2"
-        >
-          <Plus className="h-5 w-5" />
-          <span>Custom Prompt</span>
-        </button>
+        <div className="flex items-center space-x-3">
+          <Link
+            href="/dashboard/prompts/explore"
+            className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-colors flex items-center space-x-2"
+          >
+            <Sparkles className="h-5 w-5" />
+            <span>Explore AI Prompts</span>
+          </Link>
+          <button
+            onClick={() => setShowCustomPrompt(true)}
+            className="bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center space-x-2"
+          >
+            <Plus className="h-5 w-5" />
+            <span>Custom Prompt</span>
+          </button>
+        </div>
       </div>
 
       {/* AI Suggested Prompts */}
@@ -147,14 +158,16 @@ export default function PromptsPage() {
         <CardContent>
           <div className="space-y-4">
             {subscribedPrompts.map((prompt) => (
-              <div
+              <Link
                 key={prompt.id}
-                className="p-5 border border-gray-200 dark:border-gray-800 rounded-lg hover:shadow-md transition-shadow bg-white dark:bg-gray-900"
+                href={`/dashboard/prompts/${prompt.id}`}
+                className="block p-5 border border-gray-200 dark:border-gray-800 rounded-lg hover:shadow-md hover:border-purple-300 dark:hover:border-purple-700 transition-all bg-white dark:bg-gray-900 group"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
-                      {prompt.text}
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center space-x-2">
+                      <span>{prompt.text}</span>
+                      <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors" />
                     </h3>
                     <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
                       <span>Last run: {prompt.lastRun}</span>
@@ -169,9 +182,6 @@ export default function PromptsPage() {
                       </span>
                     </div>
                   </div>
-                  <button className="text-gray-400 hover:text-red-600 dark:hover:text-red-400">
-                    <X className="h-5 w-5" />
-                  </button>
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-xs text-gray-600 dark:text-gray-400">Providers:</span>
@@ -184,7 +194,7 @@ export default function PromptsPage() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </CardContent>

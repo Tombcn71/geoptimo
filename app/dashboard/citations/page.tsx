@@ -63,6 +63,14 @@ const yourCitations = [
   },
 ];
 
+const brandPerformance = [
+  { brand: "Geoptimo", mentions: 234, avgPosition: 2.1, citationRate: 68, sentiment: "+82%" },
+  { brand: "Sonix", mentions: 198, avgPosition: 2.4, citationRate: 61, sentiment: "+75%" },
+  { brand: "Rev", mentions: 176, avgPosition: 2.8, citationRate: 58, sentiment: "+71%" },
+  { brand: "Trint", mentions: 143, avgPosition: 3.2, citationRate: 52, sentiment: "+65%" },
+  { brand: "Descript", mentions: 127, avgPosition: 3.5, citationRate: 49, sentiment: "+68%" },
+];
+
 const brandMentions = [
   {
     source: "techcrunch.com/article-123",
@@ -140,6 +148,89 @@ export default function CitationsPage() {
               <strong>💡 Pro Tip:</strong> Si consigues que tu marca sea mencionada en contenido en estos dominios, 
               aumentarás significativamente tus probabilidades de aparecer en respuestas de IA.
             </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Brand Performance */}
+      <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <TrendingUp className="h-5 w-5 text-blue-600" />
+            <span>Brand Performance in Citations</span>
+          </CardTitle>
+          <CardDescription>
+            Top brands mentioned in cited sources across AI platforms
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-200 dark:border-gray-800">
+                  <th className="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">#</th>
+                  <th className="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">Brand</th>
+                  <th className="text-right py-3 px-4 font-semibold text-gray-900 dark:text-white">Mentions</th>
+                  <th className="text-right py-3 px-4 font-semibold text-gray-900 dark:text-white">Avg Position</th>
+                  <th className="text-right py-3 px-4 font-semibold text-gray-900 dark:text-white">Citation Rate</th>
+                  <th className="text-right py-3 px-4 font-semibold text-gray-900 dark:text-white">Sentiment</th>
+                </tr>
+              </thead>
+              <tbody>
+                {brandPerformance.map((brand, index) => (
+                  <tr
+                    key={brand.brand}
+                    className={`border-b border-gray-100 dark:border-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 ${
+                      brand.brand === "Geoptimo" ? "bg-purple-50 dark:bg-purple-950/20" : ""
+                    }`}
+                  >
+                    <td className="py-4 px-4 text-gray-500 dark:text-gray-400">
+                      {index + 1}
+                    </td>
+                    <td className="py-4 px-4">
+                      <div className="flex items-center space-x-2">
+                        <span className={`font-semibold ${
+                          brand.brand === "Geoptimo"
+                            ? "text-purple-700 dark:text-purple-400"
+                            : "text-gray-900 dark:text-white"
+                        }`}>
+                          {brand.brand}
+                        </span>
+                        {brand.brand === "Geoptimo" && (
+                          <span className="px-2 py-0.5 bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 text-xs rounded-full">
+                            You
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="py-4 px-4 text-right font-medium text-gray-900 dark:text-white">
+                      {brand.mentions}
+                    </td>
+                    <td className="py-4 px-4 text-right text-gray-700 dark:text-gray-300">
+                      #{brand.avgPosition}
+                    </td>
+                    <td className="py-4 px-4 text-right">
+                      <div className="flex items-center justify-end space-x-2">
+                        <div className="w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-blue-600"
+                            style={{ width: `${brand.citationRate}%` }}
+                          />
+                        </div>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                          {brand.citationRate}%
+                        </span>
+                      </div>
+                    </td>
+                    <td className="py-4 px-4 text-right">
+                      <span className="text-green-600 dark:text-green-400 font-semibold">
+                        {brand.sentiment}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </CardContent>
       </Card>

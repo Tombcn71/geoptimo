@@ -10,7 +10,15 @@ import {
   ArrowRight,
   Loader2
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+const progressSteps = [
+  { id: 1, label: "Preparing", duration: 500 },
+  { id: 2, label: "Crawling", duration: 1500 },
+  { id: 3, label: "Processing", duration: 1200 },
+  { id: 4, label: "Analyzing", duration: 1800 },
+  { id: 5, label: "Finalizing", duration: 1000 }
+];
 
 const auditResults = {
   score: 78,
@@ -103,13 +111,49 @@ export default function AuditPage() {
   const [url, setUrl] = useState("");
   const [isAuditing, setIsAuditing] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    if (!isAuditing) return;
+
+    let stepIndex = 0;
+    let totalDuration = 0;
+    
+    const runSteps = async () => {
+      for (const step of progressSteps) {
+        setCurrentStep(stepIndex);
+        
+        // Animate progress for this step
+        const startProgress = totalDuration;
+        const endProgress = totalDuration + step.duration;
+        const totalTime = progressSteps.reduce((sum, s) => sum + s.duration, 0);
+        
+        const animationFrames = 60;
+        const frameDelay = step.duration / animationFrames;
+        
+        for (let i = 0; i <= animationFrames; i++) {
+          await new Promise(resolve => setTimeout(resolve, frameDelay));
+          const currentProgress = startProgress + (step.duration * i / animationFrames);
+          setProgress((currentProgress / totalTime) * 100);
+        }
+        
+        totalDuration += step.duration;
+        stepIndex++;
+      }
+      
+      setIsAuditing(false);
+      setShowResults(true);
+      setProgress(0);
+      setCurrentStep(0);
+    };
+    
+    runSteps();
+  }, [isAuditing]);
 
   const handleAudit = () => {
     setIsAuditing(true);
-    setTimeout(() => {
-      setIsAuditing(false);
-      setShowResults(true);
-    }, 2000);
+    setShowResults(false);
   };
 
   return (
@@ -162,6 +206,73 @@ export default function AuditPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Progress Animation */}
+      {isAuditing && (
+        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
+          <CardContent className="pt-8 pb-8">
+            <div className="max-w-2xl mx-auto">
+              <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-8">
+                Analyzing Your Website...
+              </h3>
+              
+              {/* Progress Bar */}
+              <div className="mb-8">
+                <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-4 overflow-hidden">
+                  <div
+                    className="h-4 bg-gradient-to-r from-purple-600 to-blue-600 transition-all duration-300"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+                <div className="text-center mt-2 text-sm font-semibold text-purple-600 dark:text-purple-400">
+                  {Math.round(progress)}%
+                </div>
+              </div>
+
+              {/* Steps */}
+              <div className="space-y-4">
+                {progressSteps.map((step, index) => (
+                  <div
+                    key={step.id}
+                    className={`flex items-center space-x-3 p-3 rounded-lg transition-all ${
+                      index === currentStep
+                        ? "bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-900"
+                        : index < currentStep
+                        ? "bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900"
+                        : "bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+                    }`}
+                  >
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                      index === currentStep
+                        ? "bg-purple-600 text-white animate-pulse"
+                        : index < currentStep
+                        ? "bg-green-600 text-white"
+                        : "bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
+                    }`}>
+                      {index < currentStep ? (
+                        <CheckCircle2 className="h-5 w-5" />
+                      ) : index === currentStep ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <span className="text-sm font-semibold">{index + 1}</span>
+                      )}
+                    </div>
+                    <span className={`font-medium ${
+                      index === currentStep
+                        ? "text-purple-900 dark:text-purple-300"
+                        : index < currentStep
+                        ? "text-green-900 dark:text-green-300"
+                        : "text-gray-600 dark:text-gray-400"
+                    }`}>
+                      {step.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Results */}
       {showResults && (

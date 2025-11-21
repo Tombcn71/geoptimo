@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tooltip } from "@/components/ui/tooltip";
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -83,9 +84,12 @@ export default function DashboardPage() {
         {/* Visibility Score */}
         <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 border-purple-200 dark:border-purple-800">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-purple-700 dark:text-purple-300 flex items-center space-x-2">
-              <Eye className="h-4 w-4" />
-              <span>AI Visibility Score</span>
+            <CardTitle className="text-sm font-medium text-purple-700 dark:text-purple-300 flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Eye className="h-4 w-4" />
+                <span>AI Visibility Score</span>
+              </div>
+              <Tooltip content="Combines detection rate, average position, and top-3 prominence into a single score. Higher is better (max 100)." />
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -105,9 +109,12 @@ export default function DashboardPage() {
         {/* Mentions */}
         <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-blue-700 dark:text-blue-300 flex items-center space-x-2">
-              <MessageSquare className="h-4 w-4" />
-              <span>Total Mentions</span>
+            <CardTitle className="text-sm font-medium text-blue-700 dark:text-blue-300 flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <MessageSquare className="h-4 w-4" />
+                <span>Total Mentions</span>
+              </div>
+              <Tooltip content="Total number of AI responses that mentioned your brand at least once." />
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -127,9 +134,12 @@ export default function DashboardPage() {
         {/* Average Position */}
         <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 border-green-200 dark:border-green-800">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-green-700 dark:text-green-300 flex items-center space-x-2">
-              <Award className="h-4 w-4" />
-              <span>Avg Position</span>
+            <CardTitle className="text-sm font-medium text-green-700 dark:text-green-300 flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Award className="h-4 w-4" />
+                <span>Avg Position</span>
+              </div>
+              <Tooltip content="Average ranking position when your brand appears. Lower is better - position 1 means you're mentioned first." />
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -149,9 +159,12 @@ export default function DashboardPage() {
         {/* Top 3 Visibility */}
         <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 border-orange-200 dark:border-orange-800">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-orange-700 dark:text-orange-300 flex items-center space-x-2">
-              <Target className="h-4 w-4" />
-              <span>Top 3 Appearances</span>
+            <CardTitle className="text-sm font-medium text-orange-700 dark:text-orange-300 flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Target className="h-4 w-4" />
+                <span>Top 3 Appearances</span>
+              </div>
+              <Tooltip content="Percentage of times your brand appears in the top 3 positions when mentioned in AI responses." />
             </CardTitle>
           </CardHeader>
           <CardContent>
