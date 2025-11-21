@@ -20,99 +20,14 @@ const progressSteps = [
   { id: 5, label: "Finalizing", duration: 1000 }
 ];
 
-const auditResults = {
-  score: 78,
-  url: "https://tuempresa.com",
-  dimensions: [
-    {
-      name: "Citation Likelihood",
-      score: 82,
-      status: "good",
-      description: "Probabilidad de que tu contenido sea citado por IA",
-      issues: [
-        { text: "Add more authoritative sources", priority: "medium" },
-        { text: "Include specific statistics and data", priority: "low" }
-      ],
-      strengths: [
-        "Clear and concise writing style",
-        "Well-researched content"
-      ]
-    },
-    {
-      name: "Readability",
-      score: 75,
-      status: "good",
-      description: "Qué tan fácil es para la IA entender tu contenido",
-      issues: [
-        { text: "Some paragraphs are too long", priority: "medium" },
-        { text: "Complex sentence structures in places", priority: "low" }
-      ],
-      strengths: [
-        "Good use of bullet points",
-        "Clear headings"
-      ]
-    },
-    {
-      name: "Structure",
-      score: 88,
-      status: "excellent",
-      description: "Organización y jerarquía del contenido",
-      issues: [],
-      strengths: [
-        "Excellent heading hierarchy",
-        "Logical content flow",
-        "Good use of lists and sections"
-      ]
-    },
-    {
-      name: "Entity Coverage",
-      score: 71,
-      status: "fair",
-      description: "Coverage de entidades y conceptos clave",
-      issues: [
-        { text: "Missing definitions for technical terms", priority: "high" },
-        { text: "Insufficient context for industry jargon", priority: "medium" }
-      ],
-      strengths: [
-        "Good keyword usage"
-      ]
-    },
-    {
-      name: "Factual Density",
-      score: 79,
-      status: "good",
-      description: "Cantidad de hechos verificables y datos específicos",
-      issues: [
-        { text: "Add more specific examples", priority: "medium" },
-        { text: "Include more recent statistics", priority: "low" }
-      ],
-      strengths: [
-        "Good use of data points",
-        "References credible sources"
-      ]
-    },
-    {
-      name: "Source Quality",
-      score: 80,
-      status: "good",
-      description: "Calidad de las fuentes externas citadas",
-      issues: [
-        { text: "Some links to lower authority domains", priority: "medium" }
-      ],
-      strengths: [
-        "Links to reputable sources",
-        "Good mix of source types"
-      ]
-    }
-  ]
-};
-
 export default function AuditPage() {
   const [url, setUrl] = useState("");
   const [isAuditing, setIsAuditing] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [auditResults, setAuditResults] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isAuditing) return;
@@ -126,7 +41,6 @@ export default function AuditPage() {
         
         // Animate progress for this step
         const startProgress = totalDuration;
-        const endProgress = totalDuration + step.duration;
         const totalTime = progressSteps.reduce((sum, s) => sum + s.duration, 0);
         
         const animationFrames = 60;
@@ -141,19 +55,44 @@ export default function AuditPage() {
         totalDuration += step.duration;
         stepIndex++;
       }
-      
-      setIsAuditing(false);
-      setShowResults(true);
-      setProgress(0);
-      setCurrentStep(0);
     };
     
+    // Run animation and API call in parallel
     runSteps();
-  }, [isAuditing]);
+    
+    fetch('/api/audit/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          setError(data.error);
+          setIsAuditing(false);
+        } else {
+          setAuditResults(data);
+          // Wait for animation to finish
+          setTimeout(() => {
+            setIsAuditing(false);
+            setShowResults(true);
+            setProgress(0);
+            setCurrentStep(0);
+          }, Math.max(0, progressSteps.reduce((sum, s) => sum + s.duration, 0) - Date.now()));
+        }
+      })
+      .catch(err => {
+        console.error('Audit error:', err);
+        setError('Failed to analyze the page. Please try again.');
+        setIsAuditing(false);
+      });
+  }, [isAuditing, url]);
 
   const handleAudit = () => {
+    setError(null);
     setIsAuditing(true);
     setShowResults(false);
+    setAuditResults(null);
   };
 
   return (
@@ -274,8 +213,25 @@ export default function AuditPage() {
         </Card>
       )}
 
+      {/* Error */}
+      {error && (
+        <Card className="bg-red-50 dark:bg-red-950 border-red-200 dark:border-red-800">
+          <CardContent className="pt-6">
+            <div className="flex items-start space-x-3">
+              <AlertTriangle className="h-6 w-6 text-red-600 flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="text-lg font-semibold text-red-900 dark:text-red-200 mb-2">
+                  Audit Failed
+                </h3>
+                <p className="text-red-700 dark:text-red-300">{error}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Results */}
-      {showResults && (
+      {showResults && auditResults && (
         <>
           {/* Score Card */}
           <Card className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30 border-2 border-purple-200 dark:border-purple-900">
@@ -292,8 +248,13 @@ export default function AuditPage() {
                     {auditResults.score}
                   </div>
                   <div className="text-lg text-gray-600 dark:text-gray-400 mt-1">out of 100</div>
-                  <div className="mt-3 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-sm font-semibold">
-                    Good Score
+                  <div className={`mt-3 px-4 py-2 rounded-full text-sm font-semibold ${
+                    auditResults.score >= 85 ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' :
+                    auditResults.score >= 70 ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300' :
+                    auditResults.score >= 50 ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300' :
+                    'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300'
+                  }`}>
+                    {auditResults.score >= 85 ? 'Excellent' : auditResults.score >= 70 ? 'Good' : auditResults.score >= 50 ? 'Fair' : 'Needs Improvement'}
                   </div>
                 </div>
               </div>
@@ -303,10 +264,10 @@ export default function AuditPage() {
           {/* 6 Dimensions */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-              Análisis por Dimensión
+              Analysis by Dimension
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {auditResults.dimensions.map((dimension, index) => (
+              {auditResults.dimensions.map((dimension: any, index: number) => (
                 <Card key={index} className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
                   <CardHeader>
                     <div className="flex items-center justify-between">

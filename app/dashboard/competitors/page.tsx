@@ -40,9 +40,16 @@ export default function CompetitorsPage() {
     try {
       const response = await fetch('/api/competitors');
       const data = await response.json();
-      setCompetitors(data);
+      
+      if (Array.isArray(data)) {
+        setCompetitors(data);
+      } else {
+        console.error('API returned non-array data:', data);
+        setCompetitors([]);
+      }
     } catch (error) {
       console.error('Error fetching competitors:', error);
+      setCompetitors([]);
     } finally {
       setLoading(false);
     }
@@ -57,8 +64,8 @@ export default function CompetitorsPage() {
   }
 
   const yourBrand = competitors.find(c => c.isYou);
-  const yourRanking = competitors.findIndex(c => c.isYou) + 1;
-  const gapToLeader = yourBrand && competitors[0] ? competitors[0].visibilityScore - yourBrand.visibilityScore : 0;
+  const yourRanking = yourBrand ? competitors.findIndex(c => c.isYou) + 1 : 0;
+  const gapToLeader = yourBrand && competitors.length > 0 && competitors[0] ? competitors[0].visibilityScore - yourBrand.visibilityScore : 0;
 
   return (
     <div className="space-y-6">
@@ -71,20 +78,21 @@ export default function CompetitorsPage() {
       </div>
 
       {/* Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
-          <CardHeader>
-            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
-              Tu Ranking
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-4xl font-bold text-gray-900 dark:text-white">#{yourRanking}</div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              De {competitors.length} competidores
-            </p>
-          </CardContent>
-        </Card>
+      {competitors.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
+            <CardHeader>
+              <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Tu Ranking
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-4xl font-bold text-gray-900 dark:text-white">#{yourRanking || '-'}</div>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                De {competitors.length} competidores
+              </p>
+            </CardContent>
+          </Card>
 
         <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader>

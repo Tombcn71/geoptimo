@@ -39,9 +39,17 @@ export default function PromptsPage() {
     try {
       const response = await fetch('/api/prompts');
       const data = await response.json();
-      setPrompts(data);
+      
+      // Check if data is an array
+      if (Array.isArray(data)) {
+        setPrompts(data);
+      } else {
+        console.error('API returned non-array data:', data);
+        setPrompts([]);
+      }
     } catch (error) {
       console.error('Error fetching prompts:', error);
+      setPrompts([]);
     } finally {
       setLoading(false);
     }

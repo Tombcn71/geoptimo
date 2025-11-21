@@ -76,9 +76,16 @@ export default function CitationsPage() {
     try {
       const response = await fetch('/api/citations');
       const data = await response.json();
-      setCitations(data);
+      
+      if (Array.isArray(data)) {
+        setCitations(data);
+      } else {
+        console.error('API returned non-array data:', data);
+        setCitations([]);
+      }
     } catch (error) {
       console.error('Error fetching citations:', error);
+      setCitations([]);
     } finally {
       setLoading(false);
     }
