@@ -13,10 +13,38 @@ export async function GET() {
 
     const prompts = await prisma.prompt.findMany({
       where: { brandId: brand.id },
-      orderBy: { impressions: 'desc' }
+      orderBy: { impressions: 'desc' },
+      include: {
+        runs: {
+          orderBy: { runDate: 'desc' },
+          take: 1,
+          include: {
+            details: {
+              where: { mentioned: true }
+            }
+          }
+        }
+      }
     })
 
-    return NextResponse.json(prompts)
+    // Add computed stats
+    const promptsWithStats = prompts.map(prompt => {
+      const latestRun = prompt.runs[0];
+      const mentionCount = latestRun ? latestRun.details.length : 0;
+      const avgPosition = latestRun && latestRun.details.length > 0
+        ? latestRun.details.reduce((sum, d) => sum + (d.position || 0), 0) / latestRun.details.length
+        : 0;
+
+      return {
+        ...prompt,
+        lastRun: latestRun ? new Date(latestRun.runDate).toLocaleString() : 'Never',
+        mentions: mentionCount,
+        position: Math.round(avgPosition * 10) / 10,
+        runs: undefined // Don't send full runs data to frontend
+      };
+    });
+
+    return NextResponse.json(promptsWithStats)
   } catch (error) {
     console.error('Error fetching prompts:', error)
     return NextResponse.json(

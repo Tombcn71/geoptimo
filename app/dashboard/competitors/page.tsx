@@ -9,76 +9,56 @@ import {
   MessageSquare,
   ArrowUpDown
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type SortField = "visibility" | "sentiment" | "mentions" | "position" | "detection" | "citations";
 
-const competitors = [
-  {
-    name: "Competitor A",
-    domain: "competitor-a.com",
-    visibilityScore: 85,
-    sentiment: 94,
-    topThreeVis: 75,
-    mentions: 2104,
-    avgPosition: 1.8,
-    detectionRate: 62,
-    domainCitations: 289,
-    trend: "up"
-  },
-  {
-    name: "Competitor B",
-    domain: "competitor-b.com",
-    visibilityScore: 79,
-    sentiment: 88,
-    topThreeVis: 70,
-    mentions: 1842,
-    avgPosition: 2.1,
-    detectionRate: 58,
-    domainCitations: 234,
-    trend: "up"
-  },
-  {
-    name: "Your Brand (Geoptimo)",
-    domain: "geoptimo.com",
-    visibilityScore: 73,
-    sentiment: 92,
-    topThreeVis: 68,
-    mentions: 1284,
-    avgPosition: 2.4,
-    detectionRate: 45,
-    domainCitations: 156,
-    trend: "up",
-    isYou: true
-  },
-  {
-    name: "Competitor C",
-    domain: "competitor-c.com",
-    visibilityScore: 68,
-    sentiment: 85,
-    topThreeVis: 62,
-    mentions: 1156,
-    avgPosition: 2.8,
-    detectionRate: 41,
-    domainCitations: 142,
-    trend: "down"
-  },
-  {
-    name: "Competitor D",
-    domain: "competitor-d.com",
-    visibilityScore: 61,
-    sentiment: 81,
-    topThreeVis: 55,
-    mentions: 892,
-    avgPosition: 3.2,
-    detectionRate: 38,
-    domainCitations: 98,
-    trend: "down"
-  },
-];
+interface Competitor {
+  name: string;
+  domain: string;
+  visibilityScore: number;
+  sentiment: number;
+  topThreeVis: number;
+  mentions: number;
+  avgPosition: number;
+  detectionRate: number;
+  domainCitations: number;
+  trend: string;
+  isYou?: boolean;
+}
 
 export default function CompetitorsPage() {
   const [sortBy, setSortBy] = useState<SortField>("visibility");
+  const [competitors, setCompetitors] = useState<Competitor[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCompetitors();
+  }, []);
+
+  const fetchCompetitors = async () => {
+    try {
+      const response = await fetch('/api/competitors');
+      const data = await response.json();
+      setCompetitors(data);
+    } catch (error) {
+      console.error('Error fetching competitors:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-xl text-gray-600 dark:text-gray-400">Loading competitors...</div>
+      </div>
+    );
+  }
+
+  const yourBrand = competitors.find(c => c.isYou);
+  const yourRanking = competitors.findIndex(c => c.isYou) + 1;
+  const gapToLeader = yourBrand && competitors[0] ? competitors[0].visibilityScore - yourBrand.visibilityScore : 0;
 
   return (
     <div className="space-y-6">
@@ -99,9 +79,9 @@ export default function CompetitorsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-bold text-gray-900 dark:text-white">#3</div>
+            <div className="text-4xl font-bold text-gray-900 dark:text-white">#{yourRanking}</div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              De 5 competidores
+              De {competitors.length} competidores
             </p>
           </CardContent>
         </Card>
@@ -113,7 +93,7 @@ export default function CompetitorsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-bold text-orange-600">-12</div>
+            <div className="text-4xl font-bold text-orange-600">{gapToLeader > 0 ? `-${Math.round(gapToLeader)}` : '0'}</div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
               Puntos de visibility score
             </p>
@@ -127,9 +107,9 @@ export default function CompetitorsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-bold text-green-600">92%</div>
+            <div className="text-4xl font-bold text-green-600">{yourBrand?.sentiment || 0}%</div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              Mejor sentiment score
+              {yourBrand && yourBrand.sentiment === Math.max(...competitors.map(c => c.sentiment)) ? 'Mejor' : 'Tu'} sentiment score
             </p>
           </CardContent>
         </Card>

@@ -17,22 +17,16 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-const mentionsData = [
-  { date: "Mon", mentions: 45 },
-  { date: "Tue", mentions: 52 },
-  { date: "Wed", mentions: 48 },
-  { date: "Thu", mentions: 61 },
-  { date: "Fri", mentions: 55 },
-  { date: "Sat", mentions: 67 },
-  { date: "Sun", mentions: 58 },
-];
+interface MentionData {
+  date: string;
+  mentions: number;
+}
 
-const topQueries = [
-  { query: "best AI marketing tools", mentions: 23, trend: "up" },
-  { query: "SEO optimization platforms", mentions: 18, trend: "up" },
-  { query: "content analysis software", mentions: 15, trend: "down" },
-  { query: "brand monitoring tools", mentions: 12, trend: "up" },
-];
+interface TopQuery {
+  query: string;
+  mentions: number;
+  trend: string;
+}
 
 interface Metrics {
   visibilityScore: number;
@@ -42,6 +36,8 @@ interface Metrics {
   avgPosition: number;
   detectionRate: number;
   domainCitations: number;
+  mentionsData?: MentionData[];
+  topQueries?: TopQuery[];
 }
 
 export default function DashboardPage() {
@@ -194,7 +190,7 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={250}>
-              <LineChart data={mentionsData}>
+              <LineChart data={metrics?.mentionsData || []}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.1} />
                 <XAxis dataKey="date" stroke="#6B7280" fontSize={12} />
                 <YAxis stroke="#6B7280" fontSize={12} />
@@ -229,7 +225,7 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {topQueries.map((item, index) => (
+              {(metrics?.topQueries && metrics.topQueries.length > 0) ? metrics.topQueries.map((item, index) => (
                 <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-900 dark:text-white">
@@ -245,7 +241,11 @@ export default function DashboardPage() {
                     <TrendingDown className="h-5 w-5 text-red-500" />
                   )}
                 </div>
-              ))}
+              )) : (
+                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                  No query data available yet
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>

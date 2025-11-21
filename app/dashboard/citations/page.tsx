@@ -8,6 +8,16 @@ import {
   Award,
   Globe
 } from "lucide-react";
+import { useState, useEffect } from "react";
+
+interface Citation {
+  id: number;
+  sourceUrl: string;
+  sourceTitle: string;
+  citationCount: number;
+  lastCitedAt: Date;
+  providers: string[];
+}
 
 const domainAuthority = [
   { domain: "techcrunch.com", authority: 94, references: 342, avgPosition: 1.2 },
@@ -46,23 +56,6 @@ const sourcePreferences = [
   { type: "Social Media", percentage: 8, count: 291 },
 ];
 
-const yourCitations = [
-  {
-    url: "geoptimo.com/blog/geo-best-practices",
-    title: "GEO Best Practices for 2025",
-    mentions: 23,
-    prompts: ["How to optimize for AI search", "Best GEO strategies"],
-    lastCited: "2 hours ago"
-  },
-  {
-    url: "geoptimo.com/features",
-    title: "Geoptimo Features Overview",
-    mentions: 18,
-    prompts: ["GEO monitoring tools", "AI citation tracking"],
-    lastCited: "5 hours ago"
-  },
-];
-
 const brandPerformance = [
   { brand: "Geoptimo", mentions: 234, avgPosition: 2.1, citationRate: 68, sentiment: "+82%" },
   { brand: "Sonix", mentions: 198, avgPosition: 2.4, citationRate: 61, sentiment: "+75%" },
@@ -71,26 +64,34 @@ const brandPerformance = [
   { brand: "Descript", mentions: 127, avgPosition: 3.5, citationRate: 49, sentiment: "+68%" },
 ];
 
-const brandMentions = [
-  {
-    source: "techcrunch.com/article-123",
-    title: "Top 10 GEO Platforms for Enterprises",
-    mentions: "Geoptimo",
-    snippet: "...Geoptimo offers comprehensive AI search monitoring...",
-    citations: 34,
-    providers: ["ChatGPT", "Gemini"]
-  },
-  {
-    source: "forbes.com/geo-tools-comparison",
-    title: "Comparing Leading GEO Solutions",
-    mentions: "Geoptimo",
-    snippet: "...Among the leaders, Geoptimo stands out for its analytics...",
-    citations: 28,
-    providers: ["Gemini", "Perplexity"]
-  },
-];
-
 export default function CitationsPage() {
+  const [citations, setCitations] = useState<Citation[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCitations();
+  }, []);
+
+  const fetchCitations = async () => {
+    try {
+      const response = await fetch('/api/citations');
+      const data = await response.json();
+      setCitations(data);
+    } catch (error) {
+      console.error('Error fetching citations:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-xl text-gray-600 dark:text-gray-400">Loading citations...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -340,33 +341,53 @@ export default function CitationsPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {yourCitations.map((citation) => (
+            {citations.length > 0 ? citations.map((citation) => (
               <div
-                key={citation.url}
+                key={citation.id}
                 className="p-4 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800"
               >
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
-                      {citation.title}
+                      {citation.sourceTitle}
                     </h3>
-                    <p className="text-sm text-green-600 dark:text-green-400">{citation.url}</p>
+                    <a 
+                      href={citation.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-green-600 dark:text-green-400 hover:underline flex items-center space-x-1"
+                    >
+                      <span>{citation.sourceUrl}</span>
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-green-600">{citation.mentions}</div>
+                    <div className="text-2xl font-bold text-green-600">{citation.citationCount}</div>
                     <div className="text-xs text-gray-600 dark:text-gray-400">citations</div>
                   </div>
                 </div>
                 <div className="space-y-1">
                   <p className="text-xs text-gray-600 dark:text-gray-400">
-                    Last cited: {citation.lastCited}
+                    Last cited: {new Date(citation.lastCitedAt).toLocaleString()}
                   </p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">
-                    Top prompts: {citation.prompts.join(", ")}
-                  </p>
+                  <div className="flex items-center space-x-2 mt-2">
+                    <span className="text-xs text-gray-600 dark:text-gray-400">Providers:</span>
+                    {citation.providers.map((provider) => (
+                      <span
+                        key={provider}
+                        className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs rounded text-gray-700 dark:text-gray-300"
+                      >
+                        {provider}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            ))}
+            )) : (
+              <div className="text-center py-8 text-gray-600 dark:text-gray-400">
+                No citations found yet. Start monitoring prompts to collect citation data.
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

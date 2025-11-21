@@ -10,69 +10,53 @@ import {
   X,
   ArrowRight
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
-const aiSuggestedPrompts = [
-  { 
-    id: 1, 
-    text: "What are the best GEO optimization tools?", 
-    category: "Product Discovery",
-    impressions: 2340,
-    subscribed: false
-  },
-  { 
-    id: 2, 
-    text: "How to optimize content for AI search engines?", 
-    category: "How-To",
-    impressions: 1890,
-    subscribed: true
-  },
-  { 
-    id: 3, 
-    text: "Top platforms for monitoring AI citations", 
-    category: "Comparison",
-    impressions: 1560,
-    subscribed: false
-  },
-  { 
-    id: 4, 
-    text: "GEO tools for enterprise brands", 
-    category: "Enterprise",
-    impressions: 1200,
-    subscribed: false
-  },
-  { 
-    id: 5, 
-    text: "AI search optimization vs traditional SEO", 
-    category: "Comparison",
-    impressions: 980,
-    subscribed: true
-  },
-];
-
-const subscribedPrompts = [
-  {
-    id: 101,
-    text: "Best AI marketing tools for 2025",
-    lastRun: "2 hours ago",
-    mentions: 12,
-    position: 2,
-    providers: ["ChatGPT", "Gemini", "Perplexity"]
-  },
-  {
-    id: 102,
-    text: "How to track brand performance in AI search?",
-    lastRun: "5 hours ago",
-    mentions: 8,
-    position: 1,
-    providers: ["ChatGPT", "Gemini"]
-  },
-];
+interface Prompt {
+  id: number;
+  text: string;
+  category: string;
+  impressions: number;
+  isSubscribed: boolean;
+  providers: string[];
+  lastRun?: string;
+  mentions?: number;
+  position?: number;
+}
 
 export default function PromptsPage() {
   const [showCustomPrompt, setShowCustomPrompt] = useState(false);
   const [customPrompt, setCustomPrompt] = useState("");
+  const [prompts, setPrompts] = useState<Prompt[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchPrompts();
+  }, []);
+
+  const fetchPrompts = async () => {
+    try {
+      const response = await fetch('/api/prompts');
+      const data = await response.json();
+      setPrompts(data);
+    } catch (error) {
+      console.error('Error fetching prompts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const subscribedPrompts = prompts.filter(p => p.isSubscribed);
+  const suggestedPrompts = prompts.filter(p => !p.isSubscribed).slice(0, 5);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-xl text-gray-600 dark:text-gray-400">Loading prompts...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -115,7 +99,7 @@ export default function PromptsPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {aiSuggestedPrompts.map((prompt) => (
+            {suggestedPrompts.length > 0 ? suggestedPrompts.map((prompt) => (
               <div
                 key={prompt.id}
                 className="flex items-center justify-between p-4 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 hover:shadow-md transition-shadow"
@@ -131,7 +115,7 @@ export default function PromptsPage() {
                     {prompt.impressions.toLocaleString()} community impressions
                   </p>
                 </div>
-                {prompt.subscribed ? (
+                {prompt.isSubscribed ? (
                   <div className="flex items-center space-x-2 text-green-600">
                     <Check className="h-5 w-5" />
                     <span className="text-sm font-medium">Subscribed</span>
@@ -142,7 +126,11 @@ export default function PromptsPage() {
                   </button>
                 )}
               </div>
-            ))}
+            )) : (
+              <div className="text-center py-8 text-gray-600 dark:text-gray-400">
+                No suggested prompts available. Visit Explore Prompts to find more!
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -157,7 +145,7 @@ export default function PromptsPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {subscribedPrompts.map((prompt) => (
+            {subscribedPrompts.length > 0 ? subscribedPrompts.map((prompt) => (
               <Link
                 key={prompt.id}
                 href={`/dashboard/prompts/${prompt.id}`}
@@ -195,7 +183,14 @@ export default function PromptsPage() {
                   ))}
                 </div>
               </Link>
-            ))}
+            )) : (
+              <div className="text-center py-8 text-gray-600 dark:text-gray-400">
+                <p className="mb-4">You haven&apos;t subscribed to any prompts yet.</p>
+                <Link href="/dashboard/prompts/explore" className="text-purple-600 dark:text-purple-400 hover:underline">
+                  Explore available prompts →
+                </Link>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
