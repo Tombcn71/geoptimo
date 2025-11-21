@@ -169,7 +169,7 @@ Wij checken dan hoe goed AI zoekmachines zoals ChatGPT jouw content kunnen vinde
                 <div className="mt-4 p-3 bg-white dark:bg-gray-900 rounded-lg">
                   <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     {analyzing ? '⏳ Bezig met analyseren...' : 
-                     analysis.geoScore === 0 ? '👆 Klik op "Check Mijn Score" om te beginnen' :
+                     analysis.geoScore === 0 ? '👆 Klik op Check Mijn Score om te beginnen' :
                      analysis.geoScore >= 80 ? '🎉 Uitstekend! AI vindt jouw content makkelijk' :
                      analysis.geoScore >= 60 ? '👍 Goed! Nog ruimte voor verbetering' :
                      '💡 Check de tips hieronder voor betere resultaten'}
@@ -333,7 +333,7 @@ Wij checken dan hoe goed AI zoekmachines zoals ChatGPT jouw content kunnen vinde
               ) : (
                 <div className="text-center py-8">
                   <p className="text-gray-500 dark:text-gray-400">
-                    ⬆️ Klik op "Check Mijn Score" om AI suggesties te krijgen
+                    ⬆️ Klik op &quot;Check Mijn Score&quot; om AI suggesties te krijgen
                   </p>
                 </div>
               )}
