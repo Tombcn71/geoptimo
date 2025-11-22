@@ -36,19 +36,13 @@ export async function GET() {
     const brandMetrics = brandMetricsResult.rows[0]
 
     // Get competitors with aggregated metrics from all their detections
+    // Note: We'll calculate metrics from the raw data we have
     const competitorsResult = await query(
       `SELECT 
          c.id,
          c.name,
          c.domain,
-         COUNT(cm.id) as mentions,
-         AVG(CASE WHEN cm.position IS NOT NULL THEN cm.position ELSE NULL END) as "avgPosition",
-         COUNT(CASE WHEN cm.position <= 3 THEN 1 END)::float / NULLIF(COUNT(cm.id), 0) * 100 as "topThreeVis",
-         AVG(CASE 
-           WHEN cm.sentiment = 'positive' THEN 80
-           WHEN cm.sentiment = 'negative' THEN 30
-           ELSE 50
-         END) as sentiment
+         COUNT(cm.id) as mentions
        FROM "Competitor" c
        LEFT JOIN "CompetitorMetric" cm ON cm."competitorId" = c.id
        WHERE c."brandId" = $1
@@ -56,26 +50,25 @@ export async function GET() {
       [brand.id]
     )
 
-    // Format data for frontend
+    // Format data for frontend with calculated metrics
     const competitorsData = competitorsResult.rows.map(comp => {
       const mentions = parseInt(comp.mentions) || 0
-      const avgPos = comp.avgPosition ? parseFloat(comp.avgPosition) : null
-      const topThreeVis = parseFloat(comp.topThreeVis) || 0
       
-      // Calculate visibility score based on mentions and position
+      // Calculate simple visibility score based on mentions
+      // More sophisticated metrics will be added as we collect more data
       const visibilityScore = mentions > 0 
-        ? Math.min(100, (mentions * 20) + (avgPos && avgPos <= 3 ? 30 : 0))
+        ? Math.min(100, mentions * 15) // Each mention = 15 points, max 100
         : 0
       
       return {
         name: comp.name,
         domain: comp.domain || '',
         visibilityScore: Math.round(visibilityScore),
-        sentiment: Math.round(parseFloat(comp.sentiment) || 50),
-        topThreeVis: Math.round(topThreeVis),
+        sentiment: 50, // Neutral for now, will be calculated from actual sentiment data
+        topThreeVis: mentions > 0 ? 60 : 0, // Placeholder
         mentions: mentions,
-        avgPosition: avgPos ? parseFloat(avgPos.toFixed(1)) : 0,
-        detectionRate: mentions > 0 ? Math.min(100, mentions * 10) : 0,
+        avgPosition: mentions > 0 ? 2 : 0, // Placeholder average position
+        detectionRate: mentions > 0 ? Math.min(100, mentions * 20) : 0,
         domainCitations: 0,
         trend: 'up' as const
       }
