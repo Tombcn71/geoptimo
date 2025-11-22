@@ -31,7 +31,17 @@ function LoginForm() {
       if (result?.error) {
         setError("Invalid email or password");
       } else {
-        router.push(callbackUrl);
+        // Check if user has a brand
+        const brandResponse = await fetch('/api/brands/info');
+        const brandData = await brandResponse.json();
+        
+        if (brandData.companyName) {
+          // User has a brand, go to dashboard
+          router.push('/dashboard');
+        } else {
+          // No brand, go to onboarding
+          router.push('/onboarding');
+        }
         router.refresh();
       }
     } catch (error) {

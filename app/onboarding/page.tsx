@@ -54,6 +54,23 @@ export default function OnboardingPage() {
     }
   }, [status, router]);
 
+  // Check if user already has a brand, redirect to dashboard
+  useEffect(() => {
+    if (status === "authenticated") {
+      fetch('/api/brands/info')
+        .then(res => res.json())
+        .then(data => {
+          if (data.companyName) {
+            // User already has a brand, redirect to dashboard
+            router.push('/dashboard');
+          }
+        })
+        .catch(err => {
+          console.error('Error checking brand:', err);
+        });
+    }
+  }, [status, router]);
+
   // Show loading while checking authentication
   if (status === "loading") {
     return (
