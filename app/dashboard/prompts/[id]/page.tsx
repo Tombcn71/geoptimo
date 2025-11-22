@@ -345,18 +345,20 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                   </div>
                 </div>
 
-                {/* AI Response Section */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                {/* AI Response Section - Google AI Overview Style */}
+                <div className="bg-gradient-to-br from-blue-50/30 to-purple-50/30 dark:from-blue-950/20 dark:to-purple-950/20 rounded-xl border border-blue-100 dark:border-blue-900/30">
                   {/* Response Preview */}
-                  <div className="p-4">
-                    <div className="flex items-center justify-between mb-3">
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center space-x-2">
-                        <FileText className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                        <h4 className="font-medium text-gray-900 dark:text-white">AI Response</h4>
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
+                          <FileText className="h-4 w-4 text-white" />
+                        </div>
+                        <h4 className="font-semibold text-gray-900 dark:text-white">AI Response</h4>
                       </div>
                       <button
                         onClick={() => toggleRunExpansion(run.id)}
-                        className="flex items-center space-x-1 text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors"
+                        className="flex items-center space-x-1 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors px-3 py-1.5 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20"
                       >
                         <span>{expandedRuns.has(run.id) ? 'Show Less' : 'Show Full Response'}</span>
                         {expandedRuns.has(run.id) ? (
@@ -367,22 +369,46 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                       </button>
                     </div>
 
-                    <div className={`text-sm text-gray-700 dark:text-gray-300 leading-relaxed ${expandedRuns.has(run.id) ? '' : 'max-h-32 overflow-hidden relative'}`}>
-                      <p className="whitespace-pre-wrap">
-                        {expandedRuns.has(run.id) 
-                          ? highlightBrandName(run.response, run.brandName)
-                          : highlightBrandName(getResponseExcerpt(run.response, 300), run.brandName)
-                        }
-                      </p>
-                      {!expandedRuns.has(run.id) && run.response.length > 300 && (
-                        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white dark:from-gray-800 to-transparent" />
+                    {/* Response Content - Google AI Style */}
+                    <div className={`${expandedRuns.has(run.id) ? '' : 'max-h-40 overflow-hidden relative'}`}>
+                      <div 
+                        className="prose prose-sm dark:prose-invert max-w-none
+                          prose-headings:font-semibold prose-headings:text-gray-900 dark:prose-headings:text-white
+                          prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-3
+                          prose-strong:text-gray-900 dark:prose-strong:text-white prose-strong:font-semibold
+                          prose-ul:my-2 prose-ul:text-gray-700 dark:prose-ul:text-gray-300
+                          prose-li:my-1 prose-li:text-gray-700 dark:prose-li:text-gray-300
+                          prose-code:text-blue-600 dark:prose-code:text-blue-400 prose-code:bg-blue-50 dark:prose-code:bg-blue-900/20 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+                        "
+                        style={{
+                          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                          fontSize: '0.938rem',
+                          lineHeight: '1.6',
+                          color: 'rgb(60, 64, 67)'
+                        }}
+                      >
+                        <p className="whitespace-pre-wrap">
+                          {expandedRuns.has(run.id) 
+                            ? highlightBrandName(run.response, run.brandName)
+                            : highlightBrandName(getResponseExcerpt(run.response, 400), run.brandName)
+                          }
+                        </p>
+                      </div>
+                      {!expandedRuns.has(run.id) && run.response.length > 400 && (
+                        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-blue-50/90 via-blue-50/60 dark:from-blue-950/90 dark:via-blue-950/60 to-transparent pointer-events-none" />
                       )}
                     </div>
 
-                    {/* Response Stats */}
-                    <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-                      <span>{run.response.length} characters</span>
-                      <span>{Math.ceil(run.response.length / 5)} words (approx)</span>
+                    {/* Response Stats - Subtle */}
+                    <div className="mt-4 pt-3 border-t border-blue-100 dark:border-blue-900/30 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                      <span className="flex items-center space-x-1">
+                        <span>📊</span>
+                        <span>{Math.ceil(run.response.length / 5)} words</span>
+                      </span>
+                      <span className="flex items-center space-x-1">
+                        <span>✨</span>
+                        <span>AI-Generated</span>
+                      </span>
                     </div>
                   </div>
                 </div>
