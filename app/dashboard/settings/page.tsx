@@ -1,5 +1,7 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   Building2,
@@ -9,36 +11,108 @@ import {
   Tag,
   FileText,
   CheckCircle2,
-  Save
+  Save,
+  Loader2
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function SettingsPage() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const [brandProfile, setBrandProfile] = useState({
-    companyName: "Geoptimo",
-    website: "geoptimo.com",
-    industry: "SaaS - Marketing Technology",
-    description: "GEO optimization platform helping businesses track and improve their visibility in AI-powered search",
-    targetAudience: "Marketing teams, SEO professionals, Brand managers",
-    competitors: "SEOptimer, BrightEdge, MarketMuse",
-    keywords: "GEO, AI search optimization, brand monitoring, citation tracking",
-    uniqueValue: "Real-time AI citation monitoring with competitor analysis"
+    companyName: "",
+    website: "",
+    industry: "",
+    description: "",
+    targetAudience: "",
+    keywords: "",
+    uniqueValue: ""
   });
 
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  const handleSave = () => {
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login?callbackUrl=/dashboard/settings");
+    }
+  }, [status, router]);
+
+  // Fetch brand data
+  useEffect(() => {
+    if (status === "authenticated") {
+      fetchBrandData();
+    }
+  }, [status]);
+
+  const fetchBrandData = async () => {
+    try {
+      const response = await fetch('/api/brands/info');
+      if (response.ok) {
+        const data = await response.json();
+        setBrandProfile({
+          companyName: data.companyName || '',
+          website: data.website || '',
+          industry: data.industry || '',
+          description: data.description || '',
+          targetAudience: data.targetAudience || '',
+          keywords: Array.isArray(data.keywords) ? data.keywords.join(', ') : (data.keywords || ''),
+          uniqueValue: data.uniqueValue || ''
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching brand data:', error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const response = await fetch('/api/brands/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...brandProfile,
+          keywords: brandProfile.keywords.split(',').map(k => k.trim()).filter(k => k)
+        })
+      });
+
+      if (response.ok) {
+        setSaved(true);
+        setTimeout(() => setSaved(false), 3000);
+      } else {
+        alert('❌ Failed to save changes');
+      }
+    } catch (error) {
+      console.error('Error saving brand:', error);
+      alert('❌ Failed to save changes');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (status === "loading" || !session || loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <Loader2 className="h-12 w-12 text-purple-600 animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Brand Profile Setup</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Brand Profile Settings</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Configura tu perfil de marca para obtener mejores insights y sugerencias de IA
+          Configure your brand profile to get better insights and AI suggestions
         </p>
       </div>
 
@@ -72,10 +146,10 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Building2 className="h-5 w-5 text-purple-600" />
-            <span>Información Básica</span>
+            <span>Basic Information</span>
           </CardTitle>
           <CardDescription>
-            Detalles fundamentales sobre tu marca
+            Fundamental details about your brand
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -140,7 +214,7 @@ export default function SettingsPage() {
               />
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              Describe qué hace tu empresa y qué la hace única
+              Describe what your company does and what makes it unique
             </p>
           </div>
         </CardContent>
@@ -248,10 +322,25 @@ export default function SettingsPage() {
       <div className="flex justify-end space-x-4">
         <button
           onClick={handleSave}
-          className="bg-black dark:bg-white text-white dark:text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center space-x-2"
+          disabled={saving}
+          className="bg-black dark:bg-white text-white dark:text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center space-x-2 disabled:opacity-50"
         >
-          <Save className="h-5 w-5" />
-          <span>{saved ? "Guardado ✓" : "Save Changes"}</span>
+          {saving ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <span>Saving...</span>
+            </>
+          ) : saved ? (
+            <>
+              <CheckCircle2 className="h-5 w-5" />
+              <span>Saved!</span>
+            </>
+          ) : (
+            <>
+              <Save className="h-5 w-5" />
+              <span>Save Changes</span>
+            </>
+          )}
         </button>
       </div>
 
