@@ -526,7 +526,7 @@ export default function DemoPage() {
               </div>
             )}
 
-            {(currentStep === 3 || currentStep === 4 || currentStep === 5) && (
+            {(currentStep === 3 || currentStep === 4) && (
               <div className="space-y-6">
                 <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border-2 border-blue-200 dark:border-blue-800">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
@@ -575,7 +575,7 @@ export default function DemoPage() {
               </div>
             )}
 
-            {(currentStep === 6 || currentStep === 7) && (
+            {currentStep === 5 && (
               <div className="space-y-6">
                 <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border-2 border-purple-200 dark:border-purple-800">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
@@ -589,24 +589,62 @@ export default function DemoPage() {
                     {step.content.solution}
                   </h3>
                   <div className="space-y-3">
-                    {(step.content.dimensions || step.content.features)?.map((item, idx) => {
+                    {step.content.dimensions?.map((item, idx) => (
+                      <div key={idx} className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+                            {item.name}
+                          </h4>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            {item.description}
+                          </p>
+                          <div className="text-xs text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20 px-2 py-1 rounded inline-block">
+                            ✅ How to improve: {item.improve}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-800 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
+                    {step.content.why}
+                  </h3>
+                  <p className="text-yellow-800 dark:text-yellow-200 whitespace-pre-line">
+                    {step.content.example}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {currentStep === 6 && (
+              <div className="space-y-6">
+                <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border-2 border-green-200 dark:border-green-800">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+                    {step.content.problem}
+                  </h3>
+                  <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                    {step.content.problemText}
+                  </p>
+                  
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    {step.content.solution}
+                  </h3>
+                  <div className="space-y-3">
+                    {step.content.features?.map((item, idx) => {
                       const ItemIcon = item.icon || CheckCircle2;
                       return (
                         <div key={idx} className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
                           <div className="flex items-start space-x-3">
-                            <ItemIcon className="h-5 w-5 text-purple-600 dark:text-purple-400 mt-0.5" />
+                            <ItemIcon className="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" />
                             <div className="flex-1">
                               <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
                                 {item.name}
                               </h4>
-                              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                              <p className="text-sm text-gray-600 dark:text-gray-400">
                                 {item.description}
                               </p>
-                              {item.improve && (
-                                <div className="text-xs text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20 px-2 py-1 rounded inline-block">
-                                  ✅ {item.improve}
-                                </div>
-                              )}
                             </div>
                           </div>
                         </div>
@@ -634,6 +672,62 @@ export default function DemoPage() {
                   </h3>
                   <p className="text-yellow-800 dark:text-yellow-200 whitespace-pre-line">
                     {step.content.example}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {currentStep === 7 && (
+              <div className="space-y-6">
+                <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border-2 border-indigo-200 dark:border-indigo-800">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+                    {step.content.problem}
+                  </h3>
+                  <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                    {step.content.problemText}
+                  </p>
+                  
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    {step.content.solution}
+                  </h3>
+                  <div className="space-y-4">
+                    {step.content.workflow?.map((w, idx) => (
+                      <div key={idx} className="p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg border-2 border-indigo-200 dark:border-indigo-700">
+                        <div className="flex items-start space-x-4">
+                          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-lg">
+                            {idx + 1}
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-bold text-indigo-900 dark:text-indigo-100 text-lg mb-2">
+                              {w.step}
+                            </h4>
+                            <div className="grid grid-cols-1 gap-2 text-sm">
+                              <div className="flex items-start space-x-2">
+                                <span className="text-gray-600 dark:text-gray-400 font-medium min-w-[80px]">Tools:</span>
+                                <span className="text-gray-900 dark:text-white font-semibold">{w.tools}</span>
+                              </div>
+                              <div className="flex items-start space-x-2">
+                                <span className="text-gray-600 dark:text-gray-400 font-medium min-w-[80px]">Action:</span>
+                                <span className="text-gray-700 dark:text-gray-300">{w.action}</span>
+                              </div>
+                              <div className="flex items-start space-x-2">
+                                <span className="text-green-600 dark:text-green-400 font-medium min-w-[80px]">Result:</span>
+                                <span className="text-green-700 dark:text-green-300 font-medium">{w.result}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-2 border-yellow-200 dark:border-yellow-800 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
+                    {step.content.why}
+                  </h3>
+                  <p className="text-yellow-800 dark:text-yellow-200 text-lg font-medium">
+                    {step.content.finalMessage}
                   </p>
                 </div>
               </div>
