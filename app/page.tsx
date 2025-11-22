@@ -126,7 +126,7 @@ export default function Home() {
           
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
             <Link
-              href="/onboarding"
+              href="/register"
               className="bg-black dark:bg-white text-white dark:text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors shadow-lg"
             >
               Start Free

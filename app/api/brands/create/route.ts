@@ -1,8 +1,19 @@
 import { NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
 import { query } from '@/lib/db'
 
 export async function POST(request: Request) {
   try {
+    // Get the authenticated user
+    const session = await getServerSession()
+    
+    if (!session?.user?.email) {
+      return NextResponse.json(
+        { error: 'Unauthorized. Please log in first.' },
+        { status: 401 }
+      )
+    }
+
     const body = await request.json()
     const {
       domain,
@@ -17,12 +28,20 @@ export async function POST(request: Request) {
 
     console.log('Creating brand:', { name, domain, category })
 
-    // Ensure demo user exists (for development)
-    await query(`
-      INSERT INTO "User" (id, email, name, "createdAt", "updatedAt")
-      VALUES ('demo-user-id', 'demo@geoptimo.com', 'Demo User', NOW(), NOW())
-      ON CONFLICT (email) DO NOTHING
-    `)
+    // Get the user ID from session
+    const userResult = await query(
+      `SELECT id FROM "User" WHERE email = $1`,
+      [session.user.email]
+    )
+
+    if (userResult.rows.length === 0) {
+      return NextResponse.json(
+        { error: 'User not found' },
+        { status: 404 }
+      )
+    }
+
+    const userId = userResult.rows[0].id
 
     // Ensure sequence exists
     await query(`
@@ -35,7 +54,7 @@ export async function POST(request: Request) {
        VALUES (nextval('"Brand_id_seq"'), $1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
        RETURNING *`,
       [
-        'demo-user-id',
+        userId,
         name,
         domain,
         category,
