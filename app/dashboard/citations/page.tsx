@@ -64,6 +64,23 @@ const brandPerformance = [
   { brand: "Descript", mentions: 127, avgPosition: 3.5, citationRate: 49, sentiment: "+68%" },
 ];
 
+const brandMentions = [
+  {
+    source: "techcrunch.com",
+    title: "Best AI Search Optimization Tools for 2024",
+    snippet: "Geoptimo offers comprehensive GEO analytics...",
+    citedBy: ["ChatGPT", "Gemini"],
+    citationCount: 45
+  },
+  {
+    source: "forbes.com",
+    title: "How Brands Are Winning in AI Search",
+    snippet: "Companies like Geoptimo are leading the way...",
+    citedBy: ["ChatGPT", "Perplexity"],
+    citationCount: 38
+  }
+];
+
 export default function CitationsPage() {
   const [citations, setCitations] = useState<Citation[]>([]);
   const [loading, setLoading] = useState(true);
@@ -409,7 +426,7 @@ export default function CitationsPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {brandMentions.map((mention) => (
+            {brandMentions.map((mention: any) => (
               <div
                 key={mention.source}
                 className="p-5 border border-gray-200 dark:border-gray-800 rounded-lg hover:shadow-md transition-shadow"
