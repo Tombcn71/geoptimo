@@ -1,12 +1,19 @@
 import { NextResponse } from 'next/server'
-import { generatePromptSuggestions } from '@/lib/ai/openai'
+import { GoogleGenAI } from '@google/genai'
+
+const genAI = new GoogleGenAI({
+  apiKey: process.env.GOOGLE_AI_API_KEY || '',
+})
+
+interface Prompt {
+  text: string
+  category: string
+  estimatedImpressions: number
+}
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
-    const { category, description } = body
-
-    console.log('🤖 Generating prompt suggestions for:', { category, description: description.substring(0, 50) })
+    const { category, description } = await request.json()
 
     if (!category || !description) {
       return NextResponse.json(
@@ -15,197 +22,144 @@ export async function POST(request: Request) {
       )
     }
 
-    // Check if AI key is configured
-    if (!process.env.OPENAI_API_KEY && !process.env.GOOGLE_AI_API_KEY) {
-      console.log('⚠️ No AI keys configured, using fallback prompts')
-      return NextResponse.json(getFallbackPrompts(category))
-    }
+    console.log('🤖 Generating AI prompt suggestions for:', { category, description: description.substring(0, 50) })
 
     // Generate prompts using AI
+    const prompt = `You are a GEO (Generative Engine Optimization) expert. Generate 10 highly relevant search prompts that potential customers would ask AI chatbots (ChatGPT, Claude, Gemini, Perplexity) when looking for a service/product like this:
+
+Category: ${category}
+Description: ${description}
+
+Generate 10 natural, conversational prompts that:
+1. Match how real users talk to AI assistants
+2. Are specific enough to be actionable
+3. Vary in intent (comparison, how-to, product discovery, problem-solving)
+4. Would naturally trigger mentions of this type of business
+5. Range from 10-25 words
+
+Return ONLY a valid JSON array of objects with this exact format:
+[
+  {
+    "text": "the full prompt text",
+    "category": "${category}",
+    "estimatedImpressions": a number between 500 and 8000
+  }
+]
+
+No markdown, no explanations, just the JSON array.`
+
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-flash-lite-latest',
+    })
+
+    const result = await model.generateContent(prompt)
+    const responseText = result.response.text()
+
+    console.log('📝 Raw AI response:', responseText.substring(0, 200))
+
+    // Extract JSON from response
+    let prompts: Prompt[] = []
     try {
-      const prompts = await generatePromptSuggestions(category, description)
-      
-      if (prompts && prompts.length > 0) {
-        console.log('✅ Generated', prompts.length, 'AI prompts')
-        return NextResponse.json(prompts)
+      // Try to parse directly
+      prompts = JSON.parse(responseText)
+    } catch (e) {
+      // Try to extract JSON from markdown code blocks
+      const jsonMatch = responseText.match(/```(?:json)?\s*(\[[\s\S]*?\])\s*```/)
+      if (jsonMatch) {
+        prompts = JSON.parse(jsonMatch[1])
+      } else {
+        // Try to find any JSON array in the text
+        const arrayMatch = responseText.match(/\[[\s\S]*?\]/)
+        if (arrayMatch) {
+          prompts = JSON.parse(arrayMatch[0])
+        }
       }
-    } catch (aiError) {
-      console.error('AI generation failed, using fallback:', aiError)
     }
 
-    // Fallback if AI fails
-    return NextResponse.json(getFallbackPrompts(category))
+    // Validate and sanitize
+    if (!Array.isArray(prompts) || prompts.length === 0) {
+      console.error('❌ Failed to parse AI response, using fallback')
+      return NextResponse.json(getFallbackPrompts(category, description))
+    }
+
+    // Ensure correct format
+    const validatedPrompts = prompts.slice(0, 10).map((p, idx) => ({
+      text: p.text || `What are the best ${category.toLowerCase()} solutions?`,
+      category: p.category || category,
+      estimatedImpressions: p.estimatedImpressions || Math.floor(Math.random() * 5000) + 1000
+    }))
+
+    console.log(`✅ Generated ${validatedPrompts.length} AI-powered prompts`)
+
+    return NextResponse.json(validatedPrompts)
+
   } catch (error) {
-    console.error('Error generating prompts:', error)
-    return NextResponse.json(
-      { error: 'Failed to generate prompts' },
-      { status: 500 }
-    )
+    console.error('❌ Error generating prompts:', error)
+    
+    // Return fallback prompts
+    const { category, description } = await request.json()
+    return NextResponse.json(getFallbackPrompts(category, description))
   }
 }
 
-function getFallbackPrompts(category: string) {
-  const templates: Record<string, any[]> = {
+// Fallback prompts if AI fails
+function getFallbackPrompts(category: string, description: string): Prompt[] {
+  const templates: Record<string, string[]> = {
     SaaS: [
-      {
-        text: "What are some simple SaaS tools I can try to see if they fit my workflow?",
-        category,
-        estimatedImpressions: 4200
-      },
-      {
-        text: "Can you suggest easy-to-use apps for experimenting with new software features?",
-        category,
-        estimatedImpressions: 3800
-      },
-      {
-        text: "I want to test out SaaS platforms before committing long term. Which ones have good trial options?",
-        category,
-        estimatedImpressions: 3500
-      },
-      {
-        text: "Looking for SaaS tools that help me evaluate if they're helpful for my work without heavy setup.",
-        category,
-        estimatedImpressions: 3200
-      },
-      {
-        text: "Are there any SaaS apps designed to help users assess their usefulness quickly?",
-        category,
-        estimatedImpressions: 2900
-      },
-      {
-        text: "What SaaS solutions offer a straightforward way to test if they fit my needs?",
-        category,
-        estimatedImpressions: 2700
-      },
-      {
-        text: "Can you recommend software tools that let me experiment with their features before buying?",
-        category,
-        estimatedImpressions: 2500
-      },
-      {
-        text: "I want to try a SaaS app that helps me decide if it's worth using regularly. Any suggestions?",
-        category,
-        estimatedImpressions: 2200
-      },
-      {
-        text: "Which SaaS platforms provide a sandbox or test environment for users to explore features?",
-        category,
-        estimatedImpressions: 2000
-      },
-      {
-        text: "Help me find SaaS apps that make it easy to check if they're helpful without a big commitment.",
-        category,
-        estimatedImpressions: 1800
-      },
+      `What are the best ${category} tools for my business?`,
+      `Can you recommend ${category.toLowerCase()} platforms for small teams?`,
+      `I'm looking for affordable ${category.toLowerCase()} solutions`,
+      `Which ${category} tools have the best reviews?`,
+      `Compare top ${category.toLowerCase()} software options`,
+      `What are some ${category.toLowerCase()} alternatives to expensive platforms?`,
+      `Best ${category} tools with free trials?`,
+      `How do I choose the right ${category.toLowerCase()} solution?`,
+      `What ${category.toLowerCase()} tools integrate well with other apps?`,
+      `Looking for ${category.toLowerCase()} software with good customer support`,
     ],
-    "E-commerce": [
-      {
-        text: "What are the best e-commerce platforms for small businesses?",
-        category,
-        estimatedImpressions: 5200
-      },
-      {
-        text: "Can you recommend online stores with fast shipping?",
-        category,
-        estimatedImpressions: 4800
-      },
-      {
-        text: "Which e-commerce sites have the best return policies?",
-        category,
-        estimatedImpressions: 4200
-      },
-      {
-        text: "I'm looking for affordable e-commerce solutions for startups",
-        category,
-        estimatedImpressions: 3900
-      },
-      {
-        text: "What are some user-friendly e-commerce platforms?",
-        category,
-        estimatedImpressions: 3600
-      },
-      {
-        text: "Which online shopping platforms offer the best customer service?",
-        category,
-        estimatedImpressions: 3300
-      },
-      {
-        text: "Can you suggest e-commerce tools for inventory management?",
-        category,
-        estimatedImpressions: 3000
-      },
-      {
-        text: "What are the most secure e-commerce payment processors?",
-        category,
-        estimatedImpressions: 2800
-      },
-      {
-        text: "Which e-commerce platforms integrate well with social media?",
-        category,
-        estimatedImpressions: 2500
-      },
-      {
-        text: "I need an e-commerce solution with good analytics features",
-        category,
-        estimatedImpressions: 2200
-      },
+    'E-commerce': [
+      'What are the best e-commerce platforms for small businesses?',
+      'Can you recommend online stores with fast shipping?',
+      'Which e-commerce sites have the best return policies?',
+      'I\'m looking for affordable e-commerce solutions',
+      'What are some user-friendly e-commerce platforms?',
+      'Which online shopping platforms offer the best customer service?',
+      'Can you suggest e-commerce tools for inventory management?',
+      'What are the most secure e-commerce payment processors?',
+      'Which e-commerce platforms integrate well with social media?',
+      'I need an e-commerce solution with good analytics features',
     ],
-    "Food Delivery": [
-      {
-        text: "What are the fastest food delivery services in my area?",
-        category,
-        estimatedImpressions: 6200
-      },
-      {
-        text: "Which food delivery app has the best restaurant selection?",
-        category,
-        estimatedImpressions: 5500
-      },
-      {
-        text: "Can you recommend healthy meal delivery options?",
-        category,
-        estimatedImpressions: 4900
-      },
-      {
-        text: "What food delivery services offer the best deals and discounts?",
-        category,
-        estimatedImpressions: 4500
-      },
-      {
-        text: "Which delivery platform has the most reliable service?",
-        category,
-        estimatedImpressions: 4100
-      },
-      {
-        text: "Are there any food delivery apps with low delivery fees?",
-        category,
-        estimatedImpressions: 3800
-      },
-      {
-        text: "What are the best grocery delivery services?",
-        category,
-        estimatedImpressions: 3500
-      },
-      {
-        text: "Which food delivery service has the best customer support?",
-        category,
-        estimatedImpressions: 3200
-      },
-      {
-        text: "Can you suggest meal kit delivery options?",
-        category,
-        estimatedImpressions: 2900
-      },
-      {
-        text: "What are the top-rated food delivery apps?",
-        category,
-        estimatedImpressions: 2600
-      },
+    'Food Delivery': [
+      'What are the fastest food delivery services?',
+      'Which food delivery app has the best restaurant selection?',
+      'Can you recommend healthy meal delivery options?',
+      'What food delivery services offer the best deals?',
+      'Which delivery platform has the most reliable service?',
+      'Are there any food delivery apps with low fees?',
+      'What are the best grocery delivery services?',
+      'Which food delivery service has the best customer support?',
+      'Can you suggest meal kit delivery options?',
+      'What are the top-rated food delivery apps?',
     ],
   }
 
-  // Default to SaaS prompts if category not found
-  const prompts = templates[category] || templates["SaaS"]
-  return prompts.slice(0, 10)
-}
+  // Get category-specific templates or use generic ones
+  let promptTexts = templates[category] || [
+    `What are the best ${category.toLowerCase()} services available?`,
+    `Can you recommend ${category.toLowerCase()} providers?`,
+    `I'm looking for ${category.toLowerCase()} solutions`,
+    `Which ${category.toLowerCase()} companies have the best reviews?`,
+    `Compare top ${category.toLowerCase()} options`,
+    `What are some affordable ${category.toLowerCase()} alternatives?`,
+    `Best ${category.toLowerCase()} with good customer service?`,
+    `How do I choose a ${category.toLowerCase()} provider?`,
+    `What ${category.toLowerCase()} options are most reliable?`,
+    `Looking for ${category.toLowerCase()} recommendations`,
+  ]
 
+  return promptTexts.slice(0, 10).map((text, index) => ({
+    text,
+    category,
+    estimatedImpressions: Math.floor(Math.random() * 5000) + 1000,
+  }))
+}
