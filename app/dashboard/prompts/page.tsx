@@ -73,7 +73,7 @@ export default function PromptsPage() {
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Prompt Explorer</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Descubre y suscríbete a prompts relevantes para tu marca
+            Discover and subscribe to relevant prompts for your brand
           </p>
         </div>
         <div className="flex items-center space-x-3">
@@ -102,7 +102,7 @@ export default function PromptsPage() {
             <span>AI-Generated Suggestions</span>
           </CardTitle>
           <CardDescription>
-            Basado en tu información de marca y industria
+            Based on your brand information and industry
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -146,9 +146,9 @@ export default function PromptsPage() {
       {/* Your Subscribed Prompts */}
       <Card>
         <CardHeader>
-          <CardTitle>Tus Prompts Suscritos</CardTitle>
+          <CardTitle>Your Subscribed Prompts</CardTitle>
           <CardDescription>
-            Ejecutados diariamente across múltiples proveedores de IA
+            Executed daily across multiple AI providers
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -210,7 +210,7 @@ export default function PromptsPage() {
             <CardHeader>
               <CardTitle>Create Custom Prompt</CardTitle>
               <CardDescription>
-                Crea tu propio prompt para monitorear
+                Create your own custom prompt to monitor
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">

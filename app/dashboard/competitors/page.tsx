@@ -73,7 +73,7 @@ export default function CompetitorsPage() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Competitor Analysis</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Compara tu rendimiento con competidores en resultados de IA
+          Compare your performance with competitors in AI results
         </p>
       </div>
 
@@ -83,13 +83,13 @@ export default function CompetitorsPage() {
           <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
             <CardHeader>
               <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Tu Ranking
+                Your Ranking
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-4xl font-bold text-gray-900 dark:text-white">#{yourRanking || '-'}</div>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                De {competitors.length} competidores
+                Out of {competitors.length} competitors
               </p>
             </CardContent>
           </Card>
@@ -97,13 +97,13 @@ export default function CompetitorsPage() {
         <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader>
             <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
-              Gap al Líder
+              Gap to Leader
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-bold text-orange-600">{gapToLeader > 0 ? `-${Math.round(gapToLeader)}` : '0'}</div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              Puntos de visibility score
+              Visibility score points
             </p>
           </CardContent>
         </Card>
@@ -111,13 +111,13 @@ export default function CompetitorsPage() {
         <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader>
             <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
-              Tu Fortaleza
+              Your Strength
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-bold text-green-600">{yourBrand?.sentiment || 0}%</div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              {yourBrand && yourBrand.sentiment === Math.max(...competitors.map(c => c.sentiment)) ? 'Mejor' : 'Tu'} sentiment score
+              {yourBrand && yourBrand.sentiment === Math.max(...competitors.map(c => c.sentiment)) ? 'Best' : 'Your'} sentiment score
             </p>
           </CardContent>
         </Card>
@@ -127,9 +127,9 @@ export default function CompetitorsPage() {
       {/* Competitors Table */}
       <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
         <CardHeader>
-          <CardTitle>Ranking Detallado</CardTitle>
+          <CardTitle>Detailed Ranking</CardTitle>
           <CardDescription>
-            Todas las métricas para cada competidor
+            All metrics for each competitor
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -250,26 +250,26 @@ export default function CompetitorsPage() {
           <div className="space-y-3">
             <div className="p-4 bg-white dark:bg-gray-900 rounded-lg">
               <p className="font-medium text-gray-900 dark:text-white mb-1">
-                💡 Oportunidad: Mejorar Detection Rate
+                💡 Opportunity: Improve Detection Rate
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Competitor A tiene 17% mejor detection rate. Considera suscribirte a más prompts relevantes.
+                Competitor A has 17% better detection rate. Consider subscribing to more relevant prompts.
               </p>
             </div>
             <div className="p-4 bg-white dark:bg-gray-900 rounded-lg">
               <p className="font-medium text-gray-900 dark:text-white mb-1">
-                🎯 Fortaleza: Excellent Brand Sentiment
+                🎯 Strength: Excellent Brand Sentiment
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Tu sentiment score (92%) es el más alto. Continúa con tu estrategia de contenido actual.
+                Your sentiment score (92%) is the highest. Continue with your current content strategy.
               </p>
             </div>
             <div className="p-4 bg-white dark:bg-gray-900 rounded-lg">
               <p className="font-medium text-gray-900 dark:text-white mb-1">
-                📈 Acción Recomendada: Aumentar Domain Citations
+                📈 Recommended Action: Increase Domain Citations
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Gap de 133 citations vs líder. Focus en crear contenido citable de alta calidad.
+                Gap of 133 citations vs leader. Focus on creating high-quality citable content.
               </p>
             </div>
           </div>

@@ -25,29 +25,29 @@ const defaultScores = {
 // No default suggestions - only show real AI suggestions
 
 export default function ContentStudioPage() {
-  const [content, setContent] = useState(`Waarom AI Optimalisatie Belangrijk Is
+  const [content, setContent] = useState(`Why AI Optimization Matters
 
-AI zoekmachines zoals ChatGPT en Gemini worden steeds populairder. Mensen stellen vragen aan deze AI systemen in plaats van Google. Als jouw bedrijf niet in deze AI antwoorden voorkomt, mis je veel potentiële klanten.
+AI search engines like ChatGPT and Gemini are becoming increasingly popular. People ask questions to these AI systems instead of Google. If your business doesn't appear in these AI answers, you're missing out on many potential customers.
 
-Hoe AI Jouw Content Vindt
+How AI Finds Your Content
 
-AI systemen lezen miljoenen websites en onthouden welke content het beste is. Ze kijken naar:
+AI systems read millions of websites and remember which content is best. They look for:
 
-- Duidelijke structuur met kopjes
-- Concrete feiten en voorbeelden  
-- Betrouwbare bronnen
-- Goede leesbaarheid
+- Clear structure with headings
+- Concrete facts and examples  
+- Reliable sources
+- Good readability
 
-Tips voor Betere Resultaten
+Tips for Better Results
 
-1. Gebruik korte zinnen die makkelijk te begrijpen zijn
-2. Geef concrete voorbeelden en cijfers
-3. Leg vaktermen uit alsof je het aan een kind vertelt
-4. Verdeel je tekst in korte paragrafen met tussenkopjes
+1. Use short sentences that are easy to understand
+2. Provide concrete examples and numbers
+3. Explain technical terms as if talking to a beginner
+4. Divide your text into short paragraphs with subheadings
 
-Begin Vandaag
+Start Today
 
-Check jouw huidige website teksten met deze tool. Je ziet direct wat goed is en wat beter kan. Verbeter stap voor stap en zie hoe jouw AI score stijgt!`);
+Check your current website text with this tool. You'll immediately see what's good and what can be improved. Improve step by step and watch your AI score rise!`);
 
   const [analyzing, setAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState(defaultScores);
@@ -86,7 +86,7 @@ Check jouw huidige website teksten met deze tool. Je ziet direct wat goed is en 
       console.error('❌ Network error:', error);
       setError({
         title: 'Netwerkfout',
-        message: 'Kon geen verbinding maken met de server. Check of de dev server draait.',
+        message: 'Could not connect to the server. Check if the dev server is running.',
         details: (error as Error).message
       });
     } finally {
@@ -140,10 +140,10 @@ Check jouw huidige website teksten met deze tool. Je ziet direct wat goed is en 
               <div className="text-sm text-blue-700 dark:text-blue-300">
                 <p className="font-semibold mb-2">💡 Oplossing:</p>
                 <ol className="list-decimal list-inside space-y-1">
-                  <li>Maak een bestand <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">.env.local</code> aan in je project root</li>
-                  <li>Voeg toe: <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">GOOGLE_AI_API_KEY=jouw_key</code></li>
-                  <li>Haal je key op van: <a href="https://aistudio.google.com/apikey" target="_blank" className="underline font-medium">aistudio.google.com/apikey</a></li>
-                  <li>Herstart de dev server (Ctrl+C en dan <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">npm run dev</code>)</li>
+                  <li>Create a file <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">.env.local</code> in your project root</li>
+                  <li>Add: <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">GOOGLE_AI_API_KEY=your_key</code></li>
+                  <li>Get your key from: <a href="https://aistudio.google.com/apikey" target="_blank" className="underline font-medium">aistudio.google.com/apikey</a></li>
+                  <li>Restart the dev server (Ctrl+C then <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">npm run dev</code>)</li>
                 </ol>
               </div>
             </div>
@@ -161,7 +161,7 @@ Check jouw huidige website teksten met deze tool. Je ziet direct wat goed is en 
                 <span>Jouw Content</span>
               </CardTitle>
               <CardDescription className="text-base">
-                Plak hier de tekst die je wilt laten checken - bijvoorbeeld een blog artikel, product beschrijving, of website tekst
+                Paste the text you want to check - for example a blog article, product description, or website text
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -169,19 +169,19 @@ Check jouw huidige website teksten met deze tool. Je ziet direct wat goed is en 
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 className="w-full h-[600px] px-4 py-3 border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-base leading-relaxed resize-none"
-                placeholder="Plak hier jouw tekst... 
+                placeholder="Paste your text here... 
 
-Bijvoorbeeld:
-- Een blog artikel
-- Product beschrijving  
-- Website tekst
+For example:
+- A blog article
+- Product description  
+- Website text
 - Social media post
 
-Wij checken dan hoe goed AI zoekmachines zoals ChatGPT jouw content kunnen vinden en begrijpen."
+We'll check how well AI search engines like ChatGPT can find and understand your content."
               />
               <div className="mt-4 flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
-                <span className="font-medium">📊 {content.length.toLocaleString()} tekens • {content.split(' ').filter(w => w.length > 0).length} woorden</span>
-                <span className="text-xs">💡 Tip: Langere content (500+ woorden) geeft betere resultaten</span>
+                <span className="font-medium">📊 {content.length.toLocaleString()} characters • {content.split(' ').filter(w => w.length > 0).length} words</span>
+                <span className="text-xs">💡 Tip: Longer content (500+ words) gives better results</span>
               </div>
             </CardContent>
           </Card>
@@ -200,7 +200,7 @@ Wij checken dan hoe goed AI zoekmachines zoals ChatGPT jouw content kunnen vinde
                   {analysis.geoScore}
                 </div>
                 <div className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
-                  van de 100 punten
+                  out of 100 points
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-4 mb-4 overflow-hidden">
                   <div
@@ -214,7 +214,7 @@ Wij checken dan hoe goed AI zoekmachines zoals ChatGPT jouw content kunnen vinde
                      analysis.geoScore === 0 ? '👆 Klik op Check Mijn Score om te beginnen' :
                      analysis.geoScore >= 80 ? '🎉 Uitstekend! AI vindt jouw content makkelijk' :
                      analysis.geoScore >= 60 ? '👍 Goed! Nog ruimte voor verbetering' :
-                     '💡 Check de tips hieronder voor betere resultaten'}
+                     '💡 Check the tips below for better results'}
                   </p>
                 </div>
               </div>
@@ -224,8 +224,8 @@ Wij checken dan hoe goed AI zoekmachines zoals ChatGPT jouw content kunnen vinde
           {/* Dimension Scores */}
           <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
             <CardHeader>
-              <CardTitle className="text-base">📊 Gedetailleerde Scores</CardTitle>
-              <CardDescription>Hoe goed scoort jouw content op verschillende punten</CardDescription>
+              <CardTitle className="text-base">📊 Detailed Scores</CardTitle>
+              <CardDescription>How well your content scores on different aspects</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">

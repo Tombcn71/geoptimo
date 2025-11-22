@@ -139,7 +139,7 @@ export default function AuditPage() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">GEO Website Audit</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Analiza tu sitio con las 6 dimensiones de GEO
+          Analyze your site with the 6 GEO dimensions
         </p>
       </div>
 
