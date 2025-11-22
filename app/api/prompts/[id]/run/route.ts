@@ -49,13 +49,7 @@ export async function POST(
         // Ensure PromptResult sequence exists (on first provider)
         if (provider === prompt.providers[0]) {
           await query(`
-            DO $$
-            BEGIN
-              IF NOT EXISTS (SELECT 1 FROM pg_sequences WHERE schemaname = 'public' AND sequencename = 'PromptResult_id_seq') THEN
-                CREATE SEQUENCE "PromptResult_id_seq";
-                PERFORM setval('"PromptResult_id_seq"', COALESCE((SELECT MAX(id) FROM "PromptResult"), 0) + 1, false);
-              END IF;
-            END $$;
+            CREATE SEQUENCE IF NOT EXISTS "PromptResult_id_seq"
           `)
         }
 

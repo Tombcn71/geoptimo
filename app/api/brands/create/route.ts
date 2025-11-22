@@ -17,16 +17,9 @@ export async function POST(request: Request) {
 
     console.log('Creating brand:', { name, domain, category })
 
-    // Ensure sequence exists and get next ID
+    // Ensure sequence exists
     await query(`
-      DO $$
-      BEGIN
-        IF NOT EXISTS (SELECT 1 FROM pg_sequences WHERE schemaname = 'public' AND sequencename = 'Brand_id_seq') THEN
-          CREATE SEQUENCE "Brand_id_seq";
-          -- Set sequence to start after existing max id
-          PERFORM setval('"Brand_id_seq"', COALESCE((SELECT MAX(id) FROM "Brand"), 0) + 1, false);
-        END IF;
-      END $$;
+      CREATE SEQUENCE IF NOT EXISTS "Brand_id_seq"
     `)
 
     // Create the brand
@@ -53,13 +46,7 @@ export async function POST(request: Request) {
     if (selectedPrompts && selectedPrompts.length > 0) {
       // Ensure Prompt sequence exists
       await query(`
-        DO $$
-        BEGIN
-          IF NOT EXISTS (SELECT 1 FROM pg_sequences WHERE schemaname = 'public' AND sequencename = 'Prompt_id_seq') THEN
-            CREATE SEQUENCE "Prompt_id_seq";
-            PERFORM setval('"Prompt_id_seq"', COALESCE((SELECT MAX(id) FROM "Prompt"), 0) + 1, false);
-          END IF;
-        END $$;
+        CREATE SEQUENCE IF NOT EXISTS "Prompt_id_seq"
       `)
 
       for (const promptText of selectedPrompts) {

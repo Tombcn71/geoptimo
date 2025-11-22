@@ -102,14 +102,16 @@ export default function OnboardingPage() {
                     currentStep > step.id
                       ? "bg-purple-600 border-purple-600 text-white"
                       : currentStep === step.id
-                      ? "bg-white dark:bg-gray-800 border-purple-600 text-purple-600"
+                      ? "bg-purple-600 border-purple-600 text-white"
                       : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-400"
                   }`}
                 >
                   {currentStep > step.id ? (
                     <Check className="h-5 w-5" />
+                  ) : currentStep === step.id ? (
+                    <div className="w-3 h-3 rounded-full bg-white" />
                   ) : (
-                    <span className="text-sm font-medium">{step.id}</span>
+                    <div className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-700" />
                   )}
                 </div>
                 {index < STEPS.length - 1 && (
