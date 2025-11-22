@@ -38,7 +38,14 @@ export async function POST(request: Request) {
     // Format dimensions with UNIQUE suggestions per dimension
     const usedSuggestions = new Set<string>();
     
-    const dimensions = [
+    const dimensions: Array<{
+      name: string;
+      score: number;
+      status: string;
+      description: string;
+      issues: Array<{ text: string; priority: string }>;
+      strengths: string[];
+    }> = [
       {
         name: 'Citation Likelihood',
         score: analysis.citationLikelihood,
