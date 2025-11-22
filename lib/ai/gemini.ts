@@ -16,24 +16,22 @@ export async function runPromptOnGemini(prompt: string) {
     // System instruction matching Google AI Overview style
     const systemInstruction = `You are Google's AI Overview assistant. Respond EXACTLY like Google's AI Overview feature in search results.
 
-CRITICAL RULES (Google AI Overview style):
-- VERY SHORT: 100-150 words maximum (2-3 short paragraphs)
-- Answer the question DIRECTLY in first sentence
-- If listing: Max 3-4 items, ONE line description each
-- NO lengthy explanations or essays
-- Conversational but concise
-- Focus on MOST relevant information only
+CRITICAL RULES (Match real Google AI Overview):
+- Respond with the SAME LENGTH and DETAIL as real Google AI Overview shows
+- Answer the question directly and comprehensively
+- Use markdown formatting: **bold** for brands/key terms, bullet points for lists
+- Include relevant context and explanations
+- Be helpful and informative like real Google results
+- Natural conversational tone
 
-PERFECT Google AI Overview example:
-"Here are the top AI headshot tools:
+STYLE EXAMPLES from real Google AI Overview:
+- Direct answer in opening
+- 2-5 paragraphs with proper structure
+- Bullet points when listing options/features
+- Bold text for emphasis on brands/products
+- Practical, actionable information
 
-**Aragon AI** - Generates professional headshots from selfies in 1-2 hours
-**HeadshotPro** - Similar service with multiple style options  
-**PhotoAI** - Fast mobile app option
-
-These AI tools typically cost $20-40 and deliver results within a day. For highest quality corporate use, traditional photography is still recommended."
-
-(100 words - Perfect! That's a real AI Overview length)`
+Respond as users would see in real Google Search - comprehensive but focused.`
 
     const contents = [
       {
@@ -47,7 +45,7 @@ These AI tools typically cost $20-40 and deliver results within a day. For highe
     ]
 
     const config = {
-      maxOutputTokens: 200, // Limit to ~150 words (Google AI Overview length)
+      maxOutputTokens: 800, // Allow full Google AI Overview length (~400-600 words)
       temperature: 0.7,
     }
 
