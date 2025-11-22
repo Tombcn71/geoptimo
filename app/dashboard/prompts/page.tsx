@@ -32,7 +32,7 @@ export default function PromptsPage() {
   const [customPrompt, setCustomPrompt] = useState("");
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [loading, setLoading] = useState(true);
-  const [runningPrompts, setRunningPrompts] = useState<Set<string>>(new Set());
+  const [runningPrompts, setRunningPrompts] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     fetchPrompts();
@@ -58,7 +58,7 @@ export default function PromptsPage() {
     }
   };
 
-  const handleRunNow = async (promptId: string, e: React.MouseEvent) => {
+  const handleRunNow = async (promptId: number, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     
