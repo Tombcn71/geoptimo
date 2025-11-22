@@ -13,27 +13,27 @@ export async function runPromptOnGemini(prompt: string) {
   try {
     const model = 'gemini-flash-lite-latest'
     
-    // System instruction to make responses realistic and concise
-    const systemInstruction = `You are a helpful AI assistant. Respond naturally and conversationally, like ChatGPT would.
+    // System instruction matching Google AI Overview style
+    const systemInstruction = `You are Google's AI Overview assistant. Respond EXACTLY like Google's AI Overview feature in search results.
 
-IMPORTANT RULES:
-- Keep responses SHORT and CONCISE (200-400 words maximum)
-- Be direct and to-the-point
-- Use natural, conversational language
-- If listing items, keep it to 3-5 top recommendations
-- Don't over-explain - give practical, useful answers
-- Match the tone users expect from AI chatbots
+CRITICAL RULES (Google AI Overview style):
+- VERY SHORT: 100-150 words maximum (2-3 short paragraphs)
+- Answer the question DIRECTLY in first sentence
+- If listing: Max 3-4 items, ONE line description each
+- NO lengthy explanations or essays
+- Conversational but concise
+- Focus on MOST relevant information only
 
-Example good response length:
-"Here are the top project management tools:
+PERFECT Google AI Overview example:
+"Here are the top AI headshot tools:
 
-1. Asana - Great for team collaboration with visual boards
-2. Trello - Simple kanban-style organization
-3. Monday.com - Highly customizable workflows
+**Aragon AI** - Generates professional headshots from selfies in 1-2 hours
+**HeadshotPro** - Similar service with multiple style options  
+**PhotoAI** - Fast mobile app option
 
-Each has a free tier to get started. Asana is best for larger teams, while Trello works well for individuals and small groups."
+These AI tools typically cost $20-40 and deliver results within a day. For highest quality corporate use, traditional photography is still recommended."
 
-(That's about right! Don't write essays.)`
+(100 words - Perfect! That's a real AI Overview length)`
 
     const contents = [
       {
@@ -47,7 +47,7 @@ Each has a free tier to get started. Asana is best for larger teams, while Trell
     ]
 
     const config = {
-      maxOutputTokens: 500, // Limit to ~400 words
+      maxOutputTokens: 200, // Limit to ~150 words (Google AI Overview length)
       temperature: 0.7,
     }
 
@@ -321,11 +321,21 @@ IMPORTANT: Do NOT include "${yourBrandName}" in competitors array. Extract ALL o
     const jsonMatch = analysisText.match(/\{[\s\S]*\}/)
     if (jsonMatch) {
       const parsed = JSON.parse(jsonMatch[0])
+      const competitors = Array.isArray(parsed.competitors) ? parsed.competitors.filter((c: any) => 
+        c.name && c.name.toLowerCase() !== yourBrandName.toLowerCase()
+      ) : []
+      
+      // Debug logging
+      console.log(`🔍 Brand Detection Results:`)
+      console.log(`   Your Brand (${yourBrandName}): ${parsed.yourBrand?.mentioned ? 'MENTIONED' : 'NOT mentioned'}`)
+      console.log(`   Competitors found: ${competitors.length}`)
+      competitors.forEach((c: any) => {
+        console.log(`      - ${c.name} (position: ${c.position || 'none'}, sentiment: ${c.sentiment})`)
+      })
+      
       return {
         yourBrand: parsed.yourBrand || { mentioned: false, position: null, sentiment: 'neutral' },
-        competitors: Array.isArray(parsed.competitors) ? parsed.competitors.filter((c: any) => 
-          c.name && c.name.toLowerCase() !== yourBrandName.toLowerCase()
-        ) : []
+        competitors
       }
     }
 
