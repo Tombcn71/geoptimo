@@ -252,40 +252,57 @@ export async function detectAllBrands(response: string, yourBrandName: string) {
   try {
     const model = 'gemini-flash-lite-latest'
     
-    const prompt = `Analyze this AI response and extract ALL brand/company names mentioned.
+    const prompt = `You are a brand detection expert. Extract ALL company and product names from this AI response.
 
-Your Brand: "${yourBrandName}"
+Your Brand (for reference): "${yourBrandName}"
 
-AI Response:
+AI Response to analyze:
 """
 ${response}
 """
 
-Extract ALL brands/companies mentioned. Return ONLY valid JSON with this structure:
+CRITICAL INSTRUCTIONS:
+1. Find EVERY brand/company/product name mentioned ANYWHERE in the text
+2. Look for:
+   - Company names (Asana, Trello, Monday.com, HeadshotPro)
+   - Product names (Photoshop, Lightroom, Aragon AI)
+   - Software/service names (even with spaces: "Aragon AI", "Topaz Photo AI")
+   - Both in numbered lists AND in running text
+3. EXCLUDE generic terms: "software", "tool", "photographer", "camera", "app" (without brand)
+4. INCLUDE specific branded tools: "Adobe Photoshop", "Canva Pro", "Remove.bg"
+5. Extract position from context (if mentioned as #1, #2, first, second, etc.)
+6. Determine sentiment from surrounding text (pros/recommended = positive, cons/issues = negative)
+
+Examples of what TO extract:
+✅ "Aragon AI" (brand name)
+✅ "HeadshotPro" (service name)  
+✅ "Monday.com" (company)
+✅ "Adobe Lightroom" (product)
+✅ "Topaz Gigapixel AI" (software)
+
+Examples of what NOT to extract:
+❌ "software" (generic)
+❌ "photographer" (profession)
+❌ "AI" (technology)
+❌ "headshot" (generic term)
+
+Return ONLY this JSON structure (no markdown, no explanation):
 {
   "yourBrand": {
-    "mentioned": true or false,
-    "position": number from 1-10 or null (if it's a numbered list/ranking),
-    "sentiment": "positive" or "neutral" or "negative"
+    "mentioned": true/false,
+    "position": number or null,
+    "sentiment": "positive"/"neutral"/"negative"
   },
   "competitors": [
     {
-      "name": "Brand Name",
-      "position": number from 1-10 or null,
-      "sentiment": "positive" or "neutral" or "negative"
+      "name": "Exact Brand Name",
+      "position": number or null,
+      "sentiment": "positive"/"neutral"/"negative"
     }
   ]
 }
 
-Rules:
-- Find EVERY company/brand name (e.g. Asana, Trello, Notion, Monday.com)
-- Exclude generic terms like "software", "tool", "app"
-- position: if the response is a numbered list, what position does each brand have? (1 = first mentioned)
-- sentiment: how positively is each brand discussed?
-- Do NOT include "${yourBrandName}" in competitors list
-- Include ONLY real company/product names
-
-Return ONLY the JSON, no other text.`
+IMPORTANT: Do NOT include "${yourBrandName}" in competitors array. Extract ALL other brands exhaustively.`
 
     const contents = [
       {
