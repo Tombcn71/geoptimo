@@ -213,7 +213,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                     {analyzing ? '⏳ Bezig met analyseren...' : 
                      analysis.geoScore === 0 ? '👆 Klik op Check Mijn Score om te beginnen' :
                      analysis.geoScore >= 80 ? '🎉 Uitstekend! AI vindt jouw content makkelijk' :
-                     analysis.geoScore >= 60 ? '👍 Goed! Nog ruimte voor verbetering' :
+                     analysis.geoScore >= 60 ? '👍 Good! Room for improvement' :
                      '💡 Check the tips below for better results'}
                   </p>
                 </div>
@@ -245,7 +245,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">📋 Structuur</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">📋 Structure</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">{analysis.structure}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
@@ -254,12 +254,12 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                       style={{ width: `${analysis.structure}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Hoe overzichtelijk jouw content is</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">How well-organized your content is</p>
                 </div>
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">📊 Feiten & Data</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">📊 Facts & Data</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">{analysis.factualDensity}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
@@ -268,12 +268,12 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                       style={{ width: `${analysis.factualDensity}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Hoeveel concrete feiten je gebruikt</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">How many concrete facts you use</p>
                 </div>
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">📖 Leesbaarheid</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">📖 Readability</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">{analysis.readability}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
@@ -282,12 +282,12 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                       style={{ width: `${analysis.readability}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Hoe makkelijk te begrijpen je tekst is</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">How easy your text is to understand</p>
                 </div>
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">🏷️ Duidelijkheid</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">🏷️ Clarity</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">{analysis.entityCoverage}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
@@ -296,12 +296,12 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                       style={{ width: `${analysis.entityCoverage}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Hoe duidelijk je belangrijke termen uitlegt</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">How clearly you explain important terms</p>
                 </div>
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">⭐ Betrouwbaarheid</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">⭐ Reliability</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">{analysis.sourceQuality}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
@@ -310,7 +310,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                       style={{ width: `${analysis.sourceQuality}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Kwaliteit van bronnen die je gebruikt</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Quality of sources you use</p>
                 </div>
               </div>
             </CardContent>
@@ -321,9 +321,9 @@ We'll check how well AI search engines like ChatGPT can find and understand your
             <CardHeader>
               <CardTitle className="text-base flex items-center space-x-2">
                 <Sparkles className="h-5 w-5 text-yellow-600" />
-                <span>💡 Tips om te Verbeteren</span>
+                <span>💡 Tips to Improve</span>
               </CardTitle>
-              <CardDescription>Direct toepasbare verbeterpunten</CardDescription>
+              <CardDescription>Directly actionable improvement points</CardDescription>
             </CardHeader>
             <CardContent>
               {analysis.suggestions && analysis.suggestions.length > 0 ? (
