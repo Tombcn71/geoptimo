@@ -133,7 +133,7 @@ export default function OnboardingPage() {
           data={brandData}
           onNext={handleNext}
           onBack={handleBack}
-          onComplete={handleComplete}
+          {...(currentStep === 6 ? { onComplete: handleComplete } : {})}
         />
       </div>
     </div>
