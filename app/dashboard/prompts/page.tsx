@@ -88,6 +88,60 @@ export default function PromptsPage() {
     }
   };
 
+  const handleSubscribe = async (promptId: number, currentStatus: boolean) => {
+    try {
+      const response = await fetch('/api/prompts/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          promptId,
+          isSubscribed: !currentStatus
+        })
+      });
+      
+      if (response.ok) {
+        await fetchPrompts(); // Refresh the list
+      } else {
+        alert('❌ Failed to update subscription');
+      }
+    } catch (error) {
+      console.error('Error subscribing:', error);
+      alert('❌ Failed to update subscription');
+    }
+  };
+
+  const handleCreateCustomPrompt = async () => {
+    if (!customPrompt.trim()) {
+      alert('❌ Please enter a prompt');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/prompts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: customPrompt,
+          category: 'Custom',
+          providers: ['ChatGPT', 'Gemini', 'Claude', 'Perplexity'],
+          isCustom: true
+        })
+      });
+      
+      if (response.ok) {
+        setCustomPrompt('');
+        setShowCustomPrompt(false);
+        await fetchPrompts();
+        alert('✅ Custom prompt created!');
+      } else {
+        alert('❌ Failed to create prompt');
+      }
+    } catch (error) {
+      console.error('Error creating prompt:', error);
+      alert('❌ Failed to create prompt');
+    }
+  };
+
   const subscribedPrompts = prompts.filter(p => p.isSubscribed);
   const suggestedPrompts = prompts.filter(p => !p.isSubscribed).slice(0, 5);
 
@@ -157,12 +211,18 @@ export default function PromptsPage() {
                   </p>
                 </div>
                 {prompt.isSubscribed ? (
-                  <div className="flex items-center space-x-2 text-green-600">
+                  <button 
+                    onClick={() => handleSubscribe(prompt.id, prompt.isSubscribed)}
+                    className="flex items-center space-x-2 text-green-600 hover:text-green-700 px-4 py-2 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800 transition-colors"
+                  >
                     <Check className="h-5 w-5" />
                     <span className="text-sm font-medium">Subscribed</span>
-                  </div>
+                  </button>
                 ) : (
-                  <button className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors">
+                  <button 
+                    onClick={() => handleSubscribe(prompt.id, prompt.isSubscribed)}
+                    className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
+                  >
                     Subscribe
                   </button>
                 )}
@@ -291,16 +351,20 @@ export default function PromptsPage() {
               </div>
               <div className="flex justify-end space-x-3 pt-4">
                 <button
-                  onClick={() => setShowCustomPrompt(false)}
+                  onClick={() => {
+                    setShowCustomPrompt(false);
+                    setCustomPrompt('');
+                  }}
                   className="px-6 py-2 border border-gray-300 dark:border-gray-700 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={() => setShowCustomPrompt(false)}
-                  className="px-6 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
+                  onClick={handleCreateCustomPrompt}
+                  disabled={!customPrompt.trim()}
+                  className="px-6 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Subscribe & Run
+                  Create & Subscribe
                 </button>
               </div>
             </CardContent>
