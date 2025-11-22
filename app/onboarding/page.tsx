@@ -6,8 +6,6 @@ import { Building2, Sparkles, Check, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // Step components
-import StepWelcome from "@/components/onboarding/StepWelcome";
-import StepHowItWorks from "@/components/onboarding/StepHowItWorks";
 import StepDomain from "@/components/onboarding/StepDomain";
 import StepBrandDetails from "@/components/onboarding/StepBrandDetails";
 import StepAliases from "@/components/onboarding/StepAliases";
@@ -27,14 +25,12 @@ interface BrandData {
 }
 
 const STEPS = [
-  { id: 1, title: "Welcome", component: StepWelcome, hideProgress: true },
-  { id: 2, title: "How It Works", component: StepHowItWorks, hideProgress: true },
-  { id: 3, title: "Domain", component: StepDomain },
-  { id: 4, title: "Details", component: StepBrandDetails },
-  { id: 5, title: "Aliases", component: StepAliases },
-  { id: 6, title: "Setup", component: StepSetup },
-  { id: 7, title: "Prompts", component: StepPrompts },
-  { id: 8, title: "Pricing", component: StepPricing },
+  { id: 1, title: "Domain", component: StepDomain },
+  { id: 2, title: "Details", component: StepBrandDetails },
+  { id: 3, title: "Aliases", component: StepAliases },
+  { id: 4, title: "Setup", component: StepSetup },
+  { id: 5, title: "Prompts", component: StepPrompts },
+  { id: 6, title: "Pricing", component: StepPricing },
 ];
 
 export default function OnboardingPage() {
@@ -54,11 +50,6 @@ export default function OnboardingPage() {
       setBrandData({ ...brandData, ...data });
     }
     setCurrentStep(currentStep + 1);
-  };
-
-  const handleSkipIntro = () => {
-    // Skip to step 3 (Domain - first actual form step)
-    setCurrentStep(3);
   };
 
   const handleBack = () => {
@@ -157,8 +148,7 @@ export default function OnboardingPage() {
           data={brandData}
           onNext={handleNext}
           onBack={handleBack}
-          {...(currentStep === 1 ? { onSkip: handleSkipIntro } : {})}
-          {...(currentStep === 8 ? { onComplete: handleComplete } : {})}
+          {...(currentStep === 6 ? { onComplete: handleComplete } : {})}
         />
       </div>
     </div>
