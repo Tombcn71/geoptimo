@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { query } from '@/lib/db'
 import { runPromptOnChatGPT } from '@/lib/ai/openai'
-import { runPromptOnGemini, analyzeBrandMention, analyzeAllBrands } from '@/lib/ai/gemini'
+import { runPromptOnGemini, analyzeBrandMention, detectAllBrands } from '@/lib/ai/gemini'
 
 export async function POST(
   request: Request,
@@ -79,7 +79,7 @@ export async function POST(
 
         // 🔍 AUTO-DETECT & STORE COMPETITORS
         console.log(`🔍 Analyzing for competitors in response...`)
-        const brandAnalysis = await analyzeAllBrands(result.response, prompt.brand_name)
+        const brandAnalysis = await detectAllBrands(result.response, prompt.brand_name)
         
         if (brandAnalysis.competitors && brandAnalysis.competitors.length > 0) {
           console.log(`   Found ${brandAnalysis.competitors.length} competitors`)
