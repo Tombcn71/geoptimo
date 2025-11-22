@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     await query(`
       INSERT INTO "User" (id, email, name, "createdAt", "updatedAt")
       VALUES ('demo-user-id', 'demo@geoptimo.com', 'Demo User', NOW(), NOW())
-      ON CONFLICT (id) DO NOTHING
+      ON CONFLICT (email) DO NOTHING
     `)
 
     // Ensure sequence exists
