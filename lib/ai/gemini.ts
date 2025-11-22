@@ -85,14 +85,6 @@ Do not include any other text, only the JSON.`
     
     const analysisText = result.text
     
-    if (!analysisText) {
-      return {
-        mentioned: response.toLowerCase().includes(brandName.toLowerCase()),
-        position: null,
-        sentiment: 'neutral'
-      }
-    }
-    
     // Clean up the response to extract JSON
     const jsonMatch = analysisText.match(/\{[\s\S]*\}/)
     if (jsonMatch) {
