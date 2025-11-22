@@ -8,7 +8,10 @@ import {
   Eye,
   Hash,
   Filter,
-  CheckCircle2
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  FileText
 } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect, use } from "react";
@@ -40,6 +43,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
   const [runs, setRuns] = useState<PromptRun[]>([]);
   const [loading, setLoading] = useState(true);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [expandedRuns, setExpandedRuns] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     fetchPromptData();
@@ -97,6 +101,24 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
   const filteredRuns = filterProvider 
     ? runs.filter(run => run.provider === filterProvider)
     : runs;
+
+  const toggleRunExpansion = (runId: string) => {
+    setExpandedRuns(prev => {
+      const next = new Set(prev);
+      if (next.has(runId)) {
+        next.delete(runId);
+      } else {
+        next.add(runId);
+      }
+      return next;
+    });
+  };
+
+  const getResponseExcerpt = (text: string, maxLength: number = 300) => {
+    if (!text) return '';
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+  };
 
   const highlightBrandName = (text: string, brandName: string) => {
     if (!text) return text;
@@ -322,11 +344,46 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                   </div>
                 </div>
 
-                {/* Response */}
-                <div className="bg-white dark:bg-gray-800 p-4 rounded-lg">
-                  <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                    {highlightBrandName(run.response, run.brandName)}
-                  </p>
+                {/* AI Response Section */}
+                <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                  {/* Response Preview */}
+                  <div className="p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center space-x-2">
+                        <FileText className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                        <h4 className="font-medium text-gray-900 dark:text-white">AI Response</h4>
+                      </div>
+                      <button
+                        onClick={() => toggleRunExpansion(run.id)}
+                        className="flex items-center space-x-1 text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors"
+                      >
+                        <span>{expandedRuns.has(run.id) ? 'Show Less' : 'Show Full Response'}</span>
+                        {expandedRuns.has(run.id) ? (
+                          <ChevronUp className="h-4 w-4" />
+                        ) : (
+                          <ChevronDown className="h-4 w-4" />
+                        )}
+                      </button>
+                    </div>
+
+                    <div className={`text-sm text-gray-700 dark:text-gray-300 leading-relaxed ${expandedRuns.has(run.id) ? '' : 'max-h-32 overflow-hidden relative'}`}>
+                      <p className="whitespace-pre-wrap">
+                        {expandedRuns.has(run.id) 
+                          ? highlightBrandName(run.response, run.brandName)
+                          : highlightBrandName(getResponseExcerpt(run.response, 300), run.brandName)
+                        }
+                      </p>
+                      {!expandedRuns.has(run.id) && run.response.length > 300 && (
+                        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white dark:from-gray-800 to-transparent" />
+                      )}
+                    </div>
+
+                    {/* Response Stats */}
+                    <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                      <span>{run.response.length} characters</span>
+                      <span>{Math.ceil(run.response.length / 5)} words (approx)</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
