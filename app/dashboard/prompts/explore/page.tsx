@@ -39,6 +39,7 @@ export default function ExplorePromptsPage() {
   const [newPromptText, setNewPromptText] = useState("");
   const [newPromptCategory, setNewPromptCategory] = useState("Product Discovery");
   const [creating, setCreating] = useState(false);
+  const [generating, setGenerating] = useState(false);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -192,6 +193,68 @@ export default function ExplorePromptsPage() {
     }
   };
 
+  const handleGenerateAIPrompts = async () => {
+    setGenerating(true);
+    try {
+      // First, get the user's brand info
+      const brandResponse = await fetch('/api/brands/info');
+      const brandData = await brandResponse.json();
+      
+      if (!brandResponse.ok) {
+        alert('❌ Could not fetch brand information');
+        return;
+      }
+
+      // Generate AI prompts based on brand
+      const generateResponse = await fetch('/api/prompts/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          category: brandData.industry || 'SaaS',
+          description: brandData.description || `${brandData.companyName} - ${brandData.industry}`
+        })
+      });
+
+      if (!generateResponse.ok) {
+        alert('❌ Failed to generate AI prompts');
+        return;
+      }
+
+      const generatedPrompts = await generateResponse.json();
+
+      // Create each generated prompt
+      let successCount = 0;
+      for (const prompt of generatedPrompts) {
+        try {
+          const createResponse = await fetch('/api/prompts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              text: prompt.text,
+              category: prompt.category,
+              providers: ['ChatGPT', 'Gemini', 'Claude', 'Perplexity'],
+              isCustom: false
+            })
+          });
+
+          if (createResponse.ok) {
+            successCount++;
+          }
+        } catch (error) {
+          console.error('Error creating prompt:', error);
+        }
+      }
+
+      await fetchPrompts();
+      alert(`✅ Generated ${successCount} AI-powered prompts!`);
+    } catch (error) {
+      console.error('Error generating prompts:', error);
+      alert('❌ Failed to generate AI prompts');
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   if (status === "loading" || !session) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -229,6 +292,14 @@ export default function ExplorePromptsPage() {
         </div>
         <div className="flex gap-2">
           <button
+            onClick={handleGenerateAIPrompts}
+            disabled={generating}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 disabled:opacity-50 shadow-lg"
+          >
+            <Sparkles className={`h-5 w-5 ${generating ? 'animate-pulse' : ''}`} />
+            <span>{generating ? 'Generating...' : 'Generate AI Prompts'}</span>
+          </button>
+          <button
             onClick={() => setShowCreateModal(true)}
             className="bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 hover:bg-gray-800 dark:hover:bg-gray-200"
           >
@@ -239,10 +310,10 @@ export default function ExplorePromptsPage() {
             <button
               onClick={handleSeedPrompts}
               disabled={seeding}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 disabled:opacity-50"
+              className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 disabled:opacity-50"
             >
               <RefreshCw className={`h-5 w-5 ${seeding ? 'animate-spin' : ''}`} />
-              <span>{seeding ? 'Seeding...' : 'Seed Prompts'}</span>
+              <span>{seeding ? 'Seeding...' : 'Seed Demo Data'}</span>
             </button>
           )}
         </div>
