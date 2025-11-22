@@ -122,6 +122,7 @@ export default function CompetitorsPage() {
           </CardContent>
         </Card>
       </div>
+      ) : null}
 
       {/* Competitors Table */}
       <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
