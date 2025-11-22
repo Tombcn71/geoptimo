@@ -39,6 +39,12 @@ export default function ExplorePromptsPage() {
       const response = await fetch('/api/prompts');
       const data = await response.json();
       
+      if (response.status === 404 && data.needsOnboarding) {
+        // No brand found - redirect to onboarding
+        window.location.href = '/onboarding';
+        return;
+      }
+      
       if (Array.isArray(data)) {
         setPrompts(data);
       } else {
@@ -87,12 +93,19 @@ export default function ExplorePromptsPage() {
         method: 'POST'
       });
       
+      const result = await response.json();
+      
+      if (response.status === 404 && result.needsOnboarding) {
+        alert('❌ Please complete onboarding first to create your brand');
+        window.location.href = '/onboarding';
+        return;
+      }
+      
       if (response.ok) {
         await fetchPrompts();
         alert('✅ Prompts seeded successfully!');
       } else {
-        const error = await response.json();
-        alert(`❌ ${error.error}`);
+        alert(`❌ ${result.error || 'Failed to seed prompts'}`);
       }
     } catch (error) {
       console.error('Error seeding prompts:', error);

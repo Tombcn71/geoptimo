@@ -3,13 +3,16 @@ import { query } from '@/lib/db'
 
 export async function GET() {
   try {
+    // Get any brand (first one in database)
     const brandResult = await query(
-      `SELECT * FROM "Brand" WHERE "companyName" = $1 LIMIT 1`,
-      ['Geoptimo']
+      `SELECT * FROM "Brand" ORDER BY "createdAt" ASC LIMIT 1`
     )
 
     if (brandResult.rows.length === 0) {
-      return NextResponse.json({ error: 'Brand not found' }, { status: 404 })
+      return NextResponse.json({ 
+        error: 'No brand found. Please complete onboarding first.',
+        needsOnboarding: true 
+      }, { status: 404 })
     }
 
     const brand = brandResult.rows[0]

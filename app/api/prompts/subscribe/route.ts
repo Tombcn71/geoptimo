@@ -23,7 +23,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Error updating subscription:', error)
     return NextResponse.json(
-      { error: 'Failed to update subscription' },
+      { error: 'Failed to update subscription', details: error.message },
       { status: 500 }
     )
   }
