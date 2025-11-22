@@ -8,7 +8,9 @@ import {
   TrendingUp,
   Check,
   X,
-  ArrowRight
+  ArrowRight,
+  Play,
+  Loader2
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -30,6 +32,7 @@ export default function PromptsPage() {
   const [customPrompt, setCustomPrompt] = useState("");
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [loading, setLoading] = useState(true);
+  const [runningPrompts, setRunningPrompts] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     fetchPrompts();
@@ -52,6 +55,36 @@ export default function PromptsPage() {
       setPrompts([]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleRunNow = async (promptId: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    setRunningPrompts(prev => new Set(prev).add(promptId));
+    
+    try {
+      const response = await fetch(`/api/prompts/${promptId}/run-manual`, {
+        method: 'POST'
+      });
+      
+      if (response.ok) {
+        await fetchPrompts();
+        alert('✅ Prompt executed successfully!');
+      } else {
+        const error = await response.json();
+        alert(`❌ Failed: ${error.error}`);
+      }
+    } catch (error) {
+      console.error('Error running prompt:', error);
+      alert('❌ Failed to run prompt');
+    } finally {
+      setRunningPrompts(prev => {
+        const next = new Set(prev);
+        next.delete(promptId);
+        return next;
+      });
     }
   };
 
@@ -178,6 +211,23 @@ export default function PromptsPage() {
                       </span>
                     </div>
                   </div>
+                  <button
+                    onClick={(e) => handleRunNow(prompt.id, e)}
+                    disabled={runningPrompts.has(prompt.id)}
+                    className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg flex items-center space-x-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {runningPrompts.has(prompt.id) ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <span>Running...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="h-4 w-4" />
+                        <span>Run Now</span>
+                      </>
+                    )}
+                  </button>
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-xs text-gray-600 dark:text-gray-400">Providers:</span>
