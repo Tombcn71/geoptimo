@@ -365,7 +365,7 @@ export default function AuditPage() {
                           <span>Issues to Fix</span>
                         </h4>
                         <div className="space-y-2">
-                          {dimension.issues.map((issue, idx) => (
+                          {dimension.issues.map((issue: { text: string; priority: string }, idx: number) => (
                             <div key={idx} className="flex items-start space-x-2 text-sm">
                               <span className={`px-2 py-0.5 rounded text-xs font-semibold ${
                                 issue.priority === 'high' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' :
