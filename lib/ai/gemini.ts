@@ -114,40 +114,40 @@ Do not include any other text, only the JSON.`
 
 export async function analyzeContentWithGemini(content: string) {
   if (!process.env.GOOGLE_AI_API_KEY) {
-    throw new Error('GOOGLE_AI_API_KEY niet geconfigureerd')
+    throw new Error('GOOGLE_AI_API_KEY not configured')
   }
 
   try {
     const model = 'gemini-flash-lite-latest'
     
-    const prompt = `Je bent een GEO (Generative Engine Optimization) expert.
+    const prompt = `You are a GEO (Generative Engine Optimization) expert.
 
-STAP 1: Bepaal eerst het CONTENT TYPE:
-- Product/Service pagina (e-commerce, SaaS, diensten, apps)
-- Informatieve content (blog, gids, tutorial, artikel)
-- Bedrijfspagina (over ons, contact, team)
+STEP 1: First determine the CONTENT TYPE:
+- Product/Service page (e-commerce, SaaS, services, apps)
+- Informative content (blog, guide, tutorial, article)
+- Business page (about us, contact, team)
 
-STAP 2: Geef scores (0-100) aangepast aan het content type:
+STEP 2: Give scores (0-100) adapted to the content type:
 
-Voor PRODUCT/SERVICE pagina's (zoals apps, diensten):
-- citationLikelihood: Focus op merk autoriteit, USP duidelijkheid, sociale bewijzen (70-90 verwacht)
-- readability: Helderheid van product beschrijving en voordelen (70-95 verwacht)
-- structure: Logische product flow - probleem → oplossing → actie (65-90 verwacht)
-- entityCoverage: Product features, use cases, doelgroep beschrijving (60-85 verwacht)
-- factualDensity: Concrete specs, prijzen, resultaten, voorbeelden (50-80 verwacht)
-- sourceQuality: Reviews, testimonials, case studies, social proof (40-75 verwacht)
+For PRODUCT/SERVICE pages (like apps, services):
+- citationLikelihood: Focus on brand authority, USP clarity, social proof (70-90 expected)
+- readability: Clarity of product description and benefits (70-95 expected)
+- structure: Logical product flow - problem → solution → action (65-90 expected)
+- entityCoverage: Product features, use cases, target audience description (60-85 expected)
+- factualDensity: Concrete specs, prices, results, examples (50-80 expected)
+- sourceQuality: Reviews, testimonials, case studies, social proof (40-75 expected)
 
-Voor INFORMATIEVE content:
-- citationLikelihood: Expert autoriteit, bronvermelding, diepgang (60-95 verwacht)
-- readability: Tekst complexiteit voor breed publiek (70-95 verwacht)
-- structure: Hiërarchie en content organisatie (70-95 verwacht)
-- entityCoverage: Concepten, definities, terminologie (65-90 verwacht)
-- factualDensity: Feiten, data, statistieken (60-90 verwacht)
-- sourceQuality: Externe bronnen en referenties (50-85 verwacht)
+For INFORMATIVE content:
+- citationLikelihood: Expert authority, source citation, depth (60-95 expected)
+- readability: Text complexity for broad audience (70-95 expected)
+- structure: Hierarchy and content organization (70-95 expected)
+- entityCoverage: Concepts, definitions, terminology (65-90 expected)
+- factualDensity: Facts, data, statistics (60-90 expected)
+- sourceQuality: External sources and references (50-85 expected)
 
-STAP 3: Geef 3-5 UNIEKE, VERSCHILLENDE suggestions specifiek voor het content type. GEEN DUPLICATEN!
+STEP 3: Give 3-5 UNIQUE, DIFFERENT suggestions specific to the content type. NO DUPLICATES! ALL IN ENGLISH!
 
-Return ALLEEN valid JSON (geen markdown, geen extra tekst):
+Return ONLY valid JSON (no markdown, no extra text):
 {
   "contentType": "product|informative|business",
   "citationLikelihood": 85,
@@ -157,13 +157,13 @@ Return ALLEEN valid JSON (geen markdown, geen extra tekst):
   "factualDensity": 80,
   "sourceQuality": 85,
   "suggestions": [
-    {"type": "high", "category": "USP", "message": "Unieke tip 1", "impact": "+10"},
-    {"type": "medium", "category": "Trust", "message": "Unieke tip 2", "impact": "+5"},
-    {"type": "low", "category": "SEO", "message": "Unieke tip 3", "impact": "+3"}
+    {"type": "high", "category": "USP", "message": "Unique tip 1 in English", "impact": "+10"},
+    {"type": "medium", "category": "Trust", "message": "Unique tip 2 in English", "impact": "+5"},
+    {"type": "low", "category": "SEO", "message": "Unique tip 3 in English", "impact": "+3"}
   ]
 }
 
-Content om te analyseren:
+Content to analyze:
 ${content.substring(0, 4000)}`
 
     const contents = [

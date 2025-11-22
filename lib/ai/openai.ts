@@ -44,34 +44,34 @@ export async function analyzeContentForGEO(content: string) {
         messages: [
           {
             role: "system",
-            content: `Je bent een GEO (Generative Engine Optimization) expert. 
+            content: `You are a GEO (Generative Engine Optimization) expert. 
 
-STAP 1: Bepaal eerst het CONTENT TYPE:
-- Product/Service pagina (e-commerce, SaaS, diensten)
-- Informatieve content (blog, gids, tutorial)
-- Bedrijfspagina (over ons, contact)
+STEP 1: First determine the CONTENT TYPE:
+- Product/Service page (e-commerce, SaaS, services, apps)
+- Informative content (blog, guide, tutorial, article)
+- Business page (about us, contact, team)
 
-STAP 2: Geef scores (0-100) aangepast aan het content type:
+STEP 2: Give scores (0-100) adapted to the content type:
 
-Voor PRODUCT/SERVICE pagina's:
-- citationLikelihood: Focus op merk autoriteit, USP duidelijkheid, klantbewijzen
-- readability: Helderheid van product beschrijving en voordelen
-- structure: Logische product flow (probleem → oplossing → actie)
-- entityCoverage: Product features, use cases, doelgroep
-- factualDensity: Concrete specs, prijzen, resultaten
+For PRODUCT/SERVICE pages:
+- citationLikelihood: Focus on brand authority, USP clarity, customer proof
+- readability: Clarity of product description and benefits
+- structure: Logical product flow (problem → solution → action)
+- entityCoverage: Product features, use cases, target audience
+- factualDensity: Concrete specs, prices, results
 - sourceQuality: Reviews, testimonials, case studies
 
-Voor INFORMATIEVE content:
-- citationLikelihood: Expert autoriteit, bronvermelding
-- readability: Tekst complexiteit voor breed publiek
-- structure: Hiërarchie en content organisatie
-- entityCoverage: Concepten, definities, terminologie
-- factualDensity: Feiten, data, statistieken
-- sourceQuality: Externe bronnen en referenties
+For INFORMATIVE content:
+- citationLikelihood: Expert authority, source citation
+- readability: Text complexity for broad audience
+- structure: Hierarchy and content organization
+- entityCoverage: Concepts, definitions, terminology
+- factualDensity: Facts, data, statistics
+- sourceQuality: External sources and references
 
-STAP 3: Geef 3-5 UNIEKE, VERSCHILLENDE suggestions specifiek voor het content type.
+STEP 3: Give 3-5 UNIQUE, DIFFERENT suggestions specific to the content type. ALL IN ENGLISH!
 
-Return ALLEEN valid JSON:
+Return ONLY valid JSON:
 {
   "contentType": "product|informative|business",
   "citationLikelihood": 85,
@@ -81,14 +81,14 @@ Return ALLEEN valid JSON:
   "factualDensity": 80,
   "sourceQuality": 85,
   "suggestions": [
-    {"type": "high", "category": "USP", "message": "Unieke tip 1", "impact": "+10"},
-    {"type": "medium", "category": "Trust", "message": "Unieke tip 2", "impact": "+5"}
+    {"type": "high", "category": "USP", "message": "Unique tip 1 in English", "impact": "+10"},
+    {"type": "medium", "category": "Trust", "message": "Unique tip 2 in English", "impact": "+5"}
   ]
 }`
           },
           {
             role: "user",
-            content: `Analyseer deze content:\n\n${content.substring(0, 4000)}`
+            content: `Analyze this content:\n\n${content.substring(0, 4000)}`
           }
         ],
         response_format: { type: "json_object" },
@@ -115,7 +115,7 @@ Return ALLEEN valid JSON:
   }
 
   // No API keys configured
-  throw new Error('Geen API keys geconfigureerd. Voeg OPENAI_API_KEY of GOOGLE_AI_API_KEY toe.')
+  throw new Error('No API keys configured. Add OPENAI_API_KEY or GOOGLE_AI_API_KEY.')
 }
 
 export async function generatePromptSuggestions(industry: string, description: string) {
