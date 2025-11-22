@@ -102,7 +102,7 @@ Check your current website text with this tool. You'll immediately see what's go
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">✨ Content Checker</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2 text-lg">
-            Test hoe goed jouw content scoort bij AI zoekmachines zoals ChatGPT en Gemini
+            Test how well your content scores with AI search engines like ChatGPT and Gemini
           </p>
         </div>
         <button
@@ -111,7 +111,7 @@ Check your current website text with this tool. You'll immediately see what's go
           className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 whitespace-nowrap"
         >
           <Sparkles className={`h-6 w-6 ${analyzing ? 'animate-pulse' : ''}`} />
-          <span>{analyzing ? 'Bezig met analyseren...' : 'Check Mijn Score'}</span>
+          <span>{analyzing ? 'Analyzing...' : 'Check My Score'}</span>
         </button>
       </div>
 
@@ -158,7 +158,7 @@ Check your current website text with this tool. You'll immediately see what's go
             <CardHeader>
               <CardTitle className="flex items-center space-x-2 text-xl">
                 <Edit className="h-6 w-6 text-purple-600" />
-                <span>Jouw Content</span>
+                <span>Your Content</span>
               </CardTitle>
               <CardDescription className="text-base">
                 Paste the text you want to check - for example a blog article, product description, or website text
@@ -192,7 +192,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
           {/* AI Score */}
           <Card className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30 border-2 border-purple-200 dark:border-purple-900 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-center text-xl">🎯 Jouw AI Score</CardTitle>
+              <CardTitle className="text-center text-xl">🎯 Your AI Score</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-center">
@@ -210,9 +210,9 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                 </div>
                 <div className="mt-4 p-3 bg-white dark:bg-gray-900 rounded-lg">
                   <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {analyzing ? '⏳ Bezig met analyseren...' : 
-                     analysis.geoScore === 0 ? '👆 Klik op Check Mijn Score om te beginnen' :
-                     analysis.geoScore >= 80 ? '🎉 Uitstekend! AI vindt jouw content makkelijk' :
+                    {analyzing ? '⏳ Analyzing...' : 
+                     analysis.geoScore === 0 ? '👆 Click Check My Score to start' :
+                     analysis.geoScore >= 80 ? '🎉 Excellent! AI finds your content easily' :
                      analysis.geoScore >= 60 ? '👍 Good! Room for improvement' :
                      '💡 Check the tips below for better results'}
                   </p>
@@ -231,7 +231,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
               <div className="space-y-4">
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">🔗 Vindbaarheid</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">🔗 Discoverability</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">{analysis.citationLikelihood}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
@@ -240,7 +240,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                       style={{ width: `${analysis.citationLikelihood}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Hoe makkelijk AI jouw content kan vinden</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">How easily AI can find your content</p>
                 </div>
 
                 <div>
@@ -358,7 +358,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                             suggestion.type === 'medium' ? 'bg-yellow-200 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200' :
                             'bg-blue-200 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
                           }`}>
-                            {suggestion.type === 'high' ? 'BELANGRIJK' : suggestion.type === 'medium' ? 'TIP' : 'GOED BEZIG'}
+                            {suggestion.type === 'high' ? 'IMPORTANT' : suggestion.type === 'medium' ? 'TIP' : 'GOOD JOB'}
                           </span>
                           <span className="text-sm font-bold text-green-600 dark:text-green-400">
                             {suggestion.impact}
@@ -375,7 +375,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
               ) : (
                 <div className="text-center py-8">
                   <p className="text-gray-500 dark:text-gray-400">
-                    ⬆️ Klik op &quot;Check Mijn Score&quot; om AI suggesties te krijgen
+                    ⬆️ Click &quot;Check My Score&quot; to get AI suggestions
                   </p>
                 </div>
               )}
