@@ -78,15 +78,32 @@ export async function POST(
         })
 
         // 🔍 AUTO-DETECT & STORE COMPETITORS
-        console.log(`🔍 Analyzing for competitors in response...`)
+        console.log(`\n========================================`)
+        console.log(`🔍 COMPETITOR DETECTION START`)
+        console.log(`   Provider: ${provider}`)
+        console.log(`   Brand ID: ${prompt.brand_id}`)
+        console.log(`   Brand Name: ${prompt.brand_name}`)
+        console.log(`   Response Length: ${result.response?.length || 0} chars`)
+        console.log(`   Response Preview: ${result.response?.substring(0, 200)}...`)
+        console.log(`========================================\n`)
+        
         const brandAnalysis = await detectAllBrands(result.response, prompt.brand_name)
         
+        console.log(`\n🔍 DETECTION RESULTS:`)
+        console.log(`   Your Brand mentioned: ${brandAnalysis.yourBrand?.mentioned}`)
+        console.log(`   Competitors found: ${brandAnalysis.competitors?.length || 0}`)
+        
         if (brandAnalysis.competitors && brandAnalysis.competitors.length > 0) {
-          console.log(`   Found ${brandAnalysis.competitors.length} competitors`)
+          console.log(`\n   📋 Competitor List:`)
+          brandAnalysis.competitors.forEach((c, i) => {
+            console.log(`      ${i+1}. ${c.name} (pos: ${c.position || 'N/A'}, sentiment: ${c.sentiment})`)
+          })
           
           // Ensure Competitor sequence exists
           await query(`CREATE SEQUENCE IF NOT EXISTS "Competitor_id_seq"`)
           await query(`CREATE SEQUENCE IF NOT EXISTS "CompetitorMetric_id_seq"`)
+          
+          console.log(`\n   💾 STORING TO DATABASE...`)
           
           for (const comp of brandAnalysis.competitors) {
             try {
@@ -101,7 +118,7 @@ export async function POST(
               if (existingComp.rows.length > 0) {
                 // Competitor exists
                 competitorId = existingComp.rows[0].id
-                console.log(`   ↻ ${comp.name} (existing)`)
+                console.log(`      ↻ ${comp.name} - Already exists (ID: ${competitorId})`)
               } else {
                 // New competitor - insert
                 const newComp = await query(`
@@ -112,23 +129,29 @@ export async function POST(
                 `, [prompt.brand_id, comp.name, ''])
                 
                 competitorId = newComp.rows[0].id
-                console.log(`   ✨ ${comp.name} (NEW competitor detected!)`)
+                console.log(`      ✨ ${comp.name} - NEW! Stored with ID: ${competitorId}`)
               }
 
               // Store metric for this run
-              await query(`
+              const metricResult = await query(`
                 INSERT INTO "CompetitorMetric"
                   (id, "competitorId", "promptResultId", position, sentiment, "detectedAt")
                 VALUES (nextval('"CompetitorMetric_id_seq"'), $1, $2, $3, $4, NOW())
+                RETURNING id
               `, [competitorId, promptResultRow.id, comp.position, comp.sentiment])
 
+              console.log(`      ✅ Metric saved (ID: ${metricResult.rows[0].id})`)
+
             } catch (compError) {
-              console.error(`   ❌ Error storing competitor ${comp.name}:`, compError)
+              console.error(`      ❌ ERROR storing ${comp.name}:`, compError)
             }
           }
+          console.log(`\n   ✅ DATABASE STORAGE COMPLETE`)
         } else {
-          console.log(`   No competitors detected`)
+          console.log(`   ⚠️  NO COMPETITORS FOUND IN RESPONSE`)
         }
+        
+        console.log(`========================================\n`)
       }
     }
 
