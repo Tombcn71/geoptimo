@@ -132,7 +132,7 @@ export default function Home() {
               Comenzar Gratis
             </Link>
             <Link
-              href="#features"
+              href="/demo"
               className="bg-white dark:bg-black text-gray-900 dark:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors border-2 border-gray-200 dark:border-gray-800"
             >
               Ver Demo
