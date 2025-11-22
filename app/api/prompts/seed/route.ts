@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
 import { query } from '@/lib/db'
 
 // AI-generated prompts for GEO tool
@@ -57,9 +58,21 @@ const seedPrompts = [
 
 export async function POST() {
   try {
-    // Get any brand (first one in database)
+    // Get authenticated user
+    const session = await getServerSession()
+    
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // Get user's brand
     const brandResult = await query(
-      `SELECT * FROM "Brand" ORDER BY "createdAt" ASC LIMIT 1`
+      `SELECT b.* FROM "Brand" b
+       JOIN "User" u ON b."userId" = u.id
+       WHERE u.email = $1
+       ORDER BY b."createdAt" DESC
+       LIMIT 1`,
+      [session.user.email]
     )
 
     if (brandResult.rows.length === 0) {

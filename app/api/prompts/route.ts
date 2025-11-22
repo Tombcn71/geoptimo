@@ -1,11 +1,24 @@
 import { NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
 import { query } from '@/lib/db'
 
 export async function GET() {
   try {
-    // Get any brand (first one in database)
+    // Get authenticated user
+    const session = await getServerSession()
+    
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // Get user's brand
     const brandResult = await query(
-      `SELECT * FROM "Brand" ORDER BY "createdAt" ASC LIMIT 1`
+      `SELECT b.* FROM "Brand" b
+       JOIN "User" u ON b."userId" = u.id
+       WHERE u.email = $1
+       ORDER BY b."createdAt" DESC
+       LIMIT 1`,
+      [session.user.email]
     )
 
     if (brandResult.rows.length === 0) {
@@ -79,12 +92,24 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    // Get authenticated user
+    const session = await getServerSession()
+    
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const body = await request.json()
     const { text, category, providers, isCustom } = body
 
+    // Get user's brand
     const brandResult = await query(
-      `SELECT * FROM "Brand" WHERE "companyName" = $1 LIMIT 1`,
-      ['Geoptimo']
+      `SELECT b.* FROM "Brand" b
+       JOIN "User" u ON b."userId" = u.id
+       WHERE u.email = $1
+       ORDER BY b."createdAt" DESC
+       LIMIT 1`,
+      [session.user.email]
     )
 
     if (brandResult.rows.length === 0) {
