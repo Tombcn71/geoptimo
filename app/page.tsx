@@ -35,20 +35,20 @@ export default function Home() {
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
               <Link href="#features" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                Características
+                Features
               </Link>
               <Link href="#pricing" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                Precios
+                Pricing
               </Link>
               <Link href="/dashboard" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
                 Dashboard
               </Link>
               <ThemeToggle />
               <Link 
-                href="/dashboard" 
+                href="/onboarding" 
                 className="bg-black dark:bg-white text-white dark:text-black px-6 py-2 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors font-medium"
               >
-                Comenzar Gratis
+                Start Free
               </Link>
             </div>
 
@@ -78,14 +78,14 @@ export default function Home() {
                 className="block px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Características
+                Features
               </Link>
               <Link 
                 href="#pricing" 
                 className="block px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Precios
+                Pricing
               </Link>
               <Link 
                 href="/dashboard" 
@@ -95,11 +95,11 @@ export default function Home() {
                 Dashboard
               </Link>
               <Link 
-                href="/dashboard" 
+                href="/onboarding" 
                 className="block bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors text-center font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Comenzar Gratis
+                Start Free
               </Link>
             </div>
           </div>
@@ -111,31 +111,31 @@ export default function Home() {
         <div className="max-w-7xl mx-auto text-center">
           <div className="inline-flex items-center space-x-2 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 sm:px-4 py-2 rounded-full mb-6 sm:mb-8 border border-gray-200 dark:border-gray-800">
             <Zap className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-            <span className="text-xs sm:text-sm font-medium">Optimización para Motores de IA</span>
+            <span className="text-xs sm:text-sm font-medium">AI Engine Optimization</span>
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 px-2">
-            Sé Descubierto por
+            Be Discovered by
             <span className="block mt-2 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 bg-clip-text text-transparent animate-gradient">
-              Motores de IA
+              AI Search Engines
             </span>
           </h1>
           <p className="text-base sm:text-xl text-gray-600 dark:text-gray-400 mb-8 sm:mb-12 max-w-3xl mx-auto px-4">
-            Optimiza tu contenido para ser citado y recomendado por ChatGPT, Claude, Perplexity, 
-            Google AI y otros motores de búsqueda generativos.
+            Optimize your content to be cited and recommended by ChatGPT, Claude, Perplexity, 
+            Google AI and other generative search engines.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
             <Link
-              href="/dashboard"
+              href="/onboarding"
               className="bg-black dark:bg-white text-white dark:text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors shadow-lg"
             >
-              Comenzar Gratis
+              Start Free
             </Link>
             <Link
               href="/demo"
               className="bg-white dark:bg-black text-gray-900 dark:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors border-2 border-gray-200 dark:border-gray-800"
             >
-              Ver Demo
+              View Demo
             </Link>
           </div>
 
@@ -148,15 +148,15 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 mt-12 sm:mt-20 max-w-4xl mx-auto px-4">
             <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
               <div className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">50M+</div>
-              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Búsquedas de IA Monitoreadas</div>
+              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">AI Searches Monitored</div>
             </div>
             <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
               <div className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">98%</div>
-              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Tasa de Mejora</div>
+              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Improvement Rate</div>
             </div>
             <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
               <div className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">500+</div>
-              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Marcas Confiando</div>
+              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Brands Trusting Us</div>
             </div>
           </div>
         </div>
@@ -167,10 +167,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-              Características Potentes de GEO
+              Powerful GEO Features
             </h2>
             <p className="text-base sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-4">
-              Todo lo que necesitas para optimizar tu presencia en motores de búsqueda de IA
+              Everything you need to optimize your presence in AI search engines
             </p>
           </div>
 
@@ -181,11 +181,11 @@ export default function Home() {
                 <Search className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Monitoreo de IA en Tiempo Real
+                Real-Time AI Monitoring
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Rastrea menciones de tu marca en ChatGPT, Claude, Perplexity y más. 
-                Recibe alertas instantáneas cuando tu marca es citada.
+                Track brand mentions in ChatGPT, Claude, Perplexity and more. 
+                Get instant alerts when your brand is cited.
               </p>
             </div>
 
@@ -195,11 +195,11 @@ export default function Home() {
                 <FileSearch className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Auditoría de Sitio Web
+                Website Audit
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Análisis profundo de tu sitio para optimización de IA. Identifica problemas 
-                y obtén recomendaciones accionables.
+                Deep analysis of your site for AI optimization. Identify issues 
+                and get actionable recommendations.
               </p>
             </div>
 
@@ -209,11 +209,11 @@ export default function Home() {
                 <Rocket className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Optimización de Contenido
+                Content Optimization
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Optimiza tu contenido para mejor comprensión y citación por IA. 
-                Análisis NLP avanzado y sugerencias.
+                Optimize your content for better understanding and citation by AI. 
+                Advanced NLP analysis and suggestions.
               </p>
             </div>
 
@@ -223,11 +223,11 @@ export default function Home() {
                 <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Panel de Análisis
+                Analytics Dashboard
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Visualiza menciones, tendencias y rendimiento en todos los motores de IA. 
-                Compara con competidores.
+                Visualize mentions, trends and performance across all AI engines. 
+                Compare with competitors.
               </p>
             </div>
 
@@ -237,11 +237,11 @@ export default function Home() {
                 <Target className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Investigación de Palabras Clave
+                Keyword Research
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Descubre qué consultas activan menciones de tu marca. Identifica brechas 
-                de contenido y oportunidades.
+                Discover which queries trigger brand mentions. Identify content gaps 
+                and opportunities.
               </p>
             </div>
 
@@ -251,11 +251,11 @@ export default function Home() {
                 <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Análisis de Competidores
+                Competitor Analysis
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Compara tu rendimiento con competidores. Ve qué funciona en tu industria 
-                y mantente adelante.
+                Compare your performance with competitors. See what works in your industry 
+                and stay ahead.
               </p>
             </div>
           </div>
@@ -267,16 +267,16 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <Shield className="h-12 w-12 sm:h-16 sm:w-16 text-white mx-auto mb-4 sm:mb-6" />
           <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4 sm:mb-6">
-            Listo para Optimizar tu Presencia en IA?
+            Ready to Optimize Your AI Presence?
           </h2>
           <p className="text-base sm:text-xl text-gray-300 mb-6 sm:mb-8 px-4">
-            Únete a cientos de marcas que ya están dominando la optimización de motores generativos
+            Join hundreds of brands already dominating generative engine optimization
           </p>
           <Link
-            href="/dashboard"
+            href="/onboarding"
             className="inline-block bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
           >
-            Comenzar Prueba Gratuita
+            Start Free Trial
           </Link>
         </div>
       </section>
@@ -291,36 +291,36 @@ export default function Home() {
                 <span className="text-black dark:text-white text-xl font-bold">Geoptimo</span>
               </div>
               <p className="text-sm">
-                Optimización para motores generativos de IA. Sé descubierto, citado y recomendado.
+                Optimization for generative AI engines. Be discovered, cited and recommended.
               </p>
             </div>
             <div>
-              <h4 className="text-black dark:text-white font-semibold mb-4">Producto</h4>
+              <h4 className="text-black dark:text-white font-semibold mb-4">Product</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="#features" className="hover:text-black dark:hover:text-white transition-colors">Características</Link></li>
-                <li><Link href="#pricing" className="hover:text-black dark:hover:text-white transition-colors">Precios</Link></li>
+                <li><Link href="#features" className="hover:text-black dark:hover:text-white transition-colors">Features</Link></li>
+                <li><Link href="#pricing" className="hover:text-black dark:hover:text-white transition-colors">Pricing</Link></li>
                 <li><Link href="/dashboard" className="hover:text-black dark:hover:text-white transition-colors">Dashboard</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-black dark:text-white font-semibold mb-4">Recursos</h4>
+              <h4 className="text-black dark:text-white font-semibold mb-4">Resources</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Documentación</Link></li>
+                <li><Link href="/demo" className="hover:text-black dark:hover:text-white transition-colors">Demo</Link></li>
                 <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Blog</Link></li>
-                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Guías</Link></li>
+                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Guides</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-black dark:text-white font-semibold mb-4">Empresa</h4>
+              <h4 className="text-black dark:text-white font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Sobre Nosotros</Link></li>
-                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Contacto</Link></li>
-                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Privacidad</Link></li>
+                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">About Us</Link></li>
+                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Contact</Link></li>
+                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Privacy</Link></li>
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-200 dark:border-gray-800 mt-12 pt-8 text-center text-sm">
-            <p>&copy; 2025 Geoptimo. Todos los derechos reservados.</p>
+            <p>&copy; 2025 Geoptimo. All rights reserved.</p>
           </div>
         </div>
       </footer>
