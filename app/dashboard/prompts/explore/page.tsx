@@ -313,43 +313,98 @@ export default function ExplorePromptsPage() {
       </Link>
 
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center space-x-2">
-            <Sparkles className="h-8 w-8 text-purple-600" />
-            <span>Explore AI-Generated Prompts</span>
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Discover relevant prompts based on your brand, industry, and competitor analysis
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <button
-            onClick={handleGenerateAIPrompts}
-            disabled={generating}
-            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 disabled:opacity-50 shadow-lg"
-          >
-            <Sparkles className={`h-5 w-5 ${generating ? 'animate-pulse' : ''}`} />
-            <span>{generating ? 'Generating...' : 'Generate AI Prompts'}</span>
-          </button>
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 hover:bg-gray-800 dark:hover:bg-gray-200"
-          >
-            <Plus className="h-5 w-5" />
-            <span>Create Custom</span>
-          </button>
-          {prompts.length === 0 && (
+      <div>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center space-x-2">
+              <Sparkles className="h-8 w-8 text-purple-600" />
+              <span>Explore AI-Generated Prompts</span>
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              Discover relevant prompts based on your brand, industry, and competitor analysis
+            </p>
+          </div>
+          <div className="flex gap-2">
             <button
-              onClick={handleSeedPrompts}
-              disabled={seeding}
-              className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 disabled:opacity-50"
+              onClick={handleGenerateAIPrompts}
+              disabled={generating}
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 disabled:opacity-50 shadow-lg"
             >
-              <RefreshCw className={`h-5 w-5 ${seeding ? 'animate-spin' : ''}`} />
-              <span>{seeding ? 'Seeding...' : 'Seed Demo Data'}</span>
+              <Sparkles className={`h-5 w-5 ${generating ? 'animate-pulse' : ''}`} />
+              <span>{generating ? 'Generating...' : 'Generate AI Prompts'}</span>
             </button>
-          )}
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 hover:bg-gray-800 dark:hover:bg-gray-200"
+            >
+              <Plus className="h-5 w-5" />
+              <span>Create Custom</span>
+            </button>
+            {prompts.length === 0 && (
+              <button
+                onClick={handleSeedPrompts}
+                disabled={seeding}
+                className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 disabled:opacity-50"
+              >
+                <RefreshCw className={`h-5 w-5 ${seeding ? 'animate-spin' : ''}`} />
+                <span>{seeding ? 'Seeding...' : 'Seed Demo Data'}</span>
+              </button>
+            )}
+          </div>
         </div>
+
+        {/* How It Works */}
+        <Card className="mt-6 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30 border-purple-200 dark:border-purple-800">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Sparkles className="h-5 w-5 text-purple-600" />
+              <span>How Prompt Monitoring Works</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="flex flex-col items-start">
+                <div className="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold mb-3">
+                  1
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">AI Suggests Prompts</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  We analyze your industry and generate relevant prompts your customers might ask
+                </p>
+              </div>
+              
+              <div className="flex flex-col items-start">
+                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold mb-3">
+                  2
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">You Subscribe</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Choose which prompts to track (questions relevant to your business)
+                </p>
+              </div>
+              
+              <div className="flex flex-col items-start">
+                <div className="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-bold mb-3">
+                  3
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Daily Monitoring</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  We automatically run these prompts on ChatGPT, Claude, Gemini, Perplexity every day
+                </p>
+              </div>
+              
+              <div className="flex flex-col items-start">
+                <div className="w-10 h-10 rounded-full bg-orange-600 text-white flex items-center justify-center font-bold mb-3">
+                  4
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Track Results</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  See if you&apos;re mentioned, your position, sentiment, and full AI response
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Stats */}
