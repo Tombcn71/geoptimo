@@ -389,7 +389,7 @@ export default function AuditPage() {
                           <span>Strengths</span>
                         </h4>
                         <div className="space-y-1">
-                          {dimension.strengths.map((strength, idx) => (
+                          {dimension.strengths.map((strength: string, idx: number) => (
                             <div key={idx} className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
                               <div className="h-1.5 w-1.5 rounded-full bg-green-600" />
                               <span>{strength}</span>
