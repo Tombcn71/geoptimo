@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { query } from '@/lib/db'
 import { runPromptOnChatGPT } from '@/lib/ai/openai'
-import { runPromptOnGemini, analyzeBrandMention } from '@/lib/ai/gemini'
+import { runPromptOnGemini, detectAllBrands } from '@/lib/ai/gemini'
 
 export async function POST(
   request: Request,
@@ -12,7 +12,7 @@ export async function POST(
     
     // Get prompt with brand info
     const promptResult = await query(
-      `SELECT p.id, p.text, p.providers, b."companyName" as brand_name 
+      `SELECT p.id, p.text, p.providers, p."brandId", b."companyName" as brand_name 
        FROM "Prompt" p
        JOIN "Brand" b ON p."brandId" = b.id
        WHERE p.id = $1`,
@@ -49,18 +49,18 @@ export async function POST(
           continue
         }
 
-        // Analyze if brand is mentioned
-        const analysis = await analyzeBrandMention(
+        // Detect YOUR brand + ALL competitors
+        const brandAnalysis = await detectAllBrands(
           aiResult.response,
           prompt.brand_name
         )
 
-        // Ensure PromptResult sequence exists
-        await query(`
-          CREATE SEQUENCE IF NOT EXISTS "PromptResult_id_seq"
-        `)
+        // Ensure sequences exist
+        await query(`CREATE SEQUENCE IF NOT EXISTS "PromptResult_id_seq"`)
+        await query(`CREATE SEQUENCE IF NOT EXISTS "Competitor_id_seq"`)
+        await query(`CREATE SEQUENCE IF NOT EXISTS "CompetitorMetric_id_seq"`)
 
-        // Save result to database
+        // Save YOUR brand's result
         const insertResult = await query(
           `INSERT INTO "PromptResult" (id, "promptId", provider, mentioned, position, sentiment, response, citations, "runAt")
            VALUES (nextval('"PromptResult_id_seq"'), $1, $2, $3, $4, $5, $6, $7, NOW())
@@ -68,23 +68,85 @@ export async function POST(
           [
             prompt.id,
             provider,
-            analysis.mentioned,
-            analysis.position,
-            analysis.sentiment || 'neutral',
+            brandAnalysis.yourBrand.mentioned,
+            brandAnalysis.yourBrand.position,
+            brandAnalysis.yourBrand.sentiment || 'neutral',
             aiResult.response.substring(0, 5000),
             []
           ]
         )
 
+        console.log(`✅ ${provider}: Your brand mentioned=${brandAnalysis.yourBrand.mentioned}, position=${brandAnalysis.yourBrand.position}`)
+
+        // AUTO-DETECT & STORE COMPETITORS
+        let competitorsFound = 0
+        if (brandAnalysis.competitors && brandAnalysis.competitors.length > 0) {
+          console.log(`🔍 Found ${brandAnalysis.competitors.length} competitors`)
+          
+          for (const comp of brandAnalysis.competitors) {
+            try {
+              // Check if competitor exists
+              const existingComp = await query(`
+                SELECT id FROM "Competitor" 
+                WHERE "brandId" = $1 AND LOWER(name) = LOWER($2)
+              `, [prompt.brandId, comp.name])
+
+              let competitorId
+
+              if (existingComp.rows.length > 0) {
+                competitorId = existingComp.rows[0].id
+              } else {
+                // New competitor
+                const newComp = await query(`
+                  INSERT INTO "Competitor" 
+                    (id, "brandId", name, domain, "createdAt", "updatedAt")
+                  VALUES (nextval('"Competitor_id_seq"'), $1, $2, $3, NOW(), NOW())
+                  RETURNING id
+                `, [prompt.brandId, comp.name, ''])
+                
+                competitorId = newComp.rows[0].id
+                console.log(`   ✨ ${comp.name} (NEW competitor!)`)
+              }
+
+              // Store metrics
+              await query(`
+                INSERT INTO "CompetitorMetric"
+                  (id, "competitorId", date, "visibilityScore", sentiment, "topThreeVis", 
+                   mentions, "avgPosition", "detectionRate", "domainCitations")
+                VALUES (nextval('"CompetitorMetric_id_seq"'), $1, NOW(), $2, $3, $4, 1, $5, 0, 0)
+                ON CONFLICT ("competitorId", date) 
+                DO UPDATE SET 
+                  mentions = "CompetitorMetric".mentions + 1,
+                  "avgPosition" = CASE 
+                    WHEN $5 IS NOT NULL THEN ($5 + COALESCE("CompetitorMetric"."avgPosition", 0)) / 2.0
+                    ELSE "CompetitorMetric"."avgPosition"
+                  END,
+                  sentiment = $3
+              `, [
+                competitorId,
+                comp.position ? (comp.position <= 3 ? 80 : 50) : 40,
+                comp.sentiment === 'positive' ? 80 : (comp.sentiment === 'negative' ? 30 : 50),
+                comp.position && comp.position <= 3 ? 100 : 0,
+                comp.position
+              ])
+
+              competitorsFound++
+            } catch (compError) {
+              console.error(`   ❌ Error storing competitor ${comp.name}:`, compError)
+            }
+          }
+        }
+
         results.push({
           provider,
-          mentioned: analysis.mentioned,
-          position: analysis.position,
-          sentiment: analysis.sentiment,
+          mentioned: brandAnalysis.yourBrand.mentioned,
+          position: brandAnalysis.yourBrand.position,
+          sentiment: brandAnalysis.yourBrand.sentiment,
+          competitorsFound,
           resultId: insertResult.rows[0].id
         })
 
-        console.log(`✅ ${provider}: mentioned=${analysis.mentioned}, position=${analysis.position}`)
+        console.log(`✅ ${provider}: mentioned=${brandAnalysis.yourBrand.mentioned}, ${competitorsFound} competitors detected`)
 
       } catch (providerError) {
         console.error(`❌ Error with ${provider}:`, providerError)

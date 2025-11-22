@@ -210,3 +210,99 @@ ${content.substring(0, 4000)}`
     throw error
   }
 }
+
+// NEW: Detect ALL brands/competitors in AI response
+export async function detectAllBrands(response: string, yourBrandName: string) {
+  if (!process.env.GOOGLE_AI_API_KEY) {
+    return {
+      yourBrand: { mentioned: false, position: null, sentiment: 'neutral' },
+      competitors: []
+    }
+  }
+
+  try {
+    const model = 'gemini-flash-lite-latest'
+    
+    const prompt = `Analyze this AI response and extract ALL brand/company names mentioned.
+
+Your Brand: "${yourBrandName}"
+
+AI Response:
+"""
+${response}
+"""
+
+Extract ALL brands/companies mentioned. Return ONLY valid JSON with this structure:
+{
+  "yourBrand": {
+    "mentioned": true or false,
+    "position": number from 1-10 or null (if it's a numbered list/ranking),
+    "sentiment": "positive" or "neutral" or "negative"
+  },
+  "competitors": [
+    {
+      "name": "Brand Name",
+      "position": number from 1-10 or null,
+      "sentiment": "positive" or "neutral" or "negative"
+    }
+  ]
+}
+
+Rules:
+- Find EVERY company/brand name (e.g. Asana, Trello, Notion, Monday.com)
+- Exclude generic terms like "software", "tool", "app"
+- position: if the response is a numbered list, what position does each brand have? (1 = first mentioned)
+- sentiment: how positively is each brand discussed?
+- Do NOT include "${yourBrandName}" in competitors list
+- Include ONLY real company/product names
+
+Return ONLY the JSON, no other text.`
+
+    const contents = [
+      {
+        role: 'user' as const,
+        parts: [{ text: prompt }]
+      }
+    ]
+
+    const result = await ai.models.generateContent({
+      model,
+      contents,
+    })
+    
+    const analysisText = result.text?.trim()
+    
+    const jsonMatch = analysisText.match(/\{[\s\S]*\}/)
+    if (jsonMatch) {
+      const parsed = JSON.parse(jsonMatch[0])
+      return {
+        yourBrand: parsed.yourBrand || { mentioned: false, position: null, sentiment: 'neutral' },
+        competitors: Array.isArray(parsed.competitors) ? parsed.competitors.filter((c: any) => 
+          c.name && c.name.toLowerCase() !== yourBrandName.toLowerCase()
+        ) : []
+      }
+    }
+
+    // Fallback
+    return {
+      yourBrand: { 
+        mentioned: response.toLowerCase().includes(yourBrandName.toLowerCase()),
+        position: null, 
+        sentiment: 'neutral' 
+      },
+      competitors: []
+    }
+  } catch (error) {
+    console.error('Error detecting brands:', error)
+    
+    // Fallback
+    return {
+      yourBrand: { 
+        mentioned: response.toLowerCase().includes(yourBrandName.toLowerCase()),
+        position: null, 
+        sentiment: 'neutral' 
+      },
+      competitors: []
+    }
+  }
+}
