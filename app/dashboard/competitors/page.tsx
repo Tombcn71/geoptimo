@@ -241,7 +241,7 @@ export default function CompetitorsPage() {
           </CardContent>
         </Card>
       </div>
-      ) : null}
+      )}
 
       {/* Why This Matters */}
       {competitors.length > 0 && (
