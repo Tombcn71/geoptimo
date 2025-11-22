@@ -243,28 +243,9 @@ export default function SettingsPage() {
                 value={brandProfile.targetAudience}
                 onChange={(e) => setBrandProfile({...brandProfile, targetAudience: e.target.value})}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
-                placeholder="Ej: Marketing teams, SEO professionals"
+                placeholder="e.g. Marketing teams, SEO professionals"
               />
             </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Main Competitors
-            </label>
-            <div className="relative">
-              <Target className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <input
-                type="text"
-                value={brandProfile.competitors}
-                onChange={(e) => setBrandProfile({...brandProfile, competitors: e.target.value})}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
-                placeholder="Separa con comas"
-              />
-            </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              Estos competidores aparecerán en tu análisis comparativo
-            </p>
           </div>
         </CardContent>
       </Card>
@@ -274,7 +255,7 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Tag className="h-5 w-5 text-orange-600" />
-            <span>Keywords & Posicionamiento</span>
+            <span>Keywords & Positioning</span>
           </CardTitle>
           <CardDescription>
             Define cómo quieres ser encontrado
@@ -292,7 +273,7 @@ export default function SettingsPage() {
                 value={brandProfile.keywords}
                 onChange={(e) => setBrandProfile({...brandProfile, keywords: e.target.value})}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
-                placeholder="Separa con comas"
+                placeholder="Separate with commas"
               />
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -362,15 +343,7 @@ export default function SettingsPage() {
                 🎯 Recommended Prompts
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Hemos generado 12 prompts relevantes para tu industria. Ve al Prompt Explorer para suscribirte.
-              </p>
-            </div>
-            <div className="p-4 bg-white dark:bg-gray-900 rounded-lg">
-              <p className="font-medium text-gray-900 dark:text-white mb-1">
-                🔍 Competitor Tracking Active
-              </p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Estamos monitoreando {brandProfile.competitors.split(',').length} competidores en tu análisis comparativo.
+                We've generated 12 relevant prompts for your industry. Visit Prompt Explorer to subscribe.
               </p>
             </div>
             <div className="p-4 bg-white dark:bg-gray-900 rounded-lg">
@@ -378,7 +351,7 @@ export default function SettingsPage() {
                 💡 Content Opportunities
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Detectamos 8 topics donde puedes mejorar tu visibilidad en IA. Revisa el Content Studio.
+                We detected 8 topics where you can improve your AI visibility. Check the Content Studio.
               </p>
             </div>
           </div>
