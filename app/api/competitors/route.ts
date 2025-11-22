@@ -51,28 +51,70 @@ export async function GET() {
     )
 
     // Format data for frontend with calculated metrics
-    const competitorsData = competitorsResult.rows.map(comp => {
+    const competitorsData = await Promise.all(competitorsResult.rows.map(async (comp) => {
       const mentions = parseInt(comp.mentions) || 0
       
-      // Calculate simple visibility score based on mentions
-      // More sophisticated metrics will be added as we collect more data
-      const visibilityScore = mentions > 0 
-        ? Math.min(100, mentions * 15) // Each mention = 15 points, max 100
+      // Get detailed metrics from CompetitorMetric joined with PromptResult
+      const detailsResult = await query(
+        `SELECT 
+           cm.position,
+           cm.sentiment,
+           pr.mentioned,
+           pr.position as prompt_position
+         FROM "CompetitorMetric" cm
+         LEFT JOIN "PromptResult" pr ON cm."promptResultId" = pr.id
+         WHERE cm."competitorId" = $1`,
+        [comp.id]
+      )
+      
+      const details = detailsResult.rows
+      
+      // Calculate average position (from CompetitorMetric.position)
+      const positions = details
+        .map(d => d.position)
+        .filter(p => p !== null && p !== undefined && p > 0)
+      const avgPosition = positions.length > 0
+        ? positions.reduce((a, b) => a + b, 0) / positions.length
+        : 0
+      
+      // Calculate sentiment score
+      const sentiments = details.map(d => {
+        if (d.sentiment === 'positive') return 85
+        if (d.sentiment === 'negative') return 25
+        return 50
+      })
+      const avgSentiment = sentiments.length > 0
+        ? sentiments.reduce((a, b) => a + b, 0) / sentiments.length
+        : 50
+      
+      // Calculate top 3 percentage
+      const topThreeCount = positions.filter(p => p <= 3).length
+      const topThreeVis = mentions > 0 
+        ? (topThreeCount / mentions) * 100
+        : 0
+      
+      // Calculate visibility score (based on mentions, position, top 3)
+      const visibilityScore = mentions > 0
+        ? Math.min(100, 
+            (mentions * 10) + // 10 points per mention
+            (topThreeVis > 0 ? 30 : 0) + // 30 bonus for top 3 appearances
+            (avgPosition > 0 && avgPosition <= 5 ? 20 : 0) // 20 bonus for avg top 5
+          )
         : 0
       
       return {
         name: comp.name,
         domain: comp.domain || '',
         visibilityScore: Math.round(visibilityScore),
-        sentiment: 50, // Neutral for now, will be calculated from actual sentiment data
-        topThreeVis: mentions > 0 ? 60 : 0, // Placeholder
+        sentiment: Math.round(avgSentiment),
+        topThreeVis: Math.round(topThreeVis),
         mentions: mentions,
-        avgPosition: mentions > 0 ? 2 : 0, // Placeholder average position
-        detectionRate: mentions > 0 ? Math.min(100, mentions * 20) : 0,
+        avgPosition: avgPosition > 0 ? parseFloat(avgPosition.toFixed(1)) : 0,
+        detectionRate: mentions > 0 ? Math.min(100, mentions * 25) : 0,
         domainCitations: 0,
         trend: 'up' as const
       }
-    })
+    }))
 
     // Add your brand to comparison
     const yourBrand = {
