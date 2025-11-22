@@ -251,6 +251,61 @@ export default function DashboardPage() {
         </Card>
       </div>
 
+      {/* Recent Activity */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Recent Activity</CardTitle>
+          <CardDescription>
+            Latest prompt runs and brand mentions
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {(metrics?.topQueries && metrics.topQueries.length > 0) ? (
+            <div className="space-y-3">
+              {metrics.topQueries.slice(0, 5).map((query, index) => (
+                <Link
+                  key={index}
+                  href="/dashboard/prompts"
+                  className="flex items-center justify-between p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group"
+                >
+                  <div className="flex items-center space-x-4 flex-1">
+                    <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+                      <MessageSquare className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400">
+                        {query.query}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        {query.mentions} {query.mentions === 1 ? 'mention' : 'mentions'}
+                      </p>
+                    </div>
+                  </div>
+                  <ArrowUpRight className="h-5 w-5 text-gray-400 group-hover:text-purple-600 dark:group-hover:text-purple-400" />
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <MessageSquare className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                No Activity Yet
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                Subscribe to prompts and run them to start tracking your AI visibility
+              </p>
+              <Link
+                href="/dashboard/prompts/explore"
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+              >
+                <Search className="h-5 w-5" />
+                <span>Explore Prompts</span>
+              </Link>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Link href="/dashboard/content">

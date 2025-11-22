@@ -39,9 +39,20 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
   const [promptData, setPromptData] = useState<any>(null);
   const [runs, setRuns] = useState<PromptRun[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
     fetchPromptData();
+    
+    // Check if we just ran this prompt
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('justRan') === 'true') {
+      setShowSuccessMessage(true);
+      // Remove the query param
+      window.history.replaceState({}, '', window.location.pathname);
+      // Hide message after 5 seconds
+      setTimeout(() => setShowSuccessMessage(false), 5000);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolvedParams.id]);
 
@@ -112,6 +123,29 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
 
   return (
     <div className="space-y-6">
+      {/* Success Message */}
+      {showSuccessMessage && (
+        <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-500 dark:border-green-600 rounded-lg p-4 flex items-center justify-between animate-pulse">
+          <div className="flex items-center space-x-3">
+            <CheckCircle2 className="h-6 w-6 text-green-600 dark:text-green-400" />
+            <div>
+              <p className="font-semibold text-green-900 dark:text-green-100">
+                ✅ Prompt Executed Successfully!
+              </p>
+              <p className="text-sm text-green-700 dark:text-green-300">
+                Results are shown below. The AI ran this prompt across multiple providers.
+              </p>
+            </div>
+          </div>
+          <button 
+            onClick={() => setShowSuccessMessage(false)}
+            className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-200"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       {/* Back Button */}
       <Link href="/dashboard/prompts" className="inline-flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
         <ArrowLeft className="h-4 w-4" />
@@ -222,8 +256,31 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
           <CardTitle>Prompt Runs Timeline</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {filteredRuns.map((run) => (
+          {filteredRuns.length === 0 ? (
+            <div className="text-center py-12">
+              <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                No Runs Yet
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                This prompt hasn&apos;t been executed yet. 
+                {promptData?.subscribed ? (
+                  <span> It will run automatically daily, or you can run it manually from the Prompts page.</span>
+                ) : (
+                  <span> Subscribe to this prompt and run it manually to see results.</span>
+                )}
+              </p>
+              <Link 
+                href="/dashboard/prompts"
+                className="inline-flex items-center space-x-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                <span>Back to Prompts</span>
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {filteredRuns.map((run) => (
               <div
                 key={run.id}
                 className={`p-5 rounded-lg border ${
@@ -273,7 +330,8 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                 </div>
               </div>
             ))}
-          </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

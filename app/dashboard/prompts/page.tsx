@@ -71,7 +71,8 @@ export default function PromptsPage() {
       
       if (response.ok) {
         await fetchPrompts();
-        alert('✅ Prompt executed successfully!');
+        // Redirect to detail page to see results
+        window.location.href = `/dashboard/prompts/${promptId}?justRan=true`;
       } else {
         const error = await response.json();
         alert(`❌ Failed: ${error.error}`);
