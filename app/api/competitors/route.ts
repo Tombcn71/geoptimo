@@ -35,33 +35,51 @@ export async function GET() {
 
     const brandMetrics = brandMetricsResult.rows[0]
 
-    // Get competitors with their latest metrics
+    // Get competitors with aggregated metrics from all their detections
     const competitorsResult = await query(
-      `SELECT c.*, cm."visibilityScore", cm.sentiment, cm."topThreeVis", 
-              cm.mentions, cm."avgPosition", cm."detectionRate", cm."domainCitations"
+      `SELECT 
+         c.id,
+         c.name,
+         c.domain,
+         COUNT(cm.id) as mentions,
+         AVG(CASE WHEN cm.position IS NOT NULL THEN cm.position ELSE NULL END) as "avgPosition",
+         COUNT(CASE WHEN cm.position <= 3 THEN 1 END)::float / NULLIF(COUNT(cm.id), 0) * 100 as "topThreeVis",
+         AVG(CASE 
+           WHEN cm.sentiment = 'positive' THEN 80
+           WHEN cm.sentiment = 'negative' THEN 30
+           ELSE 50
+         END) as sentiment
        FROM "Competitor" c
-       LEFT JOIN LATERAL (
-         SELECT * FROM "CompetitorMetric" 
-         WHERE "competitorId" = c.id 
-         ORDER BY date DESC LIMIT 1
-       ) cm ON true
-       WHERE c."brandId" = $1`,
+       LEFT JOIN "CompetitorMetric" cm ON cm."competitorId" = c.id
+       WHERE c."brandId" = $1
+       GROUP BY c.id, c.name, c.domain`,
       [brand.id]
     )
 
     // Format data for frontend
-    const competitorsData = competitorsResult.rows.map(comp => ({
-      name: comp.name,
-      domain: comp.domain,
-      visibilityScore: comp.visibilityScore || 0,
-      sentiment: comp.sentiment || 0,
-      topThreeVis: comp.topThreeVis || 0,
-      mentions: comp.mentions || 0,
-      avgPosition: comp.avgPosition ? parseFloat(comp.avgPosition) : 0,
-      detectionRate: comp.detectionRate || 0,
-      domainCitations: comp.domainCitations || 0,
-      trend: 'up' as const
-    }))
+    const competitorsData = competitorsResult.rows.map(comp => {
+      const mentions = parseInt(comp.mentions) || 0
+      const avgPos = comp.avgPosition ? parseFloat(comp.avgPosition) : null
+      const topThreeVis = parseFloat(comp.topThreeVis) || 0
+      
+      // Calculate visibility score based on mentions and position
+      const visibilityScore = mentions > 0 
+        ? Math.min(100, (mentions * 20) + (avgPos && avgPos <= 3 ? 30 : 0))
+        : 0
+      
+      return {
+        name: comp.name,
+        domain: comp.domain || '',
+        visibilityScore: Math.round(visibilityScore),
+        sentiment: Math.round(parseFloat(comp.sentiment) || 50),
+        topThreeVis: Math.round(topThreeVis),
+        mentions: mentions,
+        avgPosition: avgPos ? parseFloat(avgPos.toFixed(1)) : 0,
+        detectionRate: mentions > 0 ? Math.min(100, mentions * 10) : 0,
+        domainCitations: 0,
+        trend: 'up' as const
+      }
+    })
 
     // Add your brand to comparison
     const yourBrand = {

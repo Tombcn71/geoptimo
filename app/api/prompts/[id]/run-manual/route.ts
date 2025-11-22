@@ -102,38 +102,30 @@ export async function POST(
               if (existingComp.rows.length > 0) {
                 competitorId = existingComp.rows[0].id
               } else {
-                // New competitor
+                // New competitor - generate unique domain from name
+                const uniqueDomain = comp.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+                
                 const newComp = await query(`
                   INSERT INTO "Competitor" 
                     (id, "brandId", name, domain, "createdAt", "updatedAt")
                   VALUES (nextval('"Competitor_id_seq"'), $1, $2, $3, NOW(), NOW())
                   RETURNING id
-                `, [prompt.brandId, comp.name, ''])
+                `, [prompt.brandId, comp.name, uniqueDomain])
                 
                 competitorId = newComp.rows[0].id
-                console.log(`   ✨ ${comp.name} (NEW competitor!)`)
+                console.log(`   ✨ ${comp.name} (NEW competitor! domain: ${uniqueDomain})`)
               }
 
-              // Store metrics
+              // Store metrics (link to promptResultId instead of date-based aggregation)
               await query(`
                 INSERT INTO "CompetitorMetric"
-                  (id, "competitorId", date, "visibilityScore", sentiment, "topThreeVis", 
-                   mentions, "avgPosition", "detectionRate", "domainCitations")
-                VALUES (nextval('"CompetitorMetric_id_seq"'), $1, NOW(), $2, $3, $4, 1, $5, 0, 0)
-                ON CONFLICT ("competitorId", date) 
-                DO UPDATE SET 
-                  mentions = "CompetitorMetric".mentions + 1,
-                  "avgPosition" = CASE 
-                    WHEN $5 IS NOT NULL THEN ($5 + COALESCE("CompetitorMetric"."avgPosition", 0)) / 2.0
-                    ELSE "CompetitorMetric"."avgPosition"
-                  END,
-                  sentiment = $3
+                  (id, "competitorId", "promptResultId", position, sentiment, "detectedAt")
+                VALUES (nextval('"CompetitorMetric_id_seq"'), $1, $2, $3, $4, NOW())
               `, [
                 competitorId,
-                comp.position ? (comp.position <= 3 ? 80 : 50) : 40,
-                comp.sentiment === 'positive' ? 80 : (comp.sentiment === 'negative' ? 30 : 50),
-                comp.position && comp.position <= 3 ? 100 : 0,
-                comp.position
+                insertResult.rows[0].id,
+                comp.position,
+                comp.sentiment
               ])
 
               competitorsFound++
