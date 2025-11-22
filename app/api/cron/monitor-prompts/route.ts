@@ -37,22 +37,17 @@ export async function GET(request: Request) {
       try {
         console.log(`\n🔍 Running prompt: "${prompt.text.substring(0, 50)}..."`)
         
-        // Run on each provider
+        // Run on each provider (currently only Gemini is supported)
         for (const provider of prompt.providers) {
           try {
             let aiResult = null
 
-            // Run prompt on AI platform
-            if (provider === 'ChatGPT') {
-              aiResult = await runPromptOnChatGPT(prompt.text)
-            } else if (provider === 'Gemini') {
+            // Only Gemini is implemented for now
+            if (provider === 'Gemini') {
               aiResult = await runPromptOnGemini(prompt.text)
-            } else if (provider === 'Claude') {
-              // Use Gemini as fallback for Claude
-              aiResult = await runPromptOnGemini(prompt.text)
-            } else if (provider === 'Perplexity') {
-              // TODO: Add Perplexity when API available
-              console.log(`⏭️  Skipping ${provider} (not implemented yet)`)
+            } else {
+              // Skip other providers until they're properly implemented
+              console.log(`⏭️  Skipping ${provider} (not yet implemented)`)
               continue
             }
 

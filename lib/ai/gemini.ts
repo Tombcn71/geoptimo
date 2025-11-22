@@ -12,20 +12,49 @@ export async function runPromptOnGemini(prompt: string) {
 
   try {
     const model = 'gemini-flash-lite-latest'
+    
+    // System instruction to make responses realistic and concise
+    const systemInstruction = `You are a helpful AI assistant. Respond naturally and conversationally, like ChatGPT would.
+
+IMPORTANT RULES:
+- Keep responses SHORT and CONCISE (200-400 words maximum)
+- Be direct and to-the-point
+- Use natural, conversational language
+- If listing items, keep it to 3-5 top recommendations
+- Don't over-explain - give practical, useful answers
+- Match the tone users expect from AI chatbots
+
+Example good response length:
+"Here are the top project management tools:
+
+1. Asana - Great for team collaboration with visual boards
+2. Trello - Simple kanban-style organization
+3. Monday.com - Highly customizable workflows
+
+Each has a free tier to get started. Asana is best for larger teams, while Trello works well for individuals and small groups."
+
+(That's about right! Don't write essays.)`
+
     const contents = [
       {
         role: 'user' as const,
         parts: [
           {
-            text: prompt,
+            text: `${systemInstruction}\n\nUser question: ${prompt}`,
           },
         ],
       },
     ]
 
+    const config = {
+      maxOutputTokens: 500, // Limit to ~400 words
+      temperature: 0.7,
+    }
+
     const response = await ai.models.generateContent({
       model,
       contents,
+      config,
     })
 
     return {

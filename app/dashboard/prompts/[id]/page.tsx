@@ -17,12 +17,13 @@ import Link from "next/link";
 import { useState, useEffect, use } from "react";
 import Image from "next/image";
 
-// AI Provider logos
+// AI Provider logos (currently only Gemini is supported)
 const providerLogos = {
-  "OpenAI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png",
-  "Anthropic": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZUXhK7OwjbhB9JRz7TvHR2mOHxKY6GPUFrw&s",
-  "Google": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg",
-  "Perplexity": "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/perplexity-ai-icon.png"
+  "Gemini": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg",
+  // Other providers will be added when implemented:
+  // "ChatGPT": "...",
+  // "Claude": "...",
+  // "Perplexity": "..."
 };
 
 interface PromptRun {

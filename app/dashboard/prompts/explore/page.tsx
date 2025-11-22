@@ -154,7 +154,7 @@ export default function ExplorePromptsPage() {
         body: JSON.stringify({
           text: newPromptText,
           category: newPromptCategory,
-          providers: ['ChatGPT', 'Gemini', 'Claude', 'Perplexity'],
+          providers: ['Gemini'], // Only Gemini is implemented for now
           isCustom: true
         })
       });
@@ -265,7 +265,7 @@ export default function ExplorePromptsPage() {
             body: JSON.stringify({
               text: prompt.text,
               category: prompt.category,
-              providers: ['ChatGPT', 'Gemini', 'Claude', 'Perplexity'],
+              providers: ['Gemini'], // Only Gemini is implemented for now
               isCustom: false
             })
           });

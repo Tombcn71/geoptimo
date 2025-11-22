@@ -28,24 +28,30 @@ export async function POST(
 
     console.log(`🚀 Running prompt manually: "${prompt.text.substring(0, 50)}..."`)
 
-    // Run on each subscribed provider
+    // Run on each subscribed provider (currently only Gemini is supported)
     for (const provider of prompt.providers) {
       try {
         let aiResult = null
 
-        if (provider === 'ChatGPT') {
-          aiResult = await runPromptOnChatGPT(prompt.text)
-        } else if (provider === 'Gemini') {
+        // Only Gemini is implemented for now
+        if (provider === 'Gemini') {
           aiResult = await runPromptOnGemini(prompt.text)
-        } else if (provider === 'Claude') {
-          aiResult = await runPromptOnGemini(prompt.text) // Use Gemini as fallback
-        } else if (provider === 'Perplexity') {
-          console.log(`⏭️  Skipping ${provider} (not implemented yet)`)
+        } else {
+          // Skip other providers until properly implemented
+          console.log(`⏭️  Skipping ${provider} (not yet implemented)`)
+          results.push({
+            provider,
+            error: 'Provider not yet implemented. Currently only Gemini is supported.'
+          })
           continue
         }
 
         if (!aiResult || !aiResult.response) {
           console.log(`⚠️  No response from ${provider}`)
+          results.push({
+            provider,
+            error: 'No response received from AI provider'
+          })
           continue
         }
 
