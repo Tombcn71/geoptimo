@@ -5,9 +5,10 @@ import { Sparkles, ArrowRight, Zap, BarChart3, Target } from "lucide-react";
 
 interface Props {
   onNext: () => void;
+  onSkip?: () => void;
 }
 
-export default function StepWelcome({ onNext }: Props) {
+export default function StepWelcome({ onNext, onSkip }: Props) {
   return (
     <Card className="border-none shadow-2xl bg-white dark:bg-gray-900">
       <CardContent className="pt-12 pb-12 px-8">
@@ -80,7 +81,7 @@ export default function StepWelcome({ onNext }: Props) {
           </div>
         </div>
 
-        <div className="text-center">
+        <div className="text-center space-y-3">
           <button
             onClick={onNext}
             className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-semibold text-lg transition-all flex items-center space-x-3 mx-auto shadow-lg hover:shadow-xl transform hover:scale-105"
@@ -88,7 +89,15 @@ export default function StepWelcome({ onNext }: Props) {
             <span>Let&apos;s Get Started</span>
             <ArrowRight className="h-5 w-5" />
           </button>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
+          {onSkip && (
+            <button
+              onClick={onSkip}
+              className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white underline"
+            >
+              Skip introduction, go straight to setup →
+            </button>
+          )}
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
             Takes 2 minutes • No credit card required
           </p>
         </div>

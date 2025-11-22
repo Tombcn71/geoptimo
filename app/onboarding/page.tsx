@@ -56,6 +56,11 @@ export default function OnboardingPage() {
     setCurrentStep(currentStep + 1);
   };
 
+  const handleSkipIntro = () => {
+    // Skip to step 3 (Domain - first actual form step)
+    setCurrentStep(3);
+  };
+
   const handleBack = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
@@ -64,6 +69,8 @@ export default function OnboardingPage() {
 
   const handleComplete = async (plan?: string) => {
     try {
+      console.log('Creating brand with data:', { ...brandData, plan });
+      
       // Save brand data to database
       const response = await fetch('/api/brands/create', {
         method: 'POST',
@@ -71,13 +78,19 @@ export default function OnboardingPage() {
         body: JSON.stringify({ ...brandData, plan }),
       });
 
-      if (response.ok) {
+      const result = await response.json();
+      console.log('Brand creation result:', result);
+
+      if (response.ok && result.success) {
+        alert('✅ Brand created successfully! Welcome to Geoptimo!');
         router.push('/dashboard');
       } else {
-        console.error('Failed to create brand');
+        alert(`❌ Failed to create brand: ${result.error || 'Unknown error'}\n\nDetails: ${result.details || 'No details'}`);
+        console.error('Failed to create brand:', result);
       }
     } catch (error) {
       console.error('Error creating brand:', error);
+      alert(`❌ Error creating brand: ${(error as Error).message}`);
     }
   };
 
@@ -144,6 +157,7 @@ export default function OnboardingPage() {
           data={brandData}
           onNext={handleNext}
           onBack={handleBack}
+          {...(currentStep === 1 ? { onSkip: handleSkipIntro } : {})}
           {...(currentStep === 8 ? { onComplete: handleComplete } : {})}
         />
       </div>
