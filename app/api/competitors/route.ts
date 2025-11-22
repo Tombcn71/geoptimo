@@ -1,43 +1,52 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { query } from '@/lib/db'
 
 export async function GET() {
   try {
-    const brand = await prisma.brand.findFirst({
-      where: { companyName: 'Geoptimo' },
-      include: {
-        metrics: {
-          orderBy: { date: 'desc' },
-          take: 1
-        }
-      }
-    })
+    const brandResult = await query(
+      `SELECT * FROM "Brand" WHERE "companyName" = $1 LIMIT 1`,
+      ['Geoptimo']
+    )
 
-    if (!brand) {
+    if (brandResult.rows.length === 0) {
       return NextResponse.json({ error: 'Brand not found' }, { status: 404 })
     }
 
-    const competitors = await prisma.competitor.findMany({
-      where: { brandId: brand.id },
-      include: {
-        metrics: {
-          orderBy: { date: 'desc' },
-          take: 1
-        }
-      }
-    })
+    const brand = brandResult.rows[0]
+
+    // Get brand's latest metrics
+    const brandMetricsResult = await query(
+      `SELECT * FROM "Metric" WHERE "brandId" = $1 ORDER BY date DESC LIMIT 1`,
+      [brand.id]
+    )
+
+    const brandMetrics = brandMetricsResult.rows[0]
+
+    // Get competitors with their latest metrics
+    const competitorsResult = await query(
+      `SELECT c.*, cm."visibilityScore", cm.sentiment, cm."topThreeVis", 
+              cm.mentions, cm."avgPosition", cm."detectionRate", cm."domainCitations"
+       FROM "Competitor" c
+       LEFT JOIN LATERAL (
+         SELECT * FROM "CompetitorMetric" 
+         WHERE "competitorId" = c.id 
+         ORDER BY date DESC LIMIT 1
+       ) cm ON true
+       WHERE c."brandId" = $1`,
+      [brand.id]
+    )
 
     // Format data for frontend
-    const competitorsData = competitors.map(comp => ({
+    const competitorsData = competitorsResult.rows.map(comp => ({
       name: comp.name,
       domain: comp.domain,
-      visibilityScore: comp.metrics[0]?.visibilityScore || 0,
-      sentiment: comp.metrics[0]?.sentiment || 0,
-      topThreeVis: comp.metrics[0]?.topThreeVis || 0,
-      mentions: comp.metrics[0]?.mentions || 0,
-      avgPosition: comp.metrics[0]?.avgPosition || 0,
-      detectionRate: comp.metrics[0]?.detectionRate || 0,
-      domainCitations: comp.metrics[0]?.domainCitations || 0,
+      visibilityScore: comp.visibilityScore || 0,
+      sentiment: comp.sentiment || 0,
+      topThreeVis: comp.topThreeVis || 0,
+      mentions: comp.mentions || 0,
+      avgPosition: comp.avgPosition ? parseFloat(comp.avgPosition) : 0,
+      detectionRate: comp.detectionRate || 0,
+      domainCitations: comp.domainCitations || 0,
       trend: 'up' as const
     }))
 
@@ -45,13 +54,13 @@ export async function GET() {
     const yourBrand = {
       name: `Your Brand (${brand.companyName})`,
       domain: brand.website,
-      visibilityScore: brand.metrics[0]?.visibilityScore || 0,
-      sentiment: brand.metrics[0]?.sentiment || 0,
-      topThreeVis: brand.metrics[0]?.topThreeVis || 0,
-      mentions: brand.metrics[0]?.mentions || 0,
-      avgPosition: brand.metrics[0]?.avgPosition || 0,
-      detectionRate: brand.metrics[0]?.detectionRate || 0,
-      domainCitations: brand.metrics[0]?.domainCitations || 0,
+      visibilityScore: brandMetrics?.visibilityScore || 0,
+      sentiment: brandMetrics?.sentiment || 0,
+      topThreeVis: brandMetrics?.topThreeVis || 0,
+      mentions: brandMetrics?.mentions || 0,
+      avgPosition: brandMetrics?.avgPosition ? parseFloat(brandMetrics.avgPosition) : 0,
+      detectionRate: brandMetrics?.detectionRate || 0,
+      domainCitations: brandMetrics?.domainCitations || 0,
       trend: 'up' as const,
       isYou: true
     }
@@ -70,4 +79,3 @@ export async function GET() {
     )
   }
 }
-

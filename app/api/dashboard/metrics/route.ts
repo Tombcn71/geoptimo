@@ -1,78 +1,76 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { query } from '@/lib/db'
 
 export async function GET() {
   try {
-    // Get the demo brand (in production, get from auth session)
-    const brand = await prisma.brand.findFirst({
-      where: { companyName: 'Geoptimo' }
-    })
+    // Get the demo brand
+    const brandResult = await query(
+      `SELECT * FROM "Brand" WHERE "companyName" = $1 LIMIT 1`,
+      ['Geoptimo']
+    )
 
-    if (!brand) {
+    if (brandResult.rows.length === 0) {
       return NextResponse.json({ error: 'Brand not found' }, { status: 404 })
     }
 
-    // Get latest metrics
-    const latestMetrics = await prisma.metric.findFirst({
-      where: { brandId: brand.id },
-      orderBy: { date: 'desc' }
-    })
+    const brand = brandResult.rows[0]
 
-    if (!latestMetrics) {
+    // Get latest metrics
+    const metricsResult = await query(
+      `SELECT * FROM "Metric" WHERE "brandId" = $1 ORDER BY date DESC LIMIT 1`,
+      [brand.id]
+    )
+
+    if (metricsResult.rows.length === 0) {
       return NextResponse.json({ error: 'No metrics found' }, { status: 404 })
     }
+
+    const latestMetrics = metricsResult.rows[0]
 
     // Get metrics for the last 7 days for trend chart
     const sevenDaysAgo = new Date()
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
     
-    const mentionsTrend = await prisma.metric.findMany({
-      where: { 
-        brandId: brand.id,
-        date: { gte: sevenDaysAgo }
-      },
-      orderBy: { date: 'asc' },
-      select: {
-        date: true,
-        mentions: true
-      }
-    })
+    const trendResult = await query(
+      `SELECT date, mentions FROM "Metric" 
+       WHERE "brandId" = $1 AND date >= $2 
+       ORDER BY date ASC`,
+      [brand.id, sevenDaysAgo]
+    )
 
-    // Get top prompts with most mentions
-    const topPrompts = await prisma.prompt.findMany({
-      where: { brandId: brand.id },
-      orderBy: { 
-        results: {
-          _count: 'desc'
-        }
-      },
-      take: 5,
-      include: {
-        results: {
-          where: { mentioned: true },
-          take: 10
-        }
-      }
-    })
-
-    // Format mentions trend data
-    const mentionsData = mentionsTrend.map(m => ({
+    const mentionsData = trendResult.rows.map(m => ({
       date: new Date(m.date).toLocaleDateString('en-US', { weekday: 'short' }),
       mentions: m.mentions
     }))
 
-    // Format top queries with mention counts
-    const topQueries = topPrompts.map(prompt => {
-      const mentionCount = prompt.results.length // results already filtered by mentioned: true
-      return {
-        query: prompt.text,
-        mentions: mentionCount,
-        trend: 'up' // TODO: Calculate actual trend
-      }
-    }).filter(q => q.mentions > 0)
+    // Get top prompts with most mentions
+    const topPromptsResult = await query(
+      `SELECT p.id, p.text, COUNT(pr.id) as mention_count 
+       FROM "Prompt" p
+       LEFT JOIN "PromptResult" pr ON p.id = pr."promptId" AND pr.mentioned = true
+       WHERE p."brandId" = $1
+       GROUP BY p.id, p.text
+       ORDER BY mention_count DESC
+       LIMIT 5`,
+      [brand.id]
+    )
+
+    const topQueries = topPromptsResult.rows
+      .filter(p => parseInt(p.mention_count) > 0)
+      .map(p => ({
+        query: p.text,
+        mentions: parseInt(p.mention_count),
+        trend: 'up'
+      }))
 
     return NextResponse.json({
-      ...latestMetrics,
+      visibilityScore: latestMetrics.visibilityScore,
+      sentiment: latestMetrics.sentiment,
+      topThreeVis: latestMetrics.topThreeVis,
+      mentions: latestMetrics.mentions,
+      avgPosition: parseFloat(latestMetrics.avgPosition),
+      detectionRate: latestMetrics.detectionRate,
+      domainCitations: latestMetrics.domainCitations,
       mentionsData,
       topQueries
     })
@@ -84,4 +82,3 @@ export async function GET() {
     )
   }
 }
-

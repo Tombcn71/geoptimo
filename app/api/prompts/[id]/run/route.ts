@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { query } from '@/lib/db'
 import { runPromptOnChatGPT } from '@/lib/ai/openai'
 import { runPromptOnGemini, analyzeBrandMention } from '@/lib/ai/gemini'
 
@@ -9,17 +9,21 @@ export async function POST(
 ) {
   try {
     const params = await context.params
-    const prompt = await prisma.prompt.findUnique({
-      where: { id: params.id },
-      include: {
-        brand: true
-      }
-    })
+    
+    // Get prompt with brand info
+    const promptResult = await query(
+      `SELECT p.*, b."companyName" as brand_name 
+       FROM "Prompt" p
+       JOIN "Brand" b ON p."brandId" = b.id
+       WHERE p.id = $1`,
+      [params.id]
+    )
 
-    if (!prompt) {
+    if (promptResult.rows.length === 0) {
       return NextResponse.json({ error: 'Prompt not found' }, { status: 404 })
     }
 
+    const prompt = promptResult.rows[0]
     const results = []
 
     // Run on each subscribed provider
@@ -39,35 +43,40 @@ export async function POST(
         // Analyze if brand is mentioned
         const analysis = await analyzeBrandMention(
           result.response,
-          prompt.brand.companyName
+          prompt.brand_name
         )
 
         // Save result to database
-        const promptResult = await prisma.promptResult.create({
-          data: {
-            promptId: prompt.id,
-            provider: provider,
-            mentioned: analysis.mentioned,
-            position: analysis.position,
-            sentiment: analysis.sentiment || 'neutral',
-            response: result.response,
-            citations: [], // Extract citations if available
-          }
-        })
+        const insertResult = await query(
+          `INSERT INTO "PromptResult" ("promptId", provider, mentioned, position, sentiment, response, citations, "runAt")
+           VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+           RETURNING *`,
+          [
+            prompt.id,
+            provider,
+            analysis.mentioned,
+            analysis.position,
+            analysis.sentiment || 'neutral',
+            result.response,
+            [] // Extract citations if available
+          ]
+        )
+
+        const promptResultRow = insertResult.rows[0]
 
         results.push({
           provider,
           ...analysis,
-          resultId: promptResult.id
+          resultId: promptResultRow.id
         })
       }
     }
 
     // Update prompt last run time
-    await prisma.prompt.update({
-      where: { id: prompt.id },
-      data: { updatedAt: new Date() }
-    })
+    await query(
+      `UPDATE "Prompt" SET "updatedAt" = NOW() WHERE id = $1`,
+      [prompt.id]
+    )
 
     return NextResponse.json({
       promptId: prompt.id,
@@ -82,4 +91,3 @@ export async function POST(
     )
   }
 }
-

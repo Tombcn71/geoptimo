@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { query } from '@/lib/db'
 
 export async function POST(request: Request) {
   try {
@@ -18,52 +18,36 @@ export async function POST(request: Request) {
     console.log('Creating brand:', { name, domain, category })
 
     // Create the brand
-    const brand = await prisma.brand.create({
-      data: {
-        userId: 'demo-user-id', // TODO: Replace with actual user ID from auth
-        companyName: name,
-        website: domain,
-        industry: category,
+    const brandResult = await query(
+      `INSERT INTO "Brand" ("userId", "companyName", website, industry, description, "targetAudience", "uniqueValue", keywords, "createdAt", "updatedAt")
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
+       RETURNING *`,
+      [
+        'demo-user-id',
+        name,
+        domain,
+        category,
         description,
-        targetAudience: '',
-        uniqueValue: '',
-        keywords: [],
-      },
-    })
+        '',
+        '',
+        aliases || []
+      ]
+    )
 
+    const brand = brandResult.rows[0]
     console.log('Brand created:', brand.id)
-
-    // Create aliases if any
-    if (aliases && aliases.length > 0) {
-      // Store aliases in the brand's keywords for now
-      await prisma.brand.update({
-        where: { id: brand.id },
-        data: {
-          keywords: aliases,
-        },
-      })
-    }
 
     // Create prompts
     if (selectedPrompts && selectedPrompts.length > 0) {
-      await Promise.all(
-        selectedPrompts.map((promptText: string) =>
-          prisma.prompt.create({
-            data: {
-              brandId: brand.id,
-              text: promptText,
-              category: category,
-              isSubscribed: true,
-              isCustom: false,
-            },
-          })
+      for (const promptText of selectedPrompts) {
+        await query(
+          `INSERT INTO "Prompt" ("brandId", text, category, "isSubscribed", "isCustom", impressions, "createdAt", "updatedAt")
+           VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())`,
+          [brand.id, promptText, category, true, false, 0]
         )
-      )
+      }
+      console.log('Created', selectedPrompts.length, 'prompts')
     }
-
-    console.log('Created', selectedPrompts?.length || 0, 'prompts')
-
-    // TODO: Create subscription record based on plan
 
     return NextResponse.json({ 
       success: true, 
@@ -82,4 +66,3 @@ export async function POST(request: Request) {
     )
   }
 }
-

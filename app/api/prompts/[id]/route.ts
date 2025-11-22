@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { query } from '@/lib/db'
 
 export async function GET(
   request: Request,
@@ -7,61 +7,64 @@ export async function GET(
 ) {
   try {
     const { id } = await context.params
-    const promptId = parseInt(id)
 
-    // Get prompt with runs and details
-    const prompt = await prisma.prompt.findUnique({
-      where: { id: promptId },
-      include: {
-        runs: {
-          orderBy: { runDate: 'desc' },
-          include: {
-            details: true
-          }
-        }
-      }
-    })
+    // Get prompt
+    const promptResult = await query(
+      `SELECT * FROM "Prompt" WHERE id = $1`,
+      [id]
+    )
 
-    if (!prompt) {
+    if (promptResult.rows.length === 0) {
       return NextResponse.json({ error: 'Prompt not found' }, { status: 404 })
     }
 
+    const prompt = promptResult.rows[0]
+
+    // Get all results for this prompt
+    const resultsResult = await query(
+      `SELECT * FROM "PromptResult" WHERE "promptId" = $1 ORDER BY "runAt" DESC`,
+      [id]
+    )
+
+    const results = resultsResult.rows
+
     // Calculate stats
-    const totalRuns = prompt.runs.length
-    const mentionedRuns = prompt.runs.filter(run => 
-      run.details.some(d => d.mentioned)
-    )
-    const totalMentions = mentionedRuns.reduce((sum, run) => 
-      sum + run.details.filter(d => d.mentioned).length, 0
-    )
+    const totalRuns = results.length
+    const mentionedResults = results.filter(r => r.mentioned)
+    const totalMentions = mentionedResults.length
     
-    const positions = mentionedRuns.flatMap(run =>
-      run.details.filter(d => d.mentioned && d.position).map(d => d.position!)
-    )
+    const positions = mentionedResults
+      .filter(r => r.position !== null)
+      .map(r => r.position)
     const avgPosition = positions.length > 0
       ? positions.reduce((sum, p) => sum + p, 0) / positions.length
       : 0
 
     const detectionRate = totalRuns > 0
-      ? (mentionedRuns.length / totalRuns) * 100
+      ? (mentionedResults.length / totalRuns) * 100
       : 0
 
-    // Format runs for frontend
-    const runsWithDetails = prompt.runs.map(run => ({
-      id: run.id,
-      date: new Date(run.runDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-      time: new Date(run.runDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-      provider: run.provider,
-      details: run.details.map(detail => ({
-        mentioned: detail.mentioned,
-        position: detail.position,
-        response: detail.responseText,
-        brandName: detail.brandName || 'Geoptimo'
-      }))
+    // Format runs for frontend (group by date and provider)
+    const runsWithDetails = results.map(result => ({
+      id: result.id,
+      date: new Date(result.runAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      time: new Date(result.runAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+      provider: result.provider,
+      details: [{
+        mentioned: result.mentioned,
+        position: result.position,
+        response: result.response,
+        brandName: 'Geoptimo'
+      }]
     }))
 
     return NextResponse.json({
-      ...prompt,
+      id: prompt.id,
+      text: prompt.text,
+      category: prompt.category,
+      isSubscribed: prompt.isSubscribed,
+      isCustom: prompt.isCustom,
+      providers: prompt.providers,
       totalRuns,
       avgPosition: Math.round(avgPosition * 10) / 10,
       detectionRate: Math.round(detectionRate * 10) / 10,
@@ -76,4 +79,3 @@ export async function GET(
     )
   }
 }
-

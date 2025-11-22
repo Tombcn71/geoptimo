@@ -1,22 +1,25 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { query } from '@/lib/db'
 
 export async function GET() {
   try {
-    const brand = await prisma.brand.findFirst({
-      where: { companyName: 'Geoptimo' }
-    })
+    const brandResult = await query(
+      `SELECT * FROM "Brand" WHERE "companyName" = $1 LIMIT 1`,
+      ['Geoptimo']
+    )
 
-    if (!brand) {
+    if (brandResult.rows.length === 0) {
       return NextResponse.json({ error: 'Brand not found' }, { status: 404 })
     }
 
-    const citations = await prisma.citation.findMany({
-      where: { brandId: brand.id },
-      orderBy: { citationCount: 'desc' }
-    })
+    const brand = brandResult.rows[0]
 
-    return NextResponse.json(citations)
+    const citationsResult = await query(
+      `SELECT * FROM "Citation" WHERE "brandId" = $1 ORDER BY "citationCount" DESC`,
+      [brand.id]
+    )
+
+    return NextResponse.json(citationsResult.rows)
   } catch (error) {
     console.error('Error fetching citations:', error)
     return NextResponse.json(
@@ -25,4 +28,3 @@ export async function GET() {
     )
   }
 }
-
