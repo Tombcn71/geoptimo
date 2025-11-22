@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -37,8 +38,20 @@ export default function RegisterPage() {
       if (!response.ok) {
         setError(data.error || "Registration failed");
       } else {
-        // Redirect to onboarding after successful registration
-        router.push("/onboarding");
+        // Auto-login after successful registration
+        const signInResult = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+        });
+
+        if (signInResult?.error) {
+          setError("Registration successful but login failed. Please login manually.");
+        } else {
+          // Redirect to onboarding after successful auto-login
+          router.push("/onboarding");
+          router.refresh();
+        }
       }
     } catch (error) {
       setError("An error occurred. Please try again.");
