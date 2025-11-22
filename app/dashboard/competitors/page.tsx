@@ -153,8 +153,51 @@ export default function CompetitorsPage() {
         </CardContent>
       </Card>
 
+      {/* Empty State - No Competitors Yet */}
+      {competitors.length === 0 ? (
+        <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-950/20 dark:to-orange-950/20 border-yellow-200 dark:border-yellow-800">
+          <CardContent className="pt-6 pb-6">
+            <div className="text-center py-12">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                <Eye className="h-10 w-10 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                No Competitors Detected Yet
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
+                Competitors will automatically appear here when you run prompts. 
+                AI will detect which other brands are mentioned alongside yours and track their performance.
+              </p>
+              <div className="flex flex-col items-center space-y-3">
+                <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                  <span className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold">1</span>
+                  <span>Go to <strong>Prompt Explorer</strong></span>
+                </div>
+                <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                  <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">2</span>
+                  <span>Click <strong>&quot;Run Now&quot;</strong> on any prompt</span>
+                </div>
+                <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                  <span className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">3</span>
+                  <span>Competitors will <strong>automatically</strong> be detected!</span>
+                </div>
+              </div>
+              <div className="mt-8">
+                <a 
+                  href="/dashboard/prompts/explore"
+                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
+                >
+                  <span>Go to Prompt Explorer</span>
+                  <ArrowUpDown className="ml-2 h-5 w-5" />
+                </a>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ) : (
+        <>
       {/* Overview Cards */}
-      {competitors.length > 0 ? (
+      {competitors.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
             <CardHeader>
@@ -377,6 +420,8 @@ export default function CompetitorsPage() {
           </div>
         </CardContent>
       </Card>
+      </>
+      )}
     </div>
   );
 }
