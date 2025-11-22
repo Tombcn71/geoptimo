@@ -130,17 +130,17 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* Key Metrics */}
+      {/* Key Metrics - Top 4 from Demo */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Visibility Score */}
+        {/* 1. Visibility Score */}
         <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 border-purple-200 dark:border-purple-800">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-purple-700 dark:text-purple-300 flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Eye className="h-4 w-4" />
-                <span>AI Visibility Score</span>
+                <span>Visibility Score</span>
               </div>
-              <Tooltip content="Combines detection rate, average position, and top-3 prominence into a single score. Higher is better (max 100)." />
+              <Tooltip content="How often your brand appears in AI responses" />
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -152,82 +152,139 @@ export default function DashboardPage() {
               +12% from last week
             </p>
             <p className="text-xs text-purple-600/70 dark:text-purple-400/70 mt-2">
-              How often your brand appears in AI responses
+              💡 Shows if your GEO efforts are working
             </p>
           </CardContent>
         </Card>
 
-        {/* Mentions */}
-        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-blue-700 dark:text-blue-300 flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <MessageSquare className="h-4 w-4" />
-                <span>Total Mentions</span>
-              </div>
-              <Tooltip content="Total number of AI responses that mentioned your brand at least once." />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-blue-900 dark:text-blue-100">
-              {metrics?.mentions || 0}
-            </div>
-            <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 flex items-center">
-              <TrendingUp className="h-3 w-3 mr-1" />
-              +8% from last week
-            </p>
-            <p className="text-xs text-blue-600/70 dark:text-blue-400/70 mt-2">
-              Times your brand was mentioned this week
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Average Position */}
+        {/* 2. Brand Sentiment */}
         <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 border-green-200 dark:border-green-800">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-green-700 dark:text-green-300 flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <Award className="h-4 w-4" />
-                <span>Avg Position</span>
+                <MessageSquare className="h-4 w-4" />
+                <span>Brand Sentiment</span>
               </div>
-              <Tooltip content="Average ranking position when your brand appears. Lower is better - position 1 means you're mentioned first." />
+              <Tooltip content="How positively AI talks about your brand" />
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-green-900 dark:text-green-100">
-              #{metrics?.avgPosition || 0}
+              {metrics?.sentiment || 0}%
             </div>
             <p className="text-xs text-green-600 dark:text-green-400 mt-2 flex items-center">
               <TrendingUp className="h-3 w-3 mr-1" />
-              Improved by 2 spots
+              Positive trend
             </p>
             <p className="text-xs text-green-600/70 dark:text-green-400/70 mt-2">
-              Your average ranking in AI results
+              💡 Positive mentions = more trust = more customers
             </p>
           </CardContent>
         </Card>
 
-        {/* Top 3 Visibility */}
+        {/* 3. Average Position */}
+        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-blue-700 dark:text-blue-300 flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Award className="h-4 w-4" />
+                <span>Average Position</span>
+              </div>
+              <Tooltip content="Where you rank in AI responses (1-10)" />
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-blue-900 dark:text-blue-100">
+              #{metrics?.avgPosition || 0}
+            </div>
+            <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 flex items-center">
+              <TrendingUp className="h-3 w-3 mr-1" />
+              Improved by 2 spots
+            </p>
+            <p className="text-xs text-blue-600/70 dark:text-blue-400/70 mt-2">
+              💡 Position 1-3 gets 80% of attention
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* 4. Detection Rate */}
         <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 border-orange-200 dark:border-orange-800">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-orange-700 dark:text-orange-300 flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Target className="h-4 w-4" />
-                <span>Top 3 Appearances</span>
+                <span>Detection Rate</span>
               </div>
-              <Tooltip content="Percentage of times your brand appears in the top 3 positions when mentioned in AI responses." />
+              <Tooltip content="% of relevant queries where you're mentioned" />
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-orange-900 dark:text-orange-100">
-              {metrics?.topThreeVis || 0}%
+              {metrics?.detectionRate || 0}%
             </div>
             <p className="text-xs text-orange-600 dark:text-orange-400 mt-2 flex items-center">
               <TrendingUp className="h-3 w-3 mr-1" />
               +5% from last week
             </p>
             <p className="text-xs text-orange-600/70 dark:text-orange-400/70 mt-2">
-              How often you rank in top 3 results
+              💡 Higher rate = more opportunities captured
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Secondary Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Total Mentions */}
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium flex items-center space-x-2">
+              <MessageSquare className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+              <span>Total Mentions</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              {metrics?.mentions || 0}
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              AI responses featuring your brand
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Top 3 Visibility */}
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium flex items-center space-x-2">
+              <Award className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+              <span>Top 3 Appearances</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              {metrics?.topThreeVis || 0}%
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              Times you ranked in top 3 positions
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Domain Citations */}
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium flex items-center space-x-2">
+              <Eye className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+              <span>Domain Citations</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              {metrics?.domainCitations || 0}
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              Times AI cited your website as source
             </p>
           </CardContent>
         </Card>
