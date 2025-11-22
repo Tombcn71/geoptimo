@@ -16,6 +16,8 @@ import {
 import Link from "next/link";
 import { useState, useEffect, use } from "react";
 import Image from "next/image";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 // AI Provider logos (currently only Gemini is supported)
 const providerLogos = {
@@ -121,19 +123,67 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
     return text.substring(0, maxLength) + '...';
   };
 
-  const highlightBrandName = (text: string, brandName: string) => {
-    if (!text) return text;
-    const parts = text.split(new RegExp(`(\\*\\*${brandName}\\*\\*|${brandName})`, 'gi'));
-    return parts.map((part, index) => {
-      if (part.toLowerCase() === brandName.toLowerCase() || part === `**${brandName}**`) {
-        return (
-          <span key={index} className="bg-purple-100 dark:bg-purple-900/30 text-purple-900 dark:text-purple-300 font-semibold px-1 rounded">
-            {brandName}
-          </span>
-        );
-      }
-      return part;
-    });
+  // Render markdown with brand highlighting
+  const renderMarkdownWithHighlight = (text: string, brandName: string) => {
+    if (!text) return null;
+    
+    // Highlight brand name in markdown text
+    const highlightedText = text.replace(
+      new RegExp(`(\\*\\*${brandName}\\*\\*|${brandName})`, 'gi'),
+      `**${brandName}**` // Keep it bold for markdown
+    );
+
+    return (
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          // Style paragraphs
+          p: ({children}) => <p className="mb-3 last:mb-0">{children}</p>,
+          // Style headings
+          h1: ({children}) => <h1 className="text-xl font-bold mb-3 mt-4 first:mt-0">{children}</h1>,
+          h2: ({children}) => <h2 className="text-lg font-bold mb-3 mt-4 first:mt-0">{children}</h2>,
+          h3: ({children}) => <h3 className="text-base font-semibold mb-2 mt-3 first:mt-0">{children}</h3>,
+          // Style lists
+          ul: ({children}) => <ul className="list-disc list-inside space-y-1 mb-3 ml-2">{children}</ul>,
+          ol: ({children}) => <ol className="list-decimal list-inside space-y-1 mb-3 ml-2">{children}</ol>,
+          li: ({children}) => <li className="ml-2">{children}</li>,
+          // Style links
+          a: ({children, href}) => (
+            <a href={href} className="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">
+              {children}
+            </a>
+          ),
+          // Style bold text - check if it's the brand name
+          strong: ({children}) => {
+            const text = String(children);
+            const isBrandName = text.toLowerCase() === brandName.toLowerCase();
+            return isBrandName ? (
+              <strong className="bg-purple-100 dark:bg-purple-900/30 text-purple-900 dark:text-purple-300 font-semibold px-1 rounded">
+                {children}
+              </strong>
+            ) : (
+              <strong className="font-semibold text-gray-900 dark:text-white">
+                {children}
+              </strong>
+            );
+          },
+          // Style code
+          code: ({children}) => (
+            <code className="bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded text-sm font-mono">
+              {children}
+            </code>
+          ),
+          // Style blockquotes
+          blockquote: ({children}) => (
+            <blockquote className="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-3">
+              {children}
+            </blockquote>
+          ),
+        }}
+      >
+        {highlightedText}
+      </ReactMarkdown>
+    );
   };
 
   if (loading) {
@@ -369,30 +419,20 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                       </button>
                     </div>
 
-                    {/* Response Content - Google AI Style */}
+                    {/* Response Content - Google AI Style with Markdown */}
                     <div className={`${expandedRuns.has(run.id) ? '' : 'max-h-40 overflow-hidden relative'}`}>
                       <div 
-                        className="prose prose-sm dark:prose-invert max-w-none
-                          prose-headings:font-semibold prose-headings:text-gray-900 dark:prose-headings:text-white
-                          prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-3
-                          prose-strong:text-gray-900 dark:prose-strong:text-white prose-strong:font-semibold
-                          prose-ul:my-2 prose-ul:text-gray-700 dark:prose-ul:text-gray-300
-                          prose-li:my-1 prose-li:text-gray-700 dark:prose-li:text-gray-300
-                          prose-code:text-blue-600 dark:prose-code:text-blue-400 prose-code:bg-blue-50 dark:prose-code:bg-blue-900/20 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-                        "
+                        className="text-gray-700 dark:text-gray-300"
                         style={{
                           fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
                           fontSize: '0.938rem',
                           lineHeight: '1.6',
-                          color: 'rgb(60, 64, 67)'
                         }}
                       >
-                        <p className="whitespace-pre-wrap">
-                          {expandedRuns.has(run.id) 
-                            ? highlightBrandName(run.response, run.brandName)
-                            : highlightBrandName(getResponseExcerpt(run.response, 400), run.brandName)
-                          }
-                        </p>
+                        {renderMarkdownWithHighlight(
+                          expandedRuns.has(run.id) ? run.response : getResponseExcerpt(run.response, 400),
+                          run.brandName
+                        )}
                       </div>
                       {!expandedRuns.has(run.id) && run.response.length > 400 && (
                         <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-blue-50/90 via-blue-50/60 dark:from-blue-950/90 dark:via-blue-950/60 to-transparent pointer-events-none" />
