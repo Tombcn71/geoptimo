@@ -10,6 +10,7 @@ import {
   ArrowUpDown
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 type SortField = "visibility" | "sentiment" | "mentions" | "position" | "detection" | "citations";
 
@@ -183,13 +184,13 @@ export default function CompetitorsPage() {
                 </div>
               </div>
               <div className="mt-8">
-                <a 
+                <Link 
                   href="/dashboard/prompts/explore"
                   className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
                 >
                   <span>Go to Prompt Explorer</span>
                   <ArrowUpDown className="ml-2 h-5 w-5" />
-                </a>
+                </Link>
               </div>
             </div>
           </CardContent>
