@@ -48,12 +48,19 @@ Return ONLY a valid JSON array of objects with this exact format:
 
 No markdown, no explanations, just the JSON array.`
 
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-flash-lite-latest',
-    })
+    const model = 'gemini-flash-lite-latest'
+    const contents = [
+      {
+        role: 'user' as const,
+        parts: [{ text: prompt }],
+      },
+    ]
 
-    const result = await model.generateContent(prompt)
-    const responseText = result.response.text()
+    const result = await genAI.models.generateContent({
+      model,
+      contents,
+    })
+    const responseText = result.text
 
     console.log('📝 Raw AI response:', responseText.substring(0, 200))
 
