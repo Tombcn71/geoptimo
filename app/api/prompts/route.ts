@@ -125,7 +125,7 @@ export async function POST(request: Request) {
 
     const promptResult = await query(
       `INSERT INTO "Prompt" (id, "brandId", text, category, providers, "isCustom", "isSubscribed", impressions, "createdAt", "updatedAt")
-       VALUES (nextval('"Prompt_id_seq"'), $1, $2, $3, $4, $5, $6, NOW(), NOW())
+       VALUES (nextval('"Prompt_id_seq"'), $1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
        RETURNING *`,
       [
         brand.id,
