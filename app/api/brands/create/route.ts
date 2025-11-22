@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       data: {
         userId: 'demo-user-id', // TODO: Replace with actual user ID from auth
         companyName: name,
-        domain,
+        website: domain,
         industry: category,
         description,
         targetAudience: '',
@@ -53,8 +53,8 @@ export async function POST(request: Request) {
               brandId: brand.id,
               text: promptText,
               category: category,
-              frequency: 'weekly',
-              isActive: true,
+              isSubscribed: true,
+              isCustom: false,
             },
           })
         )
