@@ -93,9 +93,20 @@ export async function POST(request: Request) {
 
     const brand = brandResult.rows[0]
 
+    // Ensure Prompt sequence exists
+    await query(`
+      DO $$
+      BEGIN
+        IF NOT EXISTS (SELECT 1 FROM pg_sequences WHERE schemaname = 'public' AND sequencename = 'Prompt_id_seq') THEN
+          CREATE SEQUENCE "Prompt_id_seq";
+          PERFORM setval('"Prompt_id_seq"', COALESCE((SELECT MAX(id) FROM "Prompt"), 0) + 1, false);
+        END IF;
+      END $$;
+    `)
+
     const promptResult = await query(
-      `INSERT INTO "Prompt" ("brandId", text, category, providers, "isCustom", "isSubscribed", impressions, "createdAt", "updatedAt")
-       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
+      `INSERT INTO "Prompt" (id, "brandId", text, category, providers, "isCustom", "isSubscribed", impressions, "createdAt", "updatedAt")
+       VALUES (nextval('"Prompt_id_seq"'), $1, $2, $3, $4, $5, $6, NOW(), NOW())
        RETURNING *`,
       [
         brand.id,

@@ -67,11 +67,24 @@ export async function GET(request: Request) {
               prompt.brand_name
             )
 
+            // Ensure PromptResult sequence exists (only on first iteration)
+            if (successCount === 0 && errorCount === 0 && provider === prompt.providers[0]) {
+              await query(`
+                DO $$
+                BEGIN
+                  IF NOT EXISTS (SELECT 1 FROM pg_sequences WHERE schemaname = 'public' AND sequencename = 'PromptResult_id_seq') THEN
+                    CREATE SEQUENCE "PromptResult_id_seq";
+                    PERFORM setval('"PromptResult_id_seq"', COALESCE((SELECT MAX(id) FROM "PromptResult"), 0) + 1, false);
+                  END IF;
+                END $$;
+              `)
+            }
+
             // Save result to database
             await query(`
               INSERT INTO "PromptResult" 
-                ("promptId", provider, mentioned, position, sentiment, response, citations, "runAt")
-              VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+                (id, "promptId", provider, mentioned, position, sentiment, response, citations, "runAt")
+              VALUES (nextval('"PromptResult_id_seq"'), $1, $2, $3, $4, $5, $6, $7, NOW())
             `, [
               prompt.id,
               provider,
