@@ -91,13 +91,13 @@ export default function DashboardLayout({
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950">
           <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-black">
             <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
-              Plan Gratuito
+              Free Plan
             </p>
             <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
-              500 búsquedas / mes
+              15 prompts / month
             </p>
             <button className="w-full bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors">
-              Actualizar Plan
+              Upgrade Plan
             </button>
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function DashboardLayout({
               <div className="hidden sm:block">
                 <input
                   type="search"
-                  placeholder="Buscar..."
+                  placeholder="Search..."
                   className="px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
                 />
               </div>
