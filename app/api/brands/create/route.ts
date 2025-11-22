@@ -17,6 +17,13 @@ export async function POST(request: Request) {
 
     console.log('Creating brand:', { name, domain, category })
 
+    // Ensure demo user exists (for development)
+    await query(`
+      INSERT INTO "User" (id, email, name, "createdAt", "updatedAt")
+      VALUES ('demo-user-id', 'demo@geoptimo.com', 'Demo User', NOW(), NOW())
+      ON CONFLICT (id) DO NOTHING
+    `)
+
     // Ensure sequence exists
     await query(`
       CREATE SEQUENCE IF NOT EXISTS "Brand_id_seq"
