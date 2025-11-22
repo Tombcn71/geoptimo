@@ -35,65 +35,41 @@ export async function GET() {
 
     const brandMetrics = brandMetricsResult.rows[0]
 
-    // Get competitors with aggregated metrics from all their detections
-    // Note: We'll calculate metrics from the raw data we have
+    // Get ALL competitor data in ONE efficient query
     const competitorsResult = await query(
       `SELECT 
          c.id,
          c.name,
          c.domain,
-         COUNT(cm.id) as mentions
+         COUNT(DISTINCT cm.id) as mentions,
+         AVG(CASE WHEN cm.position > 0 THEN cm.position ELSE NULL END) as avg_position,
+         COUNT(CASE WHEN cm.position <= 3 AND cm.position > 0 THEN 1 END) as top_three_count,
+         AVG(CASE 
+           WHEN cm.sentiment = 'positive' THEN 85
+           WHEN cm.sentiment = 'negative' THEN 25
+           ELSE 50
+         END) as avg_sentiment
        FROM "Competitor" c
        LEFT JOIN "CompetitorMetric" cm ON cm."competitorId" = c.id
        WHERE c."brandId" = $1
-       GROUP BY c.id, c.name, c.domain`,
+       GROUP BY c.id, c.name, c.domain
+       ORDER BY mentions DESC`,
       [brand.id]
     )
 
-    // Format data for frontend with calculated metrics
-    const competitorsData = await Promise.all(competitorsResult.rows.map(async (comp) => {
+    console.log(`🔍 Found ${competitorsResult.rows.length} competitors for brand ${brand.id}`)
+
+    // Format data for frontend
+    const competitorsData = competitorsResult.rows.map(comp => {
       const mentions = parseInt(comp.mentions) || 0
-      
-      // Get detailed metrics from CompetitorMetric joined with PromptResult
-      const detailsResult = await query(
-        `SELECT 
-           cm.position,
-           cm.sentiment,
-           pr.mentioned,
-           pr.position as prompt_position
-         FROM "CompetitorMetric" cm
-         LEFT JOIN "PromptResult" pr ON cm."promptResultId" = pr.id
-         WHERE cm."competitorId" = $1`,
-        [comp.id]
-      )
-      
-      const details = detailsResult.rows
-      
-      // Calculate average position (from CompetitorMetric.position)
-      const positions = details
-        .map(d => d.position)
-        .filter(p => p !== null && p !== undefined && p > 0)
-      const avgPosition = positions.length > 0
-        ? positions.reduce((a, b) => a + b, 0) / positions.length
-        : 0
-      
-      // Calculate sentiment score
-      const sentiments = details.map(d => {
-        if (d.sentiment === 'positive') return 85
-        if (d.sentiment === 'negative') return 25
-        return 50
-      })
-      const avgSentiment = sentiments.length > 0
-        ? sentiments.reduce((a, b) => a + b, 0) / sentiments.length
-        : 50
+      const avgPosition = comp.avg_position ? parseFloat(comp.avg_position) : 0
+      const topThreeCount = parseInt(comp.top_three_count) || 0
+      const avgSentiment = comp.avg_sentiment ? parseFloat(comp.avg_sentiment) : 50
       
       // Calculate top 3 percentage
-      const topThreeCount = positions.filter(p => p <= 3).length
-      const topThreeVis = mentions > 0 
-        ? (topThreeCount / mentions) * 100
-        : 0
+      const topThreeVis = mentions > 0 ? (topThreeCount / mentions) * 100 : 0
       
-      // Calculate visibility score (based on mentions, position, top 3)
+      // Calculate visibility score
       const visibilityScore = mentions > 0
         ? Math.min(100, 
             (mentions * 10) + // 10 points per mention
@@ -101,6 +77,8 @@ export async function GET() {
             (avgPosition > 0 && avgPosition <= 5 ? 20 : 0) // 20 bonus for avg top 5
           )
         : 0
+      
+      console.log(`   ✅ ${comp.name}: ${mentions} mentions, avg pos: ${avgPosition}, sentiment: ${avgSentiment}`)
       
       return {
         name: comp.name,
@@ -114,7 +92,7 @@ export async function GET() {
         domainCitations: 0,
         trend: 'up' as const
       }
-    }))
+    })
 
     // Add your brand to comparison
     const yourBrand = {
