@@ -104,18 +104,20 @@ export async function GET(request: Request) {
                     // Competitor exists
                     competitorId = existingComp.rows[0].id
                     console.log(`   ↻ ${comp.name} (existing)`)
-                  } else {
-                    // New competitor - insert
-                    const newComp = await query(`
-                      INSERT INTO "Competitor" 
-                        (id, "brandId", name, domain, "createdAt", "updatedAt")
-                      VALUES (nextval('"Competitor_id_seq"'), $1, $2, $3, NOW(), NOW())
-                      RETURNING id
-                    `, [prompt.brand_id, comp.name, '']) // domain can be empty for now
-                    
-                    competitorId = newComp.rows[0].id
-                    console.log(`   ✨ ${comp.name} (NEW competitor detected!)`)
-                  }
+              } else {
+                // New competitor - insert with unique domain derived from name
+                const uniqueDomain = comp.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+                
+                const newComp = await query(`
+                  INSERT INTO "Competitor" 
+                    (id, "brandId", name, domain, "createdAt", "updatedAt")
+                  VALUES (nextval('"Competitor_id_seq"'), $1, $2, $3, NOW(), NOW())
+                  RETURNING id
+                `, [prompt.brand_id, comp.name, uniqueDomain])
+                
+                competitorId = newComp.rows[0].id
+                console.log(`   ✨ ${comp.name} (NEW competitor detected! domain: ${uniqueDomain})`)
+              }
 
                   // Store competitor metrics
                   await query(`

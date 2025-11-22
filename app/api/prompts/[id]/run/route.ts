@@ -107,7 +107,7 @@ export async function POST(
           
           for (const comp of brandAnalysis.competitors) {
             try {
-              // Check if competitor already exists
+              // Check if competitor already exists BY NAME (case-insensitive)
               const existingComp = await query(`
                 SELECT id FROM "Competitor" 
                 WHERE "brandId" = $1 AND LOWER(name) = LOWER($2)
@@ -120,16 +120,19 @@ export async function POST(
                 competitorId = existingComp.rows[0].id
                 console.log(`      ↻ ${comp.name} - Already exists (ID: ${competitorId})`)
               } else {
-                // New competitor - insert
+                // New competitor - insert with unique domain derived from name
+                // Use slugified name as domain to avoid constraint issues
+                const uniqueDomain = comp.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+                
                 const newComp = await query(`
                   INSERT INTO "Competitor" 
                     (id, "brandId", name, domain, "createdAt", "updatedAt")
                   VALUES (nextval('"Competitor_id_seq"'), $1, $2, $3, NOW(), NOW())
                   RETURNING id
-                `, [prompt.brand_id, comp.name, ''])
+                `, [prompt.brand_id, comp.name, uniqueDomain])
                 
                 competitorId = newComp.rows[0].id
-                console.log(`      ✨ ${comp.name} - NEW! Stored with ID: ${competitorId}`)
+                console.log(`      ✨ ${comp.name} - NEW! Stored with ID: ${competitorId}, domain: ${uniqueDomain}`)
               }
 
               // Store metric for this run
