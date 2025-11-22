@@ -1,5 +1,7 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tooltip } from "@/components/ui/tooltip";
 import { 
@@ -11,7 +13,8 @@ import {
   ArrowUpRight,
   Target,
   Users,
-  Search
+  Search,
+  Loader2
 } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer } from "recharts";
 import { useState, useEffect } from "react";
@@ -41,21 +44,44 @@ interface Metrics {
 }
 
 export default function DashboardPage() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const [metrics, setMetrics] = useState<Metrics | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Redirect to login if not authenticated
   useEffect(() => {
-    fetch('/api/dashboard/metrics')
-      .then(res => res.json())
-      .then(data => {
-        setMetrics(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching metrics:', error);
-        setLoading(false);
-      });
-  }, []);
+    if (status === "unauthenticated") {
+      router.push("/login?callbackUrl=/dashboard");
+    }
+  }, [status, router]);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      fetch('/api/dashboard/metrics')
+        .then(res => res.json())
+        .then(data => {
+          setMetrics(data);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Error fetching metrics:', error);
+          setLoading(false);
+        });
+    }
+  }, [status]);
+
+  // Show loading while checking authentication
+  if (status === "loading" || !session) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <Loader2 className="h-12 w-12 text-purple-600 animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
