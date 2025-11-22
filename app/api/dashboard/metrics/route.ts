@@ -42,18 +42,15 @@ export async function GET() {
     const topPrompts = await prisma.prompt.findMany({
       where: { brandId: brand.id },
       orderBy: { 
-        runs: {
+        results: {
           _count: 'desc'
         }
       },
       take: 5,
       include: {
-        runs: {
-          select: {
-            details: {
-              where: { mentioned: true }
-            }
-          }
+        results: {
+          where: { mentioned: true },
+          take: 10
         }
       }
     })
@@ -66,7 +63,7 @@ export async function GET() {
 
     // Format top queries with mention counts
     const topQueries = topPrompts.map(prompt => {
-      const mentionCount = prompt.runs.reduce((sum, run) => sum + run.details.length, 0)
+      const mentionCount = prompt.results.length // results already filtered by mentioned: true
       return {
         query: prompt.text,
         mentions: mentionCount,
