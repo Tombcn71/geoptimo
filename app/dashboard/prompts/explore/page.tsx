@@ -8,10 +8,14 @@ import {
   Plus,
   ArrowLeft,
   Filter,
-  RefreshCw
+  RefreshCw,
+  Trash2,
+  X
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const categories = ["All", "Product Discovery", "How-To", "Comparison", "Technical", "Industry News"];
 
@@ -25,10 +29,23 @@ interface Prompt {
 }
 
 export default function ExplorePromptsPage() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [loading, setLoading] = useState(true);
   const [seeding, setSeeding] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [newPromptText, setNewPromptText] = useState("");
+  const [newPromptCategory, setNewPromptCategory] = useState("Product Discovery");
+  const [creating, setCreating] = useState(false);
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login?callbackUrl=/dashboard/prompts/explore");
+    }
+  }, [status, router]);
 
   useEffect(() => {
     fetchPrompts();
@@ -115,6 +132,74 @@ export default function ExplorePromptsPage() {
     }
   };
 
+  const handleCreatePrompt = async () => {
+    if (!newPromptText.trim()) {
+      alert('❌ Please enter a prompt text');
+      return;
+    }
+
+    setCreating(true);
+    try {
+      const response = await fetch('/api/prompts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: newPromptText,
+          category: newPromptCategory,
+          providers: ['ChatGPT', 'Gemini', 'Claude', 'Perplexity'],
+          isCustom: true
+        })
+      });
+
+      if (response.ok) {
+        await fetchPrompts();
+        setShowCreateModal(false);
+        setNewPromptText("");
+        setNewPromptCategory("Product Discovery");
+        alert('✅ Custom prompt created successfully!');
+      } else {
+        const error = await response.json();
+        alert(`❌ ${error.error || 'Failed to create prompt'}`);
+      }
+    } catch (error) {
+      console.error('Error creating prompt:', error);
+      alert('❌ Failed to create prompt');
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  const handleDeletePrompt = async (id: number, text: string) => {
+    if (!confirm(`Are you sure you want to delete this prompt?\n\n"${text}"`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/prompts/${id}/delete`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        await fetchPrompts();
+        alert('✅ Prompt deleted successfully!');
+      } else {
+        const error = await response.json();
+        alert(`❌ ${error.error || 'Failed to delete prompt'}`);
+      }
+    } catch (error) {
+      console.error('Error deleting prompt:', error);
+      alert('❌ Failed to delete prompt');
+    }
+  };
+
+  if (status === "loading" || !session) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-xl text-gray-600 dark:text-gray-400">Loading...</div>
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -142,16 +227,25 @@ export default function ExplorePromptsPage() {
             Discover relevant prompts based on your brand, industry, and competitor analysis
           </p>
         </div>
-        {prompts.length === 0 && (
+        <div className="flex gap-2">
           <button
-            onClick={handleSeedPrompts}
-            disabled={seeding}
-            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 disabled:opacity-50"
+            onClick={() => setShowCreateModal(true)}
+            className="bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 hover:bg-gray-800 dark:hover:bg-gray-200"
           >
-            <Plus className={`h-5 w-5 ${seeding ? 'animate-spin' : ''}`} />
-            <span>{seeding ? 'Seeding...' : 'Seed Prompts'}</span>
+            <Plus className="h-5 w-5" />
+            <span>Create Custom</span>
           </button>
-        )}
+          {prompts.length === 0 && (
+            <button
+              onClick={handleSeedPrompts}
+              disabled={seeding}
+              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 disabled:opacity-50"
+            >
+              <RefreshCw className={`h-5 w-5 ${seeding ? 'animate-spin' : ''}`} />
+              <span>{seeding ? 'Seeding...' : 'Seed Prompts'}</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Stats */}
@@ -244,26 +338,35 @@ export default function ExplorePromptsPage() {
                       ))}
                     </div>
                   </div>
-                  <button
-                    onClick={() => handleSubscribe(prompt.id, prompt.isSubscribed)}
-                    className={`flex-shrink-0 px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
-                      prompt.isSubscribed
-                        ? "bg-green-600 hover:bg-green-700 text-white"
-                        : "bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
-                    }`}
-                  >
-                    {prompt.isSubscribed ? (
-                      <>
-                        <Check className="h-5 w-5" />
-                        <span>Subscribed</span>
-                      </>
-                    ) : (
-                      <>
-                        <Plus className="h-5 w-5" />
-                        <span>Subscribe</span>
-                      </>
-                    )}
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleSubscribe(prompt.id, prompt.isSubscribed)}
+                      className={`flex-shrink-0 px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
+                        prompt.isSubscribed
+                          ? "bg-green-600 hover:bg-green-700 text-white"
+                          : "bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
+                      }`}
+                    >
+                      {prompt.isSubscribed ? (
+                        <>
+                          <Check className="h-5 w-5" />
+                          <span>Subscribed</span>
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="h-5 w-5" />
+                          <span>Subscribe</span>
+                        </>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => handleDeletePrompt(prompt.id, prompt.text)}
+                      className="flex-shrink-0 px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors"
+                      title="Delete prompt"
+                    >
+                      <Trash2 className="h-5 w-5" />
+                    </button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -282,6 +385,73 @@ export default function ExplorePromptsPage() {
           </Card>
         )}
       </div>
+
+      {/* Create Custom Prompt Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-2xl bg-white dark:bg-gray-900">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-2xl">Create Custom Prompt</CardTitle>
+                <button
+                  onClick={() => setShowCreateModal(false)}
+                  className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              <CardDescription>
+                Add a custom prompt to track for your brand
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Prompt Text
+                </label>
+                <textarea
+                  value={newPromptText}
+                  onChange={(e) => setNewPromptText(e.target.value)}
+                  placeholder="e.g., What are the best AI tools for marketing?"
+                  rows={4}
+                  className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white resize-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Category
+                </label>
+                <select
+                  value={newPromptCategory}
+                  onChange={(e) => setNewPromptCategory(e.target.value)}
+                  className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                >
+                  {categories.filter(c => c !== "All").map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex gap-2 pt-4">
+                <button
+                  onClick={handleCreatePrompt}
+                  disabled={creating || !newPromptText.trim()}
+                  className="flex-1 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {creating ? 'Creating...' : 'Create Prompt'}
+                </button>
+                <button
+                  onClick={() => setShowCreateModal(false)}
+                  className="px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
     </div>
   );
