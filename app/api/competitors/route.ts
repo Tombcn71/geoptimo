@@ -26,6 +26,8 @@ export async function GET() {
     }
 
     const brand = brandResult.rows[0]
+    
+    console.log(`🔍 Fetching competitors for brand: ${brand.companyName} (ID: ${brand.id})`)
 
     // Get brand's latest metrics
     const brandMetricsResult = await query(
@@ -58,6 +60,20 @@ export async function GET() {
     )
 
     console.log(`🔍 Found ${competitorsResult.rows.length} competitors for brand ${brand.id}`)
+    
+    if (competitorsResult.rows.length === 0) {
+      console.log(`⚠️  No competitors found in database for brand ${brand.id}`)
+      console.log(`   Check if:`)
+      console.log(`   1. You've run any prompts yet?`)
+      console.log(`   2. CompetitorMetric table has data?`)
+      
+      // Check if Competitor table has ANY entries for this brand
+      const checkResult = await query(
+        `SELECT id, name FROM "Competitor" WHERE "brandId" = $1 LIMIT 5`,
+        [brand.id]
+      )
+      console.log(`   Found ${checkResult.rows.length} raw competitors:`, checkResult.rows)
+    }
 
     // Format data for frontend
     const competitorsData = competitorsResult.rows.map(comp => {
