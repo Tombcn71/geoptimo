@@ -343,7 +343,7 @@ export default function SettingsPage() {
                 🎯 Recommended Prompts
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                We've generated 12 relevant prompts for your industry. Visit Prompt Explorer to subscribe.
+                We&apos;ve generated 12 relevant prompts for your industry. Visit Prompt Explorer to subscribe.
               </p>
             </div>
             <div className="p-4 bg-white dark:bg-gray-900 rounded-lg">
