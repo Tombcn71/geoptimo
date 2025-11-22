@@ -88,16 +88,14 @@ export default function OnboardingPage() {
 
   const currentStepData = STEPS[currentStep - 1];
   const CurrentStepComponent = currentStepData.component;
-  const showProgress = !currentStepData.hideProgress;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Progress Bar */}
-        {showProgress && (
-          <div className="mb-8">
+        <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
-            {STEPS.filter(s => !s.hideProgress).map((step, index) => (
+            {STEPS.map((step, index) => (
               <div key={step.id} className="flex items-center flex-1">
                 <div
                   className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all ${
@@ -114,7 +112,7 @@ export default function OnboardingPage() {
                     <span className="text-sm font-medium">{step.id}</span>
                   )}
                 </div>
-                {index < STEPS.filter(s => !s.hideProgress).length - 1 && (
+                {index < STEPS.length - 1 && (
                   <div
                     className={`flex-1 h-0.5 mx-2 transition-all ${
                       currentStep > step.id
@@ -127,7 +125,7 @@ export default function OnboardingPage() {
             ))}
           </div>
           <div className="flex justify-between px-2">
-            {STEPS.filter(s => !s.hideProgress).map((step) => (
+            {STEPS.map((step) => (
               <div
                 key={step.id}
                 className={`text-xs font-medium transition-all ${
@@ -141,7 +139,6 @@ export default function OnboardingPage() {
             ))}
           </div>
         </div>
-        )}
 
         {/* Step Content */}
         <CurrentStepComponent
