@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import { 
   LayoutDashboard, 
   Search, 
@@ -14,7 +15,9 @@ import {
   Sparkles,
   Users,
   Link as LinkIcon,
-  Edit
+  Edit,
+  LogOut,
+  User
 } from "lucide-react";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -35,7 +38,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const { data: session } = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: '/' });
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-black transition-colors">
@@ -49,7 +57,7 @@ export default function DashboardLayout({
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-64 bg-white dark:bg-black border-r border-gray-200 dark:border-gray-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-0 left-0 z-50 h-full w-64 bg-white dark:bg-black border-r border-gray-200 dark:border-gray-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 flex flex-col ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -68,7 +76,7 @@ export default function DashboardLayout({
           </button>
         </div>
 
-        <nav className="p-4 space-y-2">
+        <nav className="p-4 space-y-2 flex-1 overflow-y-auto">
           {navigation.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -88,19 +96,30 @@ export default function DashboardLayout({
           })}
         </nav>
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950">
-          <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-black">
-            <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
-              Free Plan
-            </p>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
-              15 prompts / month
-            </p>
-            <button className="w-full bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors">
-              Upgrade Plan
+        {/* User Profile & Logout */}
+        <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+          <div className="space-y-2">
+            <Link
+              href="/dashboard/profile"
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                pathname === "/dashboard/profile"
+                  ? "bg-gray-100 dark:bg-gray-900 text-black dark:text-white"
+                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900"
+              }`}
+            >
+              <User className="h-5 w-5" />
+              <span className="font-medium">Profile</span>
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+            >
+              <LogOut className="h-5 w-5" />
+              <span className="font-medium">Logout</span>
             </button>
           </div>
         </div>
+
       </aside>
 
       {/* Main content */}
@@ -126,9 +145,13 @@ export default function DashboardLayout({
                 />
               </div>
               <ThemeToggle />
-              <div className="h-10 w-10 rounded-full bg-black dark:bg-white flex items-center justify-center text-white dark:text-black font-semibold">
-                T
-              </div>
+              <Link
+                href="/dashboard/profile"
+                className="h-10 w-10 rounded-full bg-black dark:bg-white flex items-center justify-center text-white dark:text-black font-semibold hover:opacity-80 transition-opacity"
+                title="Profile"
+              >
+                {session?.user?.name?.[0]?.toUpperCase() || 'U'}
+              </Link>
             </div>
           </div>
         </header>

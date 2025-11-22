@@ -10,7 +10,10 @@ import {
   Filter,
   RefreshCw,
   Trash2,
-  X
+  X,
+  Play,
+  ExternalLink,
+  Eye
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -26,6 +29,9 @@ interface Prompt {
   impressions: number;
   isSubscribed: boolean;
   providers: string[];
+  mentions?: number;
+  position?: number;
+  lastRun?: string;
 }
 
 export default function ExplorePromptsPage() {
@@ -40,6 +46,7 @@ export default function ExplorePromptsPage() {
   const [newPromptCategory, setNewPromptCategory] = useState("Product Discovery");
   const [creating, setCreating] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [runningPrompts, setRunningPrompts] = useState<Set<number>>(new Set());
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -190,6 +197,32 @@ export default function ExplorePromptsPage() {
     } catch (error) {
       console.error('Error deleting prompt:', error);
       alert('❌ Failed to delete prompt');
+    }
+  };
+
+  const handleRunNow = async (promptId: number) => {
+    setRunningPrompts(prev => new Set([...prev, promptId]));
+    try {
+      const response = await fetch(`/api/prompts/${promptId}/run-manual`, {
+        method: 'POST'
+      });
+
+      if (response.ok) {
+        alert('✅ Prompt executed successfully! Check the detail page for results.');
+        await fetchPrompts(); // Refresh to show updated data
+      } else {
+        const error = await response.json();
+        alert(`❌ ${error.error || 'Failed to run prompt'}`);
+      }
+    } catch (error) {
+      console.error('Error running prompt:', error);
+      alert('❌ Failed to run prompt');
+    } finally {
+      setRunningPrompts(prev => {
+        const next = new Set(prev);
+        next.delete(promptId);
+        return next;
+      });
     }
   };
 
@@ -398,7 +431,7 @@ export default function ExplorePromptsPage() {
                         {prompt.impressions.toLocaleString()} impressions
                       </span>
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       {prompt.providers.map((provider) => (
                         <span
                           key={provider}
@@ -408,27 +441,70 @@ export default function ExplorePromptsPage() {
                         </span>
                       ))}
                     </div>
+                    
+                    {/* Performance Metrics */}
+                    {(prompt.mentions !== undefined || prompt.lastRun) && (
+                      <div className="flex flex-wrap items-center gap-4 mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+                        {prompt.mentions !== undefined && (
+                          <div className="flex items-center space-x-2">
+                            <span className="text-xs text-gray-500 dark:text-gray-400">Mentions:</span>
+                            <span className={`font-semibold ${prompt.mentions > 0 ? 'text-green-600 dark:text-green-400' : 'text-gray-600 dark:text-gray-400'}`}>
+                              {prompt.mentions}
+                            </span>
+                          </div>
+                        )}
+                        {prompt.position !== undefined && prompt.position > 0 && (
+                          <div className="flex items-center space-x-2">
+                            <span className="text-xs text-gray-500 dark:text-gray-400">Avg Position:</span>
+                            <span className="font-semibold text-purple-600 dark:text-purple-400">
+                              #{prompt.position}
+                            </span>
+                          </div>
+                        )}
+                        {prompt.lastRun && (
+                          <div className="flex items-center space-x-2">
+                            <span className="text-xs text-gray-500 dark:text-gray-400">Last Run:</span>
+                            <span className="text-xs text-gray-600 dark:text-gray-300">
+                              {prompt.lastRun}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                   <div className="flex gap-2">
+                    <Link
+                      href={`/dashboard/prompts/${prompt.id}`}
+                      className="flex-shrink-0 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors flex items-center space-x-2"
+                      title="View details"
+                    >
+                      <Eye className="h-5 w-5" />
+                      <span className="hidden md:inline">View</span>
+                    </Link>
+                    <button
+                      onClick={() => handleRunNow(prompt.id)}
+                      disabled={runningPrompts.has(prompt.id)}
+                      className="flex-shrink-0 px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                      title="Run now"
+                    >
+                      <Play className={`h-5 w-5 ${runningPrompts.has(prompt.id) ? 'animate-pulse' : ''}`} />
+                      <span className="hidden md:inline">{runningPrompts.has(prompt.id) ? 'Running...' : 'Run'}</span>
+                    </button>
                     <button
                       onClick={() => handleSubscribe(prompt.id, prompt.isSubscribed)}
-                      className={`flex-shrink-0 px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
+                      className={`flex-shrink-0 px-4 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
                         prompt.isSubscribed
                           ? "bg-green-600 hover:bg-green-700 text-white"
                           : "bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
                       }`}
+                      title={prompt.isSubscribed ? "Unsubscribe" : "Subscribe"}
                     >
                       {prompt.isSubscribed ? (
-                        <>
-                          <Check className="h-5 w-5" />
-                          <span>Subscribed</span>
-                        </>
+                        <Check className="h-5 w-5" />
                       ) : (
-                        <>
-                          <Plus className="h-5 w-5" />
-                          <span>Subscribe</span>
-                        </>
+                        <Plus className="h-5 w-5" />
                       )}
+                      <span className="hidden lg:inline">{prompt.isSubscribed ? 'Subscribed' : 'Subscribe'}</span>
                     </button>
                     <button
                       onClick={() => handleDeletePrompt(prompt.id, prompt.text)}

@@ -14,7 +14,11 @@ import {
   Target,
   Users,
   Search,
-  Loader2
+  Loader2,
+  Activity,
+  Clock,
+  CheckCircle,
+  XCircle
 } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer } from "recharts";
 import { useState, useEffect } from "react";
@@ -43,10 +47,22 @@ interface Metrics {
   topQueries?: TopQuery[];
 }
 
+interface RecentActivity {
+  id: number;
+  runAt: string;
+  provider: string;
+  mentioned: boolean;
+  position: number | null;
+  sentiment: string;
+  promptId: number;
+  promptText: string;
+}
+
 export default function DashboardPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [metrics, setMetrics] = useState<Metrics | null>(null);
+  const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Redirect to login if not authenticated
@@ -58,6 +74,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (status === "authenticated") {
+      // Fetch metrics
       fetch('/api/dashboard/metrics')
         .then(res => res.json())
         .then(data => {
@@ -67,6 +84,18 @@ export default function DashboardPage() {
         .catch(error => {
           console.error('Error fetching metrics:', error);
           setLoading(false);
+        });
+      
+      // Fetch recent activity
+      fetch('/api/dashboard/activity')
+        .then(res => res.json())
+        .then(data => {
+          if (data.activities) {
+            setRecentActivity(data.activities);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching activity:', error);
         });
     }
   }, [status]);
@@ -394,6 +423,83 @@ export default function DashboardPage() {
           </Card>
         </Link>
       </div>
+
+      {/* Recent Activity */}
+      <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <Activity className="h-5 w-5 text-purple-600" />
+            <span>Recent Activity</span>
+          </CardTitle>
+          <CardDescription>
+            Latest prompt runs and brand mentions
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {recentActivity.length > 0 ? (
+            <div className="space-y-3">
+              {recentActivity.map((activity) => (
+                <Link
+                  key={activity.id}
+                  href={`/dashboard/prompts/${activity.promptId}`}
+                  className="block p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-all hover:border-purple-500"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">
+                        {activity.promptText}
+                      </p>
+                      <div className="flex flex-wrap items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">
+                          {activity.provider}
+                        </span>
+                        <div className="flex items-center space-x-1">
+                          <Clock className="h-3 w-3" />
+                          <span>{new Date(activity.runAt).toLocaleString()}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end gap-2">
+                      {activity.mentioned ? (
+                        <>
+                          <div className="flex items-center space-x-1 text-green-600 dark:text-green-400">
+                            <CheckCircle className="h-4 w-4" />
+                            <span className="text-xs font-medium">Mentioned</span>
+                          </div>
+                          {activity.position && (
+                            <span className="text-xs text-purple-600 dark:text-purple-400 font-medium">
+                              Position #{activity.position}
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        <div className="flex items-center space-x-1 text-gray-500 dark:text-gray-400">
+                          <XCircle className="h-4 w-4" />
+                          <span className="text-xs">Not mentioned</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8">
+              <Activity className="h-12 w-12 text-gray-300 dark:text-gray-700 mx-auto mb-3" />
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                No activity yet. Run some prompts to see results here.
+              </p>
+              <Link
+                href="/dashboard/prompts/explore"
+                className="inline-flex items-center space-x-2 text-purple-600 dark:text-purple-400 hover:underline"
+              >
+                <span>Explore Prompts</span>
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }
