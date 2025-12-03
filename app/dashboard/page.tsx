@@ -283,7 +283,7 @@ export default function DashboardPage() {
               {metrics?.domainCitations || 0}
             </div>
             <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-              Times AI cited your website as source
+              Keren dat AI je website als bron citeerde
             </p>
           </CardContent>
         </Card>

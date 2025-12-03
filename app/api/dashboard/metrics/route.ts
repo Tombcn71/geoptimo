@@ -27,32 +27,54 @@ export async function GET() {
 
     const brand = brandResult.rows[0]
 
-    // Get latest metrics
-    const metricsResult = await query(
-      `SELECT * FROM "Metric" WHERE "brandId" = $1 ORDER BY date DESC LIMIT 1`,
+    // Calculate metrics from PromptResults
+    const statsResult = await query(
+      `SELECT 
+        COUNT(DISTINCT pr.id) as total_runs,
+        COUNT(DISTINCT CASE WHEN pr.mentioned = true THEN pr.id END) as total_mentions,
+        COUNT(DISTINCT CASE WHEN pr.mentioned = true AND pr.position <= 3 THEN pr.id END) as top_three_mentions,
+        AVG(CASE WHEN pr.mentioned = true THEN pr.position END) as avg_position,
+        AVG(CASE WHEN pr.sentiment = 'positive' THEN 100 
+                 WHEN pr.sentiment = 'neutral' THEN 50 
+                 WHEN pr.sentiment = 'negative' THEN 0 
+                 END) as avg_sentiment
+       FROM "PromptResult" pr
+       JOIN "Prompt" p ON pr."promptId" = p.id
+       WHERE p."brandId" = $1`,
       [brand.id]
     )
 
-    if (metricsResult.rows.length === 0) {
-      return NextResponse.json({ error: 'No metrics found' }, { status: 404 })
-    }
+    const stats = statsResult.rows[0]
+    const totalRuns = parseInt(stats.total_runs) || 0
+    const totalMentions = parseInt(stats.total_mentions) || 0
+    const topThreeMentions = parseInt(stats.top_three_mentions) || 0
 
-    const latestMetrics = metricsResult.rows[0]
+    // Calculate percentages
+    const visibilityScore = totalRuns > 0 ? Math.round((totalMentions / totalRuns) * 100) : 0
+    const topThreeVis = totalMentions > 0 ? Math.round((topThreeMentions / totalMentions) * 100) : 0
+    const detectionRate = totalRuns > 0 ? Math.round((totalMentions / totalRuns) * 100) : 0
+    const avgPosition = stats.avg_position ? parseFloat(parseFloat(stats.avg_position).toFixed(1)) : 0
+    const sentiment = stats.avg_sentiment ? Math.round(parseFloat(stats.avg_sentiment)) : 0
 
-    // Get metrics for the last 7 days for trend chart
+    // Get mentions trend for last 7 days
     const sevenDaysAgo = new Date()
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
     
     const trendResult = await query(
-      `SELECT date, mentions FROM "Metric" 
-       WHERE "brandId" = $1 AND date >= $2 
+      `SELECT 
+        DATE(pr."runAt") as date,
+        COUNT(CASE WHEN pr.mentioned = true THEN 1 END) as mentions
+       FROM "PromptResult" pr
+       JOIN "Prompt" p ON pr."promptId" = p.id
+       WHERE p."brandId" = $1 AND pr."runAt" >= $2
+       GROUP BY DATE(pr."runAt")
        ORDER BY date ASC`,
       [brand.id, sevenDaysAgo]
     )
 
     const mentionsData = trendResult.rows.map(m => ({
-      date: new Date(m.date).toLocaleDateString('en-US', { weekday: 'short' }),
-      mentions: m.mentions
+      date: new Date(m.date).toLocaleDateString('nl-NL', { weekday: 'short' }),
+      mentions: parseInt(m.mentions)
     }))
 
     // Get top prompts with most mentions
@@ -76,13 +98,13 @@ export async function GET() {
       }))
 
     return NextResponse.json({
-      visibilityScore: latestMetrics.visibilityScore,
-      sentiment: latestMetrics.sentiment,
-      topThreeVis: latestMetrics.topThreeVis,
-      mentions: latestMetrics.mentions,
-      avgPosition: parseFloat(latestMetrics.avgPosition),
-      detectionRate: latestMetrics.detectionRate,
-      domainCitations: latestMetrics.domainCitations,
+      visibilityScore,
+      sentiment,
+      topThreeVis,
+      mentions: totalMentions,
+      avgPosition,
+      detectionRate,
+      domainCitations: 0, // TODO: Calculate from actual citations
       mentionsData,
       topQueries
     })
