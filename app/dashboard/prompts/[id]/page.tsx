@@ -262,7 +262,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
             <CardContent className="pt-6">
               <div className="flex items-center space-x-2 mb-2">
                 <Hash className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                <p className="text-sm text-purple-700 dark:text-purple-300 font-medium">Avg Position</p>
+                <p className="text-sm text-purple-700 dark:text-purple-300 font-medium">Gem. Positie</p>
               </div>
               <p className="text-3xl font-bold text-purple-900 dark:text-purple-100">#{promptData?.avgPosition}</p>
             </CardContent>
@@ -384,12 +384,12 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                       <div className="flex items-center space-x-3">
                         <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-sm font-medium flex items-center space-x-1">
                           <CheckCircle2 className="h-4 w-4" />
-                          <span>Position #{run.position}</span>
+                          <span>Positie #{run.position}</span>
                         </span>
                       </div>
                     ) : (
                       <span className="px-3 py-1 bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full text-sm font-medium">
-                        Not Mentioned
+                        Niet Vermeld
                       </span>
                     )}
                   </div>
@@ -410,7 +410,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                         onClick={() => toggleRunExpansion(run.id)}
                         className="flex items-center space-x-1 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors px-3 py-1.5 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20"
                       >
-                        <span>{expandedRuns.has(run.id) ? 'Show Less' : 'Show Full Response'}</span>
+                        <span>{expandedRuns.has(run.id) ? 'Toon Minder' : 'Toon Volledig Antwoord'}</span>
                         {expandedRuns.has(run.id) ? (
                           <ChevronUp className="h-4 w-4" />
                         ) : (
