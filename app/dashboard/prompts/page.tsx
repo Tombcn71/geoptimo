@@ -133,7 +133,7 @@ export default function PromptsPage() {
         setCustomPrompt('');
         setShowCustomPrompt(false);
         await fetchPrompts();
-        alert('✅ Custom prompt created!');
+        alert('✅ Aangepaste prompt aangemaakt!');
       } else {
         alert('❌ Failed to create prompt');
       }
@@ -230,7 +230,7 @@ export default function PromptsPage() {
               </div>
             )) : (
               <div className="text-center py-8 text-gray-600 dark:text-gray-400">
-                No suggested prompts available. Visit Explore Prompts to find more!
+                Geen voorgestelde prompts beschikbaar. Bezoek Verken Prompts voor meer!
               </div>
             )}
           </div>
@@ -260,15 +260,15 @@ export default function PromptsPage() {
                       <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors" />
                     </h3>
                     <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
-                      <span>Last run: {prompt.lastRun}</span>
+                      <span>Laatste run: {prompt.lastRun}</span>
                       <span>•</span>
                       <span className="flex items-center space-x-1">
                         <TrendingUp className="h-4 w-4 text-green-600" />
-                        <span>{prompt.mentions} mentions</span>
+                        <span>{prompt.mentions} vermeldingen</span>
                       </span>
                       <span>•</span>
                       <span className="font-semibold text-purple-600 dark:text-purple-400">
-                        Avg Position: #{prompt.position}
+                        Gem. Positie: #{prompt.position}
                       </span>
                     </div>
                   </div>
@@ -280,18 +280,18 @@ export default function PromptsPage() {
                     {runningPrompts.has(prompt.id) ? (
                       <>
                         <Loader2 className="h-4 w-4 animate-spin" />
-                        <span>Running...</span>
+                        <span>Bezig...</span>
                       </>
                     ) : (
                       <>
                         <Play className="h-4 w-4" />
-                        <span>Run Now</span>
+                        <span>Nu Uitvoeren</span>
                       </>
                     )}
                   </button>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="text-xs text-gray-600 dark:text-gray-400">Providers:</span>
+                  <span className="text-xs text-gray-600 dark:text-gray-400">AI-engines:</span>
                   {prompt.providers.map((provider) => (
                     <span
                       key={provider}
@@ -319,9 +319,9 @@ export default function PromptsPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <Card className="w-full max-w-2xl">
             <CardHeader>
-              <CardTitle>Create Custom Prompt</CardTitle>
+              <CardTitle>Maak Aangepaste Prompt</CardTitle>
               <CardDescription>
-                Create your own custom prompt to monitor
+                Maak je eigen aangepaste prompt om te monitoren
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -339,7 +339,7 @@ export default function PromptsPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  AI Providers
+                  AI-engines
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   {["ChatGPT", "Gemini", "Perplexity"].map((provider) => (
@@ -365,7 +365,7 @@ export default function PromptsPage() {
                   disabled={!customPrompt.trim()}
                   className="px-6 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Create & Subscribe
+                  Aanmaken & Abonneren
                 </button>
               </div>
             </CardContent>
