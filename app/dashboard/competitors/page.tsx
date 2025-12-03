@@ -78,82 +78,6 @@ export default function CompetitorsPage() {
         </p>
       </div>
 
-      {/* Know Your Competition */}
-      <Card className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 border-blue-200 dark:border-blue-800">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Eye className="h-5 w-5 text-blue-600" />
-            <span>Know Your Competition</span>
-          </CardTitle>
-          <CardDescription>
-            Who else is being mentioned in AI responses for YOUR prompts? Are they ranking higher than you?
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="flex flex-col">
-              <div className="flex items-center space-x-2 mb-2">
-                <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-sm font-bold">
-                  V
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Zichtbaarheidsscore</h3>
-              </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                Compare how often you vs competitors get mentioned
-              </p>
-              <p className="text-xs text-purple-600 dark:text-purple-400 font-medium">
-                → If competitor ranks higher → analyze their content strategy
-              </p>
-            </div>
-
-            <div className="flex flex-col">
-              <div className="flex items-center space-x-2 mb-2">
-                <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">
-                  P
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Average Position</h3>
-              </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                See who ranks #1, #2, #3 in AI responses
-              </p>
-              <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">
-                → If you&apos;re #5 → optimize content to reach top 3
-              </p>
-            </div>
-
-            <div className="flex flex-col">
-              <div className="flex items-center space-x-2 mb-2">
-                <div className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center text-sm font-bold">
-                  D
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Detectiepercentage</h3>
-              </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                Who appears most frequently in relevant queries
-              </p>
-              <p className="text-xs text-green-600 dark:text-green-400 font-medium">
-                → If competitor has 90% vs your 40% → you&apos;re missing opportunities
-              </p>
-            </div>
-
-            <div className="flex flex-col">
-              <div className="flex items-center space-x-2 mb-2">
-                <div className="w-8 h-8 rounded-full bg-orange-600 text-white flex items-center justify-center text-sm font-bold">
-                  S
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Sentiment</h3>
-              </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                How positively AI talks about each brand
-              </p>
-              <p className="text-xs text-orange-600 dark:text-orange-400 font-medium">
-                → Negative sentiment → improve reviews, content quality
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Empty State - No Competitors Yet */}
       {competitors.length === 0 ? (
         <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-950/20 dark:to-orange-950/20 border-yellow-200 dark:border-yellow-800">
@@ -176,7 +100,7 @@ export default function CompetitorsPage() {
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
                   <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">2</span>
-                  <span>Click <strong>&quot;Run Now&quot;</strong> on any prompt</span>
+                  <span>Klik <strong>&quot;Nu Uitvoeren&quot;</strong> op een prompt</span>
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
                   <span className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">3</span>
@@ -188,7 +112,7 @@ export default function CompetitorsPage() {
                   href="/dashboard/prompts/explore"
                   className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
                 >
-                  <span>Go to Prompt Explorer</span>
+                  <span>Ga naar Prompt Verkenner</span>
                   <ArrowUpDown className="ml-2 h-5 w-5" />
                 </Link>
               </div>
