@@ -100,7 +100,7 @@ export default function SettingsPage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <Loader2 className="h-12 w-12 text-purple-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+          <p className="text-gray-600 dark:text-gray-400">Laden...</p>
         </div>
       </div>
     );
@@ -110,7 +110,7 @@ export default function SettingsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Brand Profile Settings</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Merk Profiel Instellingen</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
           Configure your brand profile to get better insights and AI suggestions
         </p>
@@ -149,14 +149,14 @@ export default function SettingsPage() {
             <span>Basic Information</span>
           </CardTitle>
           <CardDescription>
-            Fundamental details about your brand
+            Fundamentele details over je merk
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Company Name
+                Bedrijfsnaam
               </label>
               <div className="relative">
                 <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -202,7 +202,7 @@ export default function SettingsPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Brand Description
+              Merk Beschrijving
             </label>
             <div className="relative">
               <FileText className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -314,12 +314,12 @@ export default function SettingsPage() {
           ) : saved ? (
             <>
               <CheckCircle2 className="h-5 w-5" />
-              <span>Saved!</span>
+              <span>Opgeslagen!</span>
             </>
           ) : (
             <>
               <Save className="h-5 w-5" />
-              <span>Save Changes</span>
+              <span>Wijzigingen Opslaan</span>
             </>
           )}
         </button>

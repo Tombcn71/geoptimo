@@ -28,7 +28,7 @@ export default function StepDomain({ data, onNext }: Props) {
       
       setLoading(false);
     } catch (err) {
-      setError("Could not fetch favicon");
+      setError("Kon favicon niet ophalen");
       setLoading(false);
     }
   };
@@ -45,7 +45,7 @@ export default function StepDomain({ data, onNext }: Props) {
 
   const handleContinue = () => {
     if (!domain) {
-      setError("Please enter your domain");
+      setError("Voer je domein in");
       return;
     }
     
@@ -72,16 +72,16 @@ export default function StepDomain({ data, onNext }: Props) {
             </div>
           )}
         </div>
-        <CardTitle className="text-2xl">What&apos;s your brand&apos;s domain?</CardTitle>
+        <CardTitle className="text-2xl">Wat is het domein van je merk?</CardTitle>
         <CardDescription className="text-base">
-          We&apos;ll use this to fetch your brand logo and analyze your web presence
+          We gebruiken dit om je merklogo op te halen en je webpresentie te analyseren
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-2">
           <input
             type="text"
-            placeholder="example.com"
+            placeholder="voorbeeld.nl"
             value={domain}
             onChange={(e) => handleDomainChange(e.target.value)}
             className="w-full px-4 py-3 text-center text-lg border-2 border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
@@ -89,7 +89,7 @@ export default function StepDomain({ data, onNext }: Props) {
           {loading && (
             <div className="flex items-center justify-center text-sm text-gray-600 dark:text-gray-400">
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              Fetching favicon...
+              Favicon ophalen...
             </div>
           )}
           {error && (
@@ -104,11 +104,11 @@ export default function StepDomain({ data, onNext }: Props) {
           disabled={!domain}
           className="w-full bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Continue
+          Doorgaan
         </button>
 
         <p className="text-xs text-center text-gray-500 dark:text-gray-500">
-          Don&apos;t worry, you can change this later in settings
+          Geen zorgen, je kunt dit later aanpassen in de instellingen
         </p>
       </CardContent>
     </Card>

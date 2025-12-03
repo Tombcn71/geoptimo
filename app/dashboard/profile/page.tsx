@@ -70,12 +70,12 @@ export default function ProfilePage() {
     }
 
     if (newPassword !== confirmPassword) {
-      setError('New passwords do not match');
+      setError('Nieuwe wachtwoorden komen niet overeen');
       return;
     }
 
     if (newPassword.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError('Wachtwoord moet minimaal 6 tekens bevatten');
       return;
     }
 
@@ -115,7 +115,7 @@ export default function ProfilePage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <Loader2 className="h-12 w-12 text-purple-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+          <p className="text-gray-600 dark:text-gray-400">Laden...</p>
         </div>
       </div>
     );
@@ -125,7 +125,7 @@ export default function ProfilePage() {
     <div className="space-y-6 max-w-4xl">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Profile Settings</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Profiel Instellingen</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
           Manage your account information and security
         </p>
@@ -142,7 +142,7 @@ export default function ProfilePage() {
       {saved && (
         <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-300 px-4 py-3 rounded-lg flex items-center space-x-2">
           <CheckCircle2 className="h-5 w-5" />
-          <span>Changes saved successfully!</span>
+          <span>Wijzigingen succesvol opgeslagen!</span>
         </div>
       )}
 
@@ -151,16 +151,16 @@ export default function ProfilePage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <User className="h-5 w-5 text-purple-600" />
-            <span>Profile Information</span>
+            <span>Profiel Informatie</span>
           </CardTitle>
           <CardDescription>
-            Update your account details
+            Werk je accountgegevens bij
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Full Name
+              Volledige Naam
             </label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -169,14 +169,14 @@ export default function ProfilePage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                placeholder="John Doe"
+                placeholder="Jan Jansen"
               />
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Email Address
+              E-mailadres
             </label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -188,7 +188,7 @@ export default function ProfilePage() {
               />
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              Email cannot be changed
+              E-mail kan niet worden gewijzigd
             </p>
           </div>
 
@@ -201,12 +201,12 @@ export default function ProfilePage() {
               {saving ? (
                 <>
                   <Loader2 className="h-5 w-5 animate-spin" />
-                  <span>Saving...</span>
+                  <span>Opslaan...</span>
                 </>
               ) : (
                 <>
                   <Save className="h-5 w-5" />
-                  <span>Save Changes</span>
+                  <span>Wijzigingen Opslaan</span>
                 </>
               )}
             </button>
@@ -219,16 +219,16 @@ export default function ProfilePage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Lock className="h-5 w-5 text-purple-600" />
-            <span>Change Password</span>
+            <span>Wachtwoord Wijzigen</span>
           </CardTitle>
           <CardDescription>
-            Update your password to keep your account secure
+            Werk je wachtwoord bij om je account veilig te houden
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Current Password
+              Huidig Wachtwoord
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -244,7 +244,7 @@ export default function ProfilePage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              New Password
+              Nieuw Wachtwoord
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -261,7 +261,7 @@ export default function ProfilePage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Confirm New Password
+              Bevestig Nieuw Wachtwoord
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -285,12 +285,12 @@ export default function ProfilePage() {
               {saving ? (
                 <>
                   <Loader2 className="h-5 w-5 animate-spin" />
-                  <span>Updating...</span>
+                  <span>Bijwerken...</span>
                 </>
               ) : (
                 <>
                   <Lock className="h-5 w-5" />
-                  <span>Change Password</span>
+                  <span>Wachtwoord Wijzigen</span>
                 </>
               )}
             </button>

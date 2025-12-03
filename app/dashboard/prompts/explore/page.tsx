@@ -20,7 +20,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const categories = ["All", "Product Discovery", "How-To", "Comparison", "Technical", "Industry News"];
+const categories = ["Alles", "Productontdekking", "Hoe-Te", "Vergelijking", "Technisch", "Sector Nieuws"];
 
 interface Prompt {
   id: number;
@@ -37,7 +37,7 @@ interface Prompt {
 export default function ExplorePromptsPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("Alles");
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [loading, setLoading] = useState(true);
   const [seeding, setSeeding] = useState(false);
@@ -85,7 +85,7 @@ export default function ExplorePromptsPage() {
   };
 
   const filteredPrompts = prompts.filter(prompt => {
-    const categoryMatch = selectedCategory === "All" || prompt.category === selectedCategory;
+    const categoryMatch = selectedCategory === "Alles" || prompt.category === selectedCategory;
     return categoryMatch;
   });
 
@@ -291,7 +291,7 @@ export default function ExplorePromptsPage() {
   if (status === "loading" || !session) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Loading...</div>
+        <div className="text-xl text-gray-600 dark:text-gray-400">Laden...</div>
       </div>
     );
   }
@@ -299,7 +299,7 @@ export default function ExplorePromptsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Loading prompts...</div>
+        <div className="text-xl text-gray-600 dark:text-gray-400">Prompts laden...</div>
       </div>
     );
   }
@@ -331,14 +331,14 @@ export default function ExplorePromptsPage() {
               className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 disabled:opacity-50 shadow-lg"
             >
               <Sparkles className={`h-5 w-5 ${generating ? 'animate-pulse' : ''}`} />
-              <span>{generating ? 'Generating...' : 'Generate AI Prompts'}</span>
+              <span>{generating ? 'Genereren...' : 'Genereer AI Prompts'}</span>
             </button>
             <button
               onClick={() => setShowCreateModal(true)}
               className="bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 hover:bg-gray-800 dark:hover:bg-gray-200"
             >
               <Plus className="h-5 w-5" />
-              <span>Create Custom</span>
+              <span>Aangepaste Maken</span>
             </button>
             {prompts.length === 0 && (
               <button
@@ -353,7 +353,7 @@ export default function ExplorePromptsPage() {
           </div>
         </div>
 
-        {/* How It Works */}
+        {/* Hoe Het Werkt */}
         <Card className="mt-6 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30 border-purple-200 dark:border-purple-800">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
@@ -389,7 +389,7 @@ export default function ExplorePromptsPage() {
                 </div>
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Daily Monitoring</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  We automatically run these prompts on ChatGPT, Claude, Gemini, Perplexity every day
+                  We draaien deze prompts automatisch dagelijks op ChatGPT, Claude, Gemini, Perplexity
                 </p>
               </div>
               
@@ -441,7 +441,7 @@ export default function ExplorePromptsPage() {
           <CardContent className="pt-6">
             <div className="flex items-center space-x-2 mb-3">
               <Filter className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Category:</span>
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Categorie:</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {categories.map((cat) => (
@@ -531,10 +531,10 @@ export default function ExplorePromptsPage() {
                     <Link
                       href={`/dashboard/prompts/${prompt.id}`}
                       className="flex-shrink-0 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors flex items-center space-x-2"
-                      title="View details"
+                      title="Bekijk details"
                     >
                       <Eye className="h-5 w-5" />
-                      <span className="hidden md:inline">View</span>
+                      <span className="hidden md:inline">Bekijken</span>
                     </Link>
                     <button
                       onClick={() => handleRunNow(prompt.id)}
@@ -594,7 +594,7 @@ export default function ExplorePromptsPage() {
           <Card className="w-full max-w-2xl bg-white dark:bg-gray-900">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="text-2xl">Create Custom Prompt</CardTitle>
+                <CardTitle className="text-2xl">Aangepaste Prompt Maken</CardTitle>
                 <button
                   onClick={() => setShowCreateModal(false)}
                   className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
@@ -629,7 +629,7 @@ export default function ExplorePromptsPage() {
                   onChange={(e) => setNewPromptCategory(e.target.value)}
                   className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 >
-                  {categories.filter(c => c !== "All").map(cat => (
+                  {categories.filter(c => c !== "Alles").map(cat => (
                     <option key={cat} value={cat}>{cat}</option>
                   ))}
                 </select>

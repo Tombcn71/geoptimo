@@ -29,7 +29,7 @@ function LoginForm() {
       });
 
       if (result?.error) {
-        setError("Invalid email or password");
+        setError("Ongeldig e-mailadres of wachtwoord");
       } else {
         // Check if user has a brand
         const brandResponse = await fetch('/api/brands/info');
@@ -45,7 +45,7 @@ function LoginForm() {
         router.refresh();
       }
     } catch (error) {
-      setError("An error occurred. Please try again.");
+      setError("Er is een fout opgetreden. Probeer het opnieuw.");
     } finally {
       setLoading(false);
     }
@@ -60,9 +60,9 @@ function LoginForm() {
               <LogIn className="h-8 w-8 text-purple-600" />
             </div>
           </div>
-          <CardTitle className="text-2xl">Welcome Back</CardTitle>
+          <CardTitle className="text-2xl">Welkom Terug</CardTitle>
           <CardDescription className="text-base">
-            Sign in to your Geoptimo account
+            Log in op je Geoptimo account
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -75,7 +75,7 @@ function LoginForm() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Email
+                E-mail
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -85,14 +85,14 @@ function LoginForm() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                  placeholder="you@example.com"
+                  placeholder="jij@voorbeeld.nl"
                 />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Password
+                Wachtwoord
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -115,17 +115,17 @@ function LoginForm() {
               {loading ? (
                 <>
                   <Loader2 className="h-5 w-5 animate-spin" />
-                  <span>Signing in...</span>
+                  <span>Inloggen...</span>
                 </>
               ) : (
-                <span>Sign In</span>
+                <span>Inloggen</span>
               )}
             </button>
 
             <div className="text-center text-sm text-gray-600 dark:text-gray-400">
-              Don&apos;t have an account?{" "}
+              Nog geen account?{" "}
               <Link href="/register" className="text-purple-600 hover:text-purple-700 font-medium">
-                Sign up
+                Registreer
               </Link>
             </div>
           </form>

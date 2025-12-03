@@ -131,9 +131,9 @@ export default function StepPrompts({ data, onNext, onBack }: Props) {
             <MessageSquare className="h-8 w-8 text-purple-600" />
           </div>
         </div>
-        <CardTitle className="text-2xl">Select Prompts to Monitor</CardTitle>
+        <CardTitle className="text-2xl">Selecteer Prompts om te Monitoren</CardTitle>
         <CardDescription className="text-base">
-          Choose prompts to track your brand&apos;s performance
+          Kies prompts om de prestaties van je merk te volgen
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -141,7 +141,7 @@ export default function StepPrompts({ data, onNext, onBack }: Props) {
           <div className="flex flex-col items-center justify-center py-12 space-y-4">
             <Loader2 className="h-12 w-12 text-purple-600 animate-spin" />
             <p className="text-gray-600 dark:text-gray-400">
-              Generating AI-powered prompt suggestions...
+              AI-aangedreven prompt suggesties genereren...
             </p>
           </div>
         ) : (
@@ -150,10 +150,10 @@ export default function StepPrompts({ data, onNext, onBack }: Props) {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold text-gray-900 dark:text-white">
-                  Suggested Prompts
+                  Voorgestelde Prompts
                 </h3>
                 <span className="text-sm text-gray-500">
-                  {prompts.length} available
+                  {prompts.length} beschikbaar
                 </span>
               </div>
               <div className="max-h-[400px] overflow-y-auto space-y-2 pr-2">
@@ -184,7 +184,7 @@ export default function StepPrompts({ data, onNext, onBack }: Props) {
                           {prompt.text}
                         </p>
                         <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                          ~{prompt.estimatedImpressions.toLocaleString()} monthly searches
+                          ~{prompt.estimatedImpressions.toLocaleString()} maandelijkse zoekopdrachten
                         </p>
                       </div>
                     </div>
@@ -201,12 +201,12 @@ export default function StepPrompts({ data, onNext, onBack }: Props) {
                   className="w-full flex items-center justify-center space-x-2 p-3 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg hover:border-purple-500 dark:hover:border-purple-500 transition-colors text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400"
                 >
                   <Plus className="h-5 w-5" />
-                  <span className="font-medium">Add Custom Prompt</span>
+                  <span className="font-medium">Aangepaste Prompt Toevoegen</span>
                 </button>
               ) : (
                 <div className="space-y-2">
                   <textarea
-                    placeholder="Enter your custom prompt..."
+                    placeholder="Voer je aangepaste prompt in..."
                     value={customPrompt}
                     onChange={(e) => setCustomPrompt(e.target.value)}
                     rows={3}
@@ -218,7 +218,7 @@ export default function StepPrompts({ data, onNext, onBack }: Props) {
                       disabled={!customPrompt.trim()}
                       className="flex-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Add
+                      Toevoegen
                     </button>
                     <button
                       onClick={() => {
@@ -227,7 +227,7 @@ export default function StepPrompts({ data, onNext, onBack }: Props) {
                       }}
                       className="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg font-medium transition-all"
                     >
-                      Cancel
+                      Annuleren
                     </button>
                   </div>
                 </div>
@@ -239,10 +239,10 @@ export default function StepPrompts({ data, onNext, onBack }: Props) {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-semibold text-purple-900 dark:text-purple-100">
-                    Your Selection
+                    Jouw Selectie
                   </p>
                   <p className="text-sm text-purple-600 dark:text-purple-400">
-                    {selectedPrompts.length} prompt{selectedPrompts.length !== 1 ? 's' : ''} selected
+                    {selectedPrompts.length} prompt{selectedPrompts.length !== 1 ? 's' : ''} geselecteerd
                   </p>
                 </div>
                 {selectedPrompts.length > 0 && (
@@ -260,14 +260,14 @@ export default function StepPrompts({ data, onNext, onBack }: Props) {
             className="flex items-center justify-center space-x-2 flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 px-6 py-3 rounded-lg font-medium text-lg transition-all"
           >
             <ArrowLeft className="h-5 w-5" />
-            <span>Back</span>
+            <span>Terug</span>
           </button>
           <button
             onClick={handleContinue}
             disabled={loading}
             className="flex-1 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Continue
+            Doorgaan
           </button>
         </div>
       </CardContent>

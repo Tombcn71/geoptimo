@@ -106,7 +106,7 @@ export default function DashboardPage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <Loader2 className="h-12 w-12 text-purple-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+          <p className="text-gray-600 dark:text-gray-400">Laden...</p>
         </div>
       </div>
     );
@@ -115,7 +115,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Loading metrics...</div>
+        <div className="text-xl text-gray-600 dark:text-gray-400">Statistieken laden...</div>
       </div>
     );
   }
@@ -126,7 +126,7 @@ export default function DashboardPage() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Your AI search visibility performance at a glance
+          Je AI-zoekmachine zichtbaarheid in één oogopslag
         </p>
       </div>
 
@@ -138,9 +138,9 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium text-purple-700 dark:text-purple-300 flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Eye className="h-4 w-4" />
-                <span>Visibility Score</span>
+                <span>Zichtbaarheidsscore</span>
               </div>
-              <Tooltip content="How often your brand appears in AI responses" />
+              <Tooltip content="Hoe vaak je merk verschijnt in AI-antwoorden" />
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -149,10 +149,10 @@ export default function DashboardPage() {
             </div>
             <p className="text-xs text-purple-600 dark:text-purple-400 mt-2 flex items-center">
               <TrendingUp className="h-3 w-3 mr-1" />
-              +12% from last week
+              +12% t.o.v. vorige week
             </p>
             <p className="text-xs text-purple-600/70 dark:text-purple-400/70 mt-2">
-              💡 Shows if your GEO efforts are working
+              💡 Laat zien of je GEO-inspanningen werken
             </p>
           </CardContent>
         </Card>
@@ -163,9 +163,9 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium text-green-700 dark:text-green-300 flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <MessageSquare className="h-4 w-4" />
-                <span>Brand Sentiment</span>
+                <span>Merksentiment</span>
               </div>
-              <Tooltip content="How positively AI talks about your brand" />
+              <Tooltip content="Hoe positief AI over je merk spreekt" />
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -174,10 +174,10 @@ export default function DashboardPage() {
             </div>
             <p className="text-xs text-green-600 dark:text-green-400 mt-2 flex items-center">
               <TrendingUp className="h-3 w-3 mr-1" />
-              Positive trend
+              Positieve trend
             </p>
             <p className="text-xs text-green-600/70 dark:text-green-400/70 mt-2">
-              💡 Positive mentions = more trust = more customers
+              💡 Positieve vermeldingen = meer vertrouwen = meer klanten
             </p>
           </CardContent>
         </Card>
@@ -188,9 +188,9 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium text-blue-700 dark:text-blue-300 flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Award className="h-4 w-4" />
-                <span>Average Position</span>
+                <span>Gemiddelde Positie</span>
               </div>
-              <Tooltip content="Where you rank in AI responses (1-10)" />
+              <Tooltip content="Waar je rankt in AI-antwoorden (1-10)" />
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -199,10 +199,10 @@ export default function DashboardPage() {
             </div>
             <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 flex items-center">
               <TrendingUp className="h-3 w-3 mr-1" />
-              Improved by 2 spots
+              2 plekken gestegen
             </p>
             <p className="text-xs text-blue-600/70 dark:text-blue-400/70 mt-2">
-              💡 Position 1-3 gets 80% of attention
+              💡 Positie 1-3 krijgt 80% van de aandacht
             </p>
           </CardContent>
         </Card>
@@ -213,9 +213,9 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium text-orange-700 dark:text-orange-300 flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Target className="h-4 w-4" />
-                <span>Detection Rate</span>
+                <span>Detectiepercentage</span>
               </div>
-              <Tooltip content="% of relevant queries where you're mentioned" />
+              <Tooltip content="% van relevante zoekopdrachten waar je genoemd wordt" />
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -224,10 +224,10 @@ export default function DashboardPage() {
             </div>
             <p className="text-xs text-orange-600 dark:text-orange-400 mt-2 flex items-center">
               <TrendingUp className="h-3 w-3 mr-1" />
-              +5% from last week
+              +5% t.o.v. vorige week
             </p>
             <p className="text-xs text-orange-600/70 dark:text-orange-400/70 mt-2">
-              💡 Higher rate = more opportunities captured
+              💡 Hoger percentage = meer kansen benut
             </p>
           </CardContent>
         </Card>
@@ -240,7 +240,7 @@ export default function DashboardPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium flex items-center space-x-2">
               <MessageSquare className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-              <span>Total Mentions</span>
+              <span>Totaal Vermeldingen</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -276,7 +276,7 @@ export default function DashboardPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium flex items-center space-x-2">
               <Eye className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-              <span>Domain Citations</span>
+              <span>Domein Citaten</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -366,9 +366,9 @@ export default function DashboardPage() {
       {/* Recent Activity */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
+          <CardTitle>Recente Activiteit</CardTitle>
           <CardDescription>
-            Latest prompt runs and brand mentions
+            Laatste prompt runs en merkvermeldingen
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -411,7 +411,7 @@ export default function DashboardPage() {
                 className="inline-flex items-center space-x-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
               >
                 <Search className="h-5 w-5" />
-                <span>Explore Prompts</span>
+                <span>Verken Prompts</span>
               </Link>
             </div>
           )}
@@ -544,13 +544,13 @@ export default function DashboardPage() {
             <div className="text-center py-8">
               <Activity className="h-12 w-12 text-gray-300 dark:text-gray-700 mx-auto mb-3" />
               <p className="text-gray-600 dark:text-gray-400 mb-4">
-                No activity yet. Run some prompts to see results here.
+                Nog geen activiteit. Draai prompts om hier resultaten te zien.
               </p>
               <Link
                 href="/dashboard/prompts/explore"
                 className="inline-flex items-center space-x-2 text-purple-600 dark:text-purple-400 hover:underline"
               >
-                <span>Explore Prompts</span>
+                <span>Verken Prompts</span>
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
             </div>

@@ -59,7 +59,7 @@ export default function CompetitorsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Loading competitors...</div>
+        <div className="text-xl text-gray-600 dark:text-gray-400">Concurrenten laden...</div>
       </div>
     );
   }
@@ -72,7 +72,7 @@ export default function CompetitorsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Competitor Analysis</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Concurrent Analyse
         <p className="text-gray-600 dark:text-gray-400 mt-2">
           Compare your performance with competitors in AI results
         </p>
@@ -96,7 +96,7 @@ export default function CompetitorsPage() {
                 <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-sm font-bold">
                   V
                 </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Visibility Score</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white">Zichtbaarheidsscore</h3>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                 Compare how often you vs competitors get mentioned
@@ -126,7 +126,7 @@ export default function CompetitorsPage() {
                 <div className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center text-sm font-bold">
                   D
                 </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Detection Rate</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white">Detectiepercentage</h3>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                 Who appears most frequently in relevant queries
@@ -163,11 +163,11 @@ export default function CompetitorsPage() {
                 <Eye className="h-10 w-10 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                No Competitors Detected Yet
+                Nog Geen Concurrenten Gedetecteerd
               </h2>
               <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
-                Competitors will automatically appear here when you run prompts. 
-                AI will detect which other brands are mentioned alongside yours and track their performance.
+                Concurrenten verschijnen hier automatisch wanneer je prompts draait. 
+                AI detecteert welke andere merken naast die van jou worden genoemd en volgt hun prestaties.
               </p>
               <div className="flex flex-col items-center space-y-3">
                 <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
@@ -180,7 +180,7 @@ export default function CompetitorsPage() {
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
                   <span className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">3</span>
-                  <span>Competitors will <strong>automatically</strong> be detected!</span>
+                  <span>Concurrenten worden <strong>automatisch</strong> gedetecteerd!</span>
                 </div>
               </div>
               <div className="mt-8">
@@ -223,7 +223,7 @@ export default function CompetitorsPage() {
           <CardContent>
             <div className="text-4xl font-bold text-orange-600">{gapToLeader > 0 ? `-${Math.round(gapToLeader)}` : '0'}</div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              Visibility score points
+              Zichtbaarheidsscore punten
             </p>
           </CardContent>
         </Card>
@@ -262,7 +262,7 @@ export default function CompetitorsPage() {
                   You can&apos;t improve what you don&apos;t measure. See exactly where competitors beat you and close those gaps.
                 </p>
                 <p className="text-gray-700 dark:text-gray-300 font-medium">
-                  Example: If Competitor X ranks #1-3 in 80% of prompts while you&apos;re at 30%, you know you need to optimize!
+                  Voorbeeld: Als Concurrent X in 80% van de prompts op #1-3 staat terwijl jij op 30% zit, weet je dat je moet optimaliseren!
                 </p>
               </div>
             </div>
@@ -288,7 +288,7 @@ export default function CompetitorsPage() {
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
                     <div className="flex items-center justify-center space-x-1">
-                      <span>Visibility</span>
+                      <span>Zichtbaarheid</span>
                       <ArrowUpDown className="h-4 w-4" />
                     </div>
                   </th>
@@ -299,16 +299,16 @@ export default function CompetitorsPage() {
                     Top 3 %
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
-                    Mentions
+                    Vermeldingen
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
-                    Avg Pos
+                    Gem Pos
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
-                    Detection
+                    Detectie
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
-                    Citations
+                    Citaten
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
                     Trend

@@ -35,10 +35,10 @@ export default function Home() {
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
               <Link href="#features" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                Features
+                Functies
               </Link>
               <Link href="#pricing" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                Pricing
+                Prijzen
               </Link>
               <Link href="/dashboard" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
                 Dashboard
@@ -48,7 +48,7 @@ export default function Home() {
                 href="/onboarding" 
                 className="bg-black dark:bg-white text-white dark:text-black px-6 py-2 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors font-medium"
               >
-                Start Free
+                Start Gratis
               </Link>
             </div>
 
@@ -78,14 +78,14 @@ export default function Home() {
                 className="block px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Features
+                Functies
               </Link>
               <Link 
                 href="#pricing" 
                 className="block px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Pricing
+                Prijzen
               </Link>
               <Link 
                 href="/dashboard" 
@@ -99,7 +99,7 @@ export default function Home() {
                 className="block bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors text-center font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Start Free
+                Start Gratis
               </Link>
             </div>
           </div>
@@ -114,14 +114,14 @@ export default function Home() {
             <span className="text-xs sm:text-sm font-medium">AI Engine Optimization</span>
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 px-2">
-            Be Discovered by
+            Word Ontdekt Door
             <span className="block mt-2 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 bg-clip-text text-transparent animate-gradient">
-              AI Search Engines
+              AI Zoekmachines
             </span>
           </h1>
           <p className="text-base sm:text-xl text-gray-600 dark:text-gray-400 mb-8 sm:mb-12 max-w-3xl mx-auto px-4">
-            Optimize your content to be cited and recommended by ChatGPT, Claude, Perplexity, 
-            Google AI and other generative search engines.
+            Optimaliseer je content om geciteerd en aanbevolen te worden door ChatGPT, Claude, Perplexity, 
+            Google AI en andere generatieve zoekmachines.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
@@ -129,13 +129,13 @@ export default function Home() {
               href="/register"
               className="bg-black dark:bg-white text-white dark:text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors shadow-lg"
             >
-              Start Free
+              Start Gratis
             </Link>
             <Link
               href="/demo"
               className="bg-white dark:bg-black text-gray-900 dark:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors border-2 border-gray-200 dark:border-gray-800"
             >
-              View Demo
+              Bekijk Demo
             </Link>
           </div>
 
@@ -148,15 +148,15 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 mt-12 sm:mt-20 max-w-4xl mx-auto px-4">
             <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
               <div className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">50M+</div>
-              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">AI Searches Monitored</div>
+              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">AI Zoekopdrachten Gemonitord</div>
             </div>
             <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
               <div className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">98%</div>
-              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Improvement Rate</div>
+              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Verbeteringspercentage</div>
             </div>
             <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
               <div className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">500+</div>
-              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Brands Trusting Us</div>
+              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Merken Vertrouwen Ons</div>
             </div>
           </div>
         </div>
@@ -167,10 +167,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-              Powerful GEO Features
+              Krachtige GEO Functies
             </h2>
             <p className="text-base sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-4">
-              Everything you need to optimize your presence in AI search engines
+              Alles wat je nodig hebt om je aanwezigheid in AI-zoekmachines te optimaliseren
             </p>
           </div>
 
@@ -184,8 +184,8 @@ export default function Home() {
                 Real-Time AI Monitoring
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Track brand mentions in ChatGPT, Claude, Perplexity and more. 
-                Get instant alerts when your brand is cited.
+                Volg merkvermeldingen in ChatGPT, Claude, Perplexity en meer. 
+                Ontvang directe meldingen wanneer je merk wordt geciteerd.
               </p>
             </div>
 
@@ -198,8 +198,8 @@ export default function Home() {
                 Website Audit
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Deep analysis of your site for AI optimization. Identify issues 
-                and get actionable recommendations.
+                Diepgaande analyse van je site voor AI-optimalisatie. Identificeer problemen 
+                en krijg concrete aanbevelingen.
               </p>
             </div>
 
@@ -209,11 +209,11 @@ export default function Home() {
                 <Rocket className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Content Optimization
+                Content Optimalisatie
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Optimize your content for better understanding and citation by AI. 
-                Advanced NLP analysis and suggestions.
+                Optimaliseer je content voor beter begrip en citatie door AI. 
+                Geavanceerde NLP-analyse en suggesties.
               </p>
             </div>
 
@@ -223,11 +223,11 @@ export default function Home() {
                 <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Analytics Dashboard
+                Analyse Dashboard
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Visualize mentions, trends and performance across all AI engines. 
-                Compare with competitors.
+                Visualiseer vermeldingen, trends en prestaties over alle AI-engines. 
+                Vergelijk met concurrenten.
               </p>
             </div>
 
@@ -237,11 +237,11 @@ export default function Home() {
                 <Target className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Keyword Research
+                Keyword Onderzoek
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Discover which queries trigger brand mentions. Identify content gaps 
-                and opportunities.
+                Ontdek welke zoekopdrachten merkvermeldingen triggeren. Identificeer content-gaps 
+                en kansen.
               </p>
             </div>
 
@@ -251,11 +251,11 @@ export default function Home() {
                 <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Competitor Analysis
+                Concurrent Analyse
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Compare your performance with competitors. See what works in your industry 
-                and stay ahead.
+                Vergelijk je prestaties met concurrenten. Zie wat werkt in jouw sector 
+                en blijf voorop.
               </p>
             </div>
           </div>
@@ -267,16 +267,16 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <Shield className="h-12 w-12 sm:h-16 sm:w-16 text-white mx-auto mb-4 sm:mb-6" />
           <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4 sm:mb-6">
-            Ready to Optimize Your AI Presence?
+            Klaar Om Je AI Aanwezigheid Te Optimaliseren?
           </h2>
           <p className="text-base sm:text-xl text-gray-300 mb-6 sm:mb-8 px-4">
-            Join hundreds of brands already dominating generative engine optimization
+            Sluit je aan bij honderden merken die al domineren in generatieve engine optimalisatie
           </p>
           <Link
             href="/onboarding"
             className="inline-block bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
           >
-            Start Free Trial
+            Start Gratis Proefperiode
           </Link>
         </div>
       </section>
@@ -291,29 +291,29 @@ export default function Home() {
                 <span className="text-black dark:text-white text-xl font-bold">Geoptimo</span>
               </div>
               <p className="text-sm">
-                Optimization for generative AI engines. Be discovered, cited and recommended.
+                Optimalisatie voor generatieve AI-engines. Word ontdekt, geciteerd en aanbevolen.
               </p>
             </div>
             <div>
               <h4 className="text-black dark:text-white font-semibold mb-4">Product</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="#features" className="hover:text-black dark:hover:text-white transition-colors">Features</Link></li>
-                <li><Link href="#pricing" className="hover:text-black dark:hover:text-white transition-colors">Pricing</Link></li>
+                <li><Link href="#features" className="hover:text-black dark:hover:text-white transition-colors">Functies</Link></li>
+                <li><Link href="#pricing" className="hover:text-black dark:hover:text-white transition-colors">Prijzen</Link></li>
                 <li><Link href="/dashboard" className="hover:text-black dark:hover:text-white transition-colors">Dashboard</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-black dark:text-white font-semibold mb-4">Resources</h4>
+              <h4 className="text-black dark:text-white font-semibold mb-4">Bronnen</h4>
               <ul className="space-y-2 text-sm">
                 <li><Link href="/demo" className="hover:text-black dark:hover:text-white transition-colors">Demo</Link></li>
                 <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Blog</Link></li>
-                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Guides</Link></li>
+                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Gidsen</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-black dark:text-white font-semibold mb-4">Company</h4>
+              <h4 className="text-black dark:text-white font-semibold mb-4">Bedrijf</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">About Us</Link></li>
+                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Over Ons</Link></li>
                 <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Contact</Link></li>
                 <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Privacy</Link></li>
               </ul>

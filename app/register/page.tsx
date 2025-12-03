@@ -21,7 +21,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters");
+      setError("Wachtwoord moet minimaal 6 tekens bevatten");
       setLoading(false);
       return;
     }
@@ -36,7 +36,7 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Registration failed");
+        setError(data.error || "Registratie mislukt");
       } else {
         // Auto-login after successful registration
         const signInResult = await signIn("credentials", {
@@ -46,7 +46,7 @@ export default function RegisterPage() {
         });
 
         if (signInResult?.error) {
-          setError("Registration successful but login failed. Please login manually.");
+          setError("Registratie geslaagd maar inloggen mislukt. Log handmatig in.");
         } else {
           // Redirect to onboarding after successful auto-login
           router.push("/onboarding");
@@ -54,7 +54,7 @@ export default function RegisterPage() {
         }
       }
     } catch (error) {
-      setError("An error occurred. Please try again.");
+      setError("Er is een fout opgetreden. Probeer het opnieuw.");
     } finally {
       setLoading(false);
     }
@@ -69,9 +69,9 @@ export default function RegisterPage() {
               <UserPlus className="h-8 w-8 text-purple-600" />
             </div>
           </div>
-          <CardTitle className="text-2xl">Create Account</CardTitle>
+          <CardTitle className="text-2xl">Account Aanmaken</CardTitle>
           <CardDescription className="text-base">
-            Start optimizing your AI presence today
+            Start vandaag nog met het optimaliseren van je AI aanwezigheid
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -84,7 +84,7 @@ export default function RegisterPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Full Name
+                Volledige Naam
               </label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -94,14 +94,14 @@ export default function RegisterPage() {
                   onChange={(e) => setName(e.target.value)}
                   required
                   className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                  placeholder="John Doe"
+                  placeholder="Jan Jansen"
                 />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Email
+                E-mail
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -111,14 +111,14 @@ export default function RegisterPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                  placeholder="you@example.com"
+                  placeholder="jij@voorbeeld.nl"
                 />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Password
+                Wachtwoord
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -133,7 +133,7 @@ export default function RegisterPage() {
                 />
               </div>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                Must be at least 6 characters
+                Minimaal 6 tekens
               </p>
             </div>
 
@@ -145,17 +145,17 @@ export default function RegisterPage() {
               {loading ? (
                 <>
                   <Loader2 className="h-5 w-5 animate-spin" />
-                  <span>Creating account...</span>
+                  <span>Account aanmaken...</span>
                 </>
               ) : (
-                <span>Create Account</span>
+                <span>Account Aanmaken</span>
               )}
             </button>
 
             <div className="text-center text-sm text-gray-600 dark:text-gray-400">
-              Already have an account?{" "}
+              Al een account?{" "}
               <Link href="/login" className="text-purple-600 hover:text-purple-700 font-medium">
-                Sign in
+                Log in
               </Link>
             </div>
           </form>
