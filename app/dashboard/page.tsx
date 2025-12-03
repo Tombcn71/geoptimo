@@ -248,7 +248,7 @@ export default function DashboardPage() {
               {metrics?.mentions || 0}
             </div>
             <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-              AI responses featuring your brand
+              AI-antwoorden die je merk vermelden
             </p>
           </CardContent>
         </Card>
@@ -258,7 +258,7 @@ export default function DashboardPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium flex items-center space-x-2">
               <Award className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-              <span>Top 3 Appearances</span>
+              <span>Top 3 Verschijningen</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -266,7 +266,7 @@ export default function DashboardPage() {
               {metrics?.topThreeVis || 0}%
             </div>
             <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-              Times you ranked in top 3 positions
+              Aantal keren in top 3 posities
             </p>
           </CardContent>
         </Card>
@@ -295,9 +295,9 @@ export default function DashboardPage() {
         {/* Mentions Trend */}
         <Card>
           <CardHeader>
-            <CardTitle>Mention Trends (Last 7 Days)</CardTitle>
+            <CardTitle>Vermeldingen Trend (Laatste 7 Dagen)</CardTitle>
             <CardDescription>
-              Track how often your brand is mentioned by AI engines
+              Volg hoe vaak je merk wordt vermeld door AI-engines
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -330,9 +330,9 @@ export default function DashboardPage() {
         {/* Top Queries */}
         <Card>
           <CardHeader>
-            <CardTitle>Top Queries Mentioning You</CardTitle>
+            <CardTitle>Top Zoekopdrachten Die Je Noemen</CardTitle>
             <CardDescription>
-              Most common searches where your brand appears
+              Meest voorkomende zoekopdrachten waar je merk verschijnt
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -344,7 +344,7 @@ export default function DashboardPage() {
                       {item.query}
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      {item.mentions} mentions
+                      {item.mentions} vermeldingen
                     </p>
                   </div>
                   {item.trend === 'up' ? (
@@ -355,7 +355,7 @@ export default function DashboardPage() {
                 </div>
               )) : (
                 <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                  No query data available yet
+                  Nog geen query data beschikbaar
                 </div>
               )}
             </div>
@@ -372,25 +372,57 @@ export default function DashboardPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {(metrics?.topQueries && metrics.topQueries.length > 0) ? (
+          {(recentActivity && recentActivity.length > 0) ? (
             <div className="space-y-3">
-              {metrics.topQueries.slice(0, 5).map((query, index) => (
+              {recentActivity.slice(0, 10).map((activity) => (
                 <Link
-                  key={index}
-                  href="/dashboard/prompts"
+                  key={activity.id}
+                  href={`/dashboard/prompts/${activity.promptId}`}
                   className="flex items-center justify-between p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group"
                 >
                   <div className="flex items-center space-x-4 flex-1">
-                    <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-                      <MessageSquare className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      activity.mentioned 
+                        ? 'bg-green-100 dark:bg-green-900/30' 
+                        : 'bg-gray-100 dark:bg-gray-800'
+                    }`}>
+                      {activity.mentioned ? (
+                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+                      ) : (
+                        <XCircle className="h-5 w-5 text-gray-400" />
+                      )}
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400">
-                        {query.query}
+                        {activity.promptText.substring(0, 60)}...
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                        {query.mentions} {query.mentions === 1 ? 'mention' : 'mentions'}
-                      </p>
+                      <div className="flex items-center gap-3 mt-1">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          {new Date(activity.runAt).toLocaleDateString('nl-NL', { 
+                            day: 'numeric', 
+                            month: 'short',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </p>
+                        {activity.mentioned && activity.position && (
+                          <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded">
+                            Positie #{activity.position}
+                          </span>
+                        )}
+                        {activity.sentiment && (
+                          <span className={`text-xs px-2 py-0.5 rounded ${
+                            activity.sentiment === 'positive' 
+                              ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
+                              : activity.sentiment === 'negative'
+                              ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
+                              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                          }`}>
+                            {activity.sentiment === 'positive' ? '😊 Positief' : activity.sentiment === 'negative' ? '😟 Negatief' : '😐 Neutraal'}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <ArrowUpRight className="h-5 w-5 text-gray-400 group-hover:text-purple-600 dark:group-hover:text-purple-400" />
@@ -401,10 +433,10 @@ export default function DashboardPage() {
             <div className="text-center py-12">
               <MessageSquare className="h-16 w-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                No Activity Yet
+                Nog Geen Activiteit
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Subscribe to prompts and run them to start tracking your AI visibility
+                Kies prompts en voer ze uit om je AI zichtbaarheid te monitoren
               </p>
               <Link
                 href="/dashboard/prompts/explore"
@@ -425,12 +457,12 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2 text-lg">
                 <Search className="h-5 w-5 text-purple-600" />
-                <span>Optimize Content</span>
+                <span>Optimaliseer Content</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Check your content&apos;s AI visibility score and get improvement suggestions
+                Bekijk je content&apos;s AI zichtbaarheidsscore en krijg verbeter suggesties
               </p>
               <div className="mt-4 flex items-center text-purple-600 dark:text-purple-400 text-sm font-medium">
                 Open Content Checker
@@ -450,10 +482,10 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Track how your brand appears across different AI queries
+                Volg hoe je merk verschijnt in verschillende AI zoekopdrachten
               </p>
               <div className="mt-4 flex items-center text-blue-600 dark:text-blue-400 text-sm font-medium">
-                View Prompt Results
+                Bekijk Prompt Resultaten
                 <ArrowUpRight className="h-4 w-4 ml-1" />
               </div>
             </CardContent>
@@ -465,98 +497,21 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2 text-lg">
                 <Users className="h-5 w-5 text-green-600" />
-                <span>Competitor Analysis</span>
+                <span>Concurrentie Analyse</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                See how you stack up against competitors in AI search
+                Zie hoe je scoort ten opzichte van concurrenten in AI zoekresultaten
               </p>
               <div className="mt-4 flex items-center text-green-600 dark:text-green-400 text-sm font-medium">
-                Compare Performance
+                Vergelijk Prestaties
                 <ArrowUpRight className="h-4 w-4 ml-1" />
               </div>
             </CardContent>
           </Card>
         </Link>
       </div>
-
-      {/* Recent Activity */}
-      <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Activity className="h-5 w-5 text-purple-600" />
-            <span>Recent Activity</span>
-          </CardTitle>
-          <CardDescription>
-            Latest prompt runs and brand mentions
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {recentActivity.length > 0 ? (
-            <div className="space-y-3">
-              {recentActivity.map((activity) => (
-                <Link
-                  key={activity.id}
-                  href={`/dashboard/prompts/${activity.promptId}`}
-                  className="block p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-all hover:border-purple-500"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">
-                        {activity.promptText}
-                      </p>
-                      <div className="flex flex-wrap items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">
-                          {activity.provider}
-                        </span>
-                        <div className="flex items-center space-x-1">
-                          <Clock className="h-3 w-3" />
-                          <span>{new Date(activity.runAt).toLocaleString()}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end gap-2">
-                      {activity.mentioned ? (
-                        <>
-                          <div className="flex items-center space-x-1 text-green-600 dark:text-green-400">
-                            <CheckCircle className="h-4 w-4" />
-                            <span className="text-xs font-medium">Mentioned</span>
-                          </div>
-                          {activity.position && (
-                            <span className="text-xs text-purple-600 dark:text-purple-400 font-medium">
-                              Position #{activity.position}
-                            </span>
-                          )}
-                        </>
-                      ) : (
-                        <div className="flex items-center space-x-1 text-gray-500 dark:text-gray-400">
-                          <XCircle className="h-4 w-4" />
-                          <span className="text-xs">Not mentioned</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8">
-              <Activity className="h-12 w-12 text-gray-300 dark:text-gray-700 mx-auto mb-3" />
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                Nog geen activiteit. Draai prompts om hier resultaten te zien.
-              </p>
-              <Link
-                href="/dashboard/prompts/explore"
-                className="inline-flex items-center space-x-2 text-purple-600 dark:text-purple-400 hover:underline"
-              >
-                <span>Verken Prompts</span>
-                <ArrowUpRight className="h-4 w-4" />
-              </Link>
-            </div>
-          )}
-        </CardContent>
-      </Card>
     </div>
   );
 }
