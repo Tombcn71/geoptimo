@@ -81,9 +81,9 @@ export default function AnalyticsPage() {
       {/* Mentions Trend */}
       <Card>
         <CardHeader>
-          <CardTitle>Tendencia de Menciones por Plataforma</CardTitle>
+          <CardTitle>Vermeldingen Trend per Platform</CardTitle>
           <CardDescription>
-            Evolución de menciones en diferentes motores de IA
+            Evolutie van vermeldingen in verschillende AI-engines
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -125,9 +125,9 @@ export default function AnalyticsPage() {
         {/* Sentiment Chart */}
         <Card>
           <CardHeader>
-            <CardTitle>Análisis de Sentimiento</CardTitle>
+            <CardTitle>Sentiment Analyse</CardTitle>
             <CardDescription>
-              Distribución del sentimiento en menciones
+              Verdeling van sentiment in vermeldingen
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -148,9 +148,9 @@ export default function AnalyticsPage() {
         {/* Position Rankings */}
         <Card>
           <CardHeader>
-            <CardTitle>Rankings por Categoría</CardTitle>
+            <CardTitle>Rankings per Categorie</CardTitle>
             <CardDescription>
-              Posición promedio en diferentes categorías
+              Gemiddelde positie in verschillende categorieën
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -194,9 +194,9 @@ export default function AnalyticsPage() {
       {/* Top Citations */}
       <Card>
         <CardHeader>
-          <CardTitle>Citaciones Principales</CardTitle>
+          <CardTitle>Belangrijkste Citaten</CardTitle>
           <CardDescription>
-            Contextos más frecuentes en los que se menciona tu marca
+            Meest frequente contexten waarin je merk wordt genoemd
           </CardDescription>
         </CardHeader>
         <CardContent>

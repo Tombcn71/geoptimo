@@ -70,10 +70,10 @@ export default function CitationsPage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <TrendingUp className="h-5 w-5 text-green-600" />
-            <span>Your Brand Citations</span>
+            <span>Jouw Merk Citaten</span>
           </CardTitle>
           <CardDescription>
-            When AI models cite your website
+            Wanneer AI-modellen je website citeren
           </CardDescription>
         </CardHeader>
         <CardContent>

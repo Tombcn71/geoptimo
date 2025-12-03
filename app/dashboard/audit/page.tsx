@@ -148,7 +148,7 @@ export default function AuditPage() {
         <CardHeader>
           <CardTitle>Website GEO Audit</CardTitle>
           <CardDescription>
-            Analyze any webpage by entering its URL - we&apos;ll fetch and audit the content automatically
+            Analyseer elke webpagina door de URL in te voeren - we halen en auditeren de content automatisch
           </CardDescription>
         </CardHeader>
         <CardContent>

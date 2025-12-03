@@ -224,8 +224,8 @@ We'll check how well AI search engines like ChatGPT can find and understand your
           {/* Dimension Scores */}
           <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
             <CardHeader>
-              <CardTitle className="text-base">📊 Detailed Scores</CardTitle>
-              <CardDescription>How well your content scores on different aspects</CardDescription>
+              <CardTitle className="text-base">📊 Gedetailleerde Scores</CardTitle>
+              <CardDescription>Hoe goed je content scoort op verschillende aspecten</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -321,9 +321,9 @@ We'll check how well AI search engines like ChatGPT can find and understand your
             <CardHeader>
               <CardTitle className="text-base flex items-center space-x-2">
                 <Sparkles className="h-5 w-5 text-yellow-600" />
-                <span>💡 Tips to Improve</span>
+                <span>💡 Tips om te Verbeteren</span>
               </CardTitle>
-              <CardDescription>Directly actionable improvement points</CardDescription>
+              <CardDescription>Direct uitvoerbare verbeterpunten</CardDescription>
             </CardHeader>
             <CardContent>
               {analysis.suggestions && analysis.suggestions.length > 0 ? (
