@@ -239,7 +239,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
               {promptData?.subscribed && (
                 <span className="flex items-center space-x-1 text-green-600 dark:text-green-400">
                   <CheckCircle2 className="h-4 w-4" />
-                  <span>Subscribed</span>
+                  <span>Geabonneerd</span>
                 </span>
               )}
             </div>
@@ -295,7 +295,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
         <CardContent className="pt-6">
           <div className="flex items-center space-x-3">
             <Filter className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Filter by Provider:</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Filter op Provider:</span>
             <button
               onClick={() => setFilterProvider(null)}
               className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
@@ -304,7 +304,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                   : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
               }`}
             >
-              All
+              Alle
             </button>
             {Object.keys(providerLogos).map((provider) => (
               <button
@@ -333,14 +333,14 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
             <div className="text-center py-12">
               <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                No Runs Yet
+                Nog Geen Resultaten
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-4">
-                This prompt hasn&apos;t been executed yet. 
+                Deze prompt is nog niet uitgevoerd. 
                 {promptData?.subscribed ? (
-                  <span> It will run automatically daily, or you can run it manually from the Prompts page.</span>
+                  <span> Het wordt automatisch dagelijks uitgevoerd, of je kunt het handmatig uitvoeren vanaf de Prompts pagina.</span>
                 ) : (
-                  <span> Subscribe to this prompt and run it manually to see results.</span>
+                  <span> Abonneer je op deze prompt en voer het handmatig uit om resultaten te zien.</span>
                 )}
               </p>
               <Link 
@@ -404,7 +404,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
                           <FileText className="h-4 w-4 text-white" />
                         </div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white">AI Response</h4>
+                        <h4 className="font-semibold text-gray-900 dark:text-white">AI Antwoord</h4>
                       </div>
                       <button
                         onClick={() => toggleRunExpansion(run.id)}
@@ -443,11 +443,11 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                     <div className="mt-4 pt-3 border-t border-blue-100 dark:border-blue-900/30 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                       <span className="flex items-center space-x-1">
                         <span>📊</span>
-                        <span>{Math.ceil(run.response.length / 5)} words</span>
+                        <span>{Math.ceil(run.response.length / 5)} woorden</span>
                       </span>
                       <span className="flex items-center space-x-1">
                         <span>✨</span>
-                        <span>AI-Generated</span>
+                        <span>AI-Gegenereerd</span>
                       </span>
                     </div>
                   </div>
