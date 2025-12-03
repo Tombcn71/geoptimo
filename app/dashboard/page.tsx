@@ -12,7 +12,6 @@ import {
   Award,
   ArrowUpRight,
   Target,
-  Users,
   Search,
   Loader2,
   Activity,
@@ -449,69 +448,6 @@ export default function DashboardPage() {
           )}
         </CardContent>
       </Card>
-
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Link href="/dashboard/content">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-purple-500">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2 text-lg">
-                <Search className="h-5 w-5 text-purple-600" />
-                <span>Optimaliseer Content</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Bekijk je content&apos;s AI zichtbaarheidsscore en krijg verbeter suggesties
-              </p>
-              <div className="mt-4 flex items-center text-purple-600 dark:text-purple-400 text-sm font-medium">
-                Open Content Checker
-                <ArrowUpRight className="h-4 w-4 ml-1" />
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
-
-        <Link href="/dashboard/prompts">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-blue-500">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2 text-lg">
-                <MessageSquare className="h-5 w-5 text-blue-600" />
-                <span>Monitor Prompts</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Volg hoe je merk verschijnt in verschillende AI zoekopdrachten
-              </p>
-              <div className="mt-4 flex items-center text-blue-600 dark:text-blue-400 text-sm font-medium">
-                Bekijk Prompt Resultaten
-                <ArrowUpRight className="h-4 w-4 ml-1" />
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
-
-        <Link href="/dashboard/competitors">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-green-500">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2 text-lg">
-                <Users className="h-5 w-5 text-green-600" />
-                <span>Concurrentie Analyse</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Zie hoe je scoort ten opzichte van concurrenten in AI zoekresultaten
-              </p>
-              <div className="mt-4 flex items-center text-green-600 dark:text-green-400 text-sm font-medium">
-                Vergelijk Prestaties
-                <ArrowUpRight className="h-4 w-4 ml-1" />
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
-      </div>
     </div>
   );
 }
