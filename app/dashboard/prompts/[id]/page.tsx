@@ -203,10 +203,10 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
             <CheckCircle2 className="h-6 w-6 text-green-600 dark:text-green-400" />
             <div>
               <p className="font-semibold text-green-900 dark:text-green-100">
-                ✅ Prompt Executed Successfully!
+                ✅ Prompt Succesvol Uitgevoerd!
               </p>
               <p className="text-sm text-green-700 dark:text-green-300">
-                Results are shown below. The AI ran this prompt across multiple providers.
+                Resultaten worden hieronder weergegeven. De AI heeft deze prompt uitgevoerd.
               </p>
             </div>
           </div>
