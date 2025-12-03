@@ -78,9 +78,9 @@ export default function OptimizationPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Optimización de Contenido</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Content Optimalisatie</h1>
         <p className="text-gray-600 mt-2">
-          Mejora tu contenido para mayor citabilidad en motores de IA
+          Verbeter je content voor betere citeerbaarheid in AI-engines
         </p>
       </div>
 
@@ -164,10 +164,10 @@ export default function OptimizationPage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Lightbulb className="h-6 w-6 text-yellow-500" />
-            <span>Sugerencias de Optimización</span>
+            <span>Optimalisatie Suggesties</span>
           </CardTitle>
           <CardDescription>
-            Recomendaciones priorizadas para mejorar tu contenido
+            Geprioritiseerde aanbevelingen om je content te verbeteren
           </CardDescription>
         </CardHeader>
         <CardContent>

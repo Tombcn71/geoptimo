@@ -158,10 +158,10 @@ Check your current website text with this tool. You'll immediately see what's go
             <CardHeader>
               <CardTitle className="flex items-center space-x-2 text-xl">
                 <Edit className="h-6 w-6 text-purple-600" />
-                <span>Your Content</span>
+                <span>Jouw Content</span>
               </CardTitle>
               <CardDescription className="text-base">
-                Paste the text you want to check - for example a blog article, product description, or website text
+                Plak de tekst die je wilt checken - bijvoorbeeld een blogartikel, productbeschrijving of websitetekst
               </CardDescription>
             </CardHeader>
             <CardContent>

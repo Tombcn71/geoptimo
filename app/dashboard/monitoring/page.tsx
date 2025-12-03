@@ -66,9 +66,9 @@ export default function MonitoringPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Monitoreo de IA</h1>
+          <h1 className="text-3xl font-bold text-gray-900">AI Monitoring</h1>
           <p className="text-gray-600 mt-2">
-            Rastrea menciones de tu marca en tiempo real
+            Volg vermeldingen van je merk in real-time
           </p>
         </div>
         <button
@@ -109,9 +109,9 @@ export default function MonitoringPage() {
       {/* Monitoring Results */}
       <Card>
         <CardHeader>
-          <CardTitle>Resultados de Monitoreo</CardTitle>
+          <CardTitle>Monitoring Resultaten</CardTitle>
           <CardDescription>
-            Prompts activos y sus resultados más recientes
+            Actieve prompts en hun meest recente resultaten
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -159,7 +159,7 @@ export default function PromptsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Prompt Explorer</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Prompt Verkenner</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
             Discover and subscribe to relevant prompts for your brand
           </p>
@@ -170,14 +170,14 @@ export default function PromptsPage() {
             className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-colors flex items-center space-x-2"
           >
             <Sparkles className="h-5 w-5" />
-            <span>Explore AI Prompts</span>
+            <span>Verken AI Prompts</span>
           </Link>
           <button
             onClick={() => setShowCustomPrompt(true)}
             className="bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center space-x-2"
           >
             <Plus className="h-5 w-5" />
-            <span>Custom Prompt</span>
+            <span>Aangepaste Prompt</span>
           </button>
         </div>
       </div>
@@ -187,10 +187,10 @@ export default function PromptsPage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Sparkles className="h-5 w-5 text-purple-600" />
-            <span>AI-Generated Suggestions</span>
+            <span>AI-Gegenereerde Suggesties</span>
           </CardTitle>
           <CardDescription>
-            Based on your brand information and industry
+            Gebaseerd op je merkinformatie en sector
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -240,9 +240,9 @@ export default function PromptsPage() {
       {/* Your Subscribed Prompts */}
       <Card>
         <CardHeader>
-          <CardTitle>Your Subscribed Prompts</CardTitle>
+          <CardTitle>Jouw Geabonneerde Prompts</CardTitle>
           <CardDescription>
-            Executed daily across multiple AI providers
+            Dagelijks uitgevoerd op meerdere AI-providers
           </CardDescription>
         </CardHeader>
         <CardContent>
