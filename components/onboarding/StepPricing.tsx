@@ -16,7 +16,7 @@ const PLANS = [
     id: "starter",
     name: "Starter",
     icon: Rocket,
-    description: "Para individuos y startups que exploran la visibilidad IA (Voor individuen en startups die AI-zichtbaarheid verkennen).",
+    description: "Para individuos y startups que exploran la visibilidad IA",
     priceMonthly: 40,
     priceYearly: 490,
     originalYearly: 588,
@@ -25,15 +25,15 @@ const PLANS = [
       "2 merken",
       "Onbeperkte auditrapporten/maand",
       "Onbeperkte content analyses",
-      "Agrega 2 usuarios adicionales por €20/mes cada uno (Voeg 2 extra gebruikers toe voor €20/mnd elk)",
+      "Agrega 2 usuarios adicionales por €20/mes cada uno",
     ],
   },
   {
     id: "professional",
     name: "Professional",
     icon: Crown,
-    badge: "Más Popular (Meest Populair)",
-    description: "Ideal para agencias y PYMEs con insights avanzados (Ideaal voor Bureaus en MKB met geavanceerde inzichten).",
+    badge: "Más Popular",
+    description: "Ideal para agencias y PYMEs con insights avanzados",
     priceMonthly: 82,
     priceYearly: 990,
     originalYearly: 1188,
@@ -42,14 +42,14 @@ const PLANS = [
       "10 merken",
       "Onbeperkte auditrapporten/maand",
       "Onbeperkte content analyses",
-      "Agrega 5 usuarios adicionales por €30/mes cada uno (Voeg 5 extra gebruikers toe voor €30/mnd elk)",
+      "Agrega 5 usuarios adicionales por €30/mes cada uno",
     ],
   },
   {
     id: "enterprise",
     name: "Enterprise",
     icon: Building,
-    description: "Para empresas con capacidades ampliadas (Voor ondernemingen met uitgebreide capaciteiten).",
+    description: "Para empresas con capacidades ampliadas",
     priceMonthly: 165,
     priceYearly: 1990,
     originalYearly: 2388,
@@ -58,7 +58,7 @@ const PLANS = [
       "50 merken",
       "Onbeperkte auditrapporten/maand",
       "Onbeperkte content analyses",
-      "Agrega 10 usuarios adicionales por €40/mes cada uno (Voeg 10 extra gebruikers toe voor €40/mnd elk)",
+      "Agrega 10 usuarios adicionales por €40/mes cada uno",
     ],
   },
 ];
@@ -75,15 +75,15 @@ export default function StepPricing({ data, onBack, onComplete }: Props) {
     <div className="space-y-6">
       <Card className="border-2 shadow-xl">
         <CardHeader className="text-center space-y-2">
-          <CardTitle className="text-2xl">Elige Tu Suscripción (Kies Je Abonnement)</CardTitle>
+          <CardTitle className="text-2xl">Elige Tu Suscripción</CardTitle>
           <CardDescription className="text-base">
-            Comienza con un período de prueba de 14 días. No se requiere tarjeta de crédito (Start met een 14-daagse proefperiode. Geen creditcard vereist).
+            Comienza con un período de prueba de 14 días. No se requiere tarjeta de crédito
           </CardDescription>
           
           {/* Billing Toggle */}
           <div className="flex items-center justify-center space-x-3 pt-4">
             <span className={`text-sm ${!isYearly ? 'font-semibold text-gray-900 dark:text-white' : 'text-gray-500'}`}>
-              Mensual (Maandelijks)
+              Mensual
             </span>
             <button
               onClick={() => setIsYearly(!isYearly)}
@@ -98,11 +98,11 @@ export default function StepPricing({ data, onBack, onComplete }: Props) {
               />
             </button>
             <span className={`text-sm ${isYearly ? 'font-semibold text-gray-900 dark:text-white' : 'text-gray-500'}`}>
-              Anual (Jaarlijks)
+              Anual
             </span>
             {isYearly && (
               <span className="text-sm font-semibold text-green-600 dark:text-green-400">
-                Ahorra 2 meses gratis (Bespaar 2 maanden gratis)
+                Ahorra 2 meses gratis
               </span>
             )}
           </div>
@@ -199,7 +199,7 @@ export default function StepPricing({ data, onBack, onComplete }: Props) {
                       : 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-800'
                   }`}
                 >
-                  {isSelected ? 'Seleccionado (Geselecteerd)' : 'Seleccionar Suscripción (Selecteer Abonnement)'}
+                  {isSelected ? 'Seleccionado' : 'Seleccionar Suscripción'}
                 </button>
               </CardContent>
             </Card>
@@ -211,7 +211,7 @@ export default function StepPricing({ data, onBack, onComplete }: Props) {
       <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
         <CardContent className="py-4">
           <p className="text-sm text-center text-blue-700 dark:text-blue-300">
-            Todas las suscripciones incluyen un <strong>período de prueba gratuito de 14 días</strong>. Cancela en cualquier momento durante el período de prueba sin costo (Alle abonnementen bevatten een <strong>14-daagse gratis proefperiode</strong>. Annuleer op elk moment tijdens de proefperiode zonder kosten).
+            Todas las suscripciones incluyen un <strong>período de prueba gratuito de 14 días</strong>. Cancela en cualquier momento durante el período de prueba sin costo
           </p>
         </CardContent>
       </Card>
@@ -223,13 +223,13 @@ export default function StepPricing({ data, onBack, onComplete }: Props) {
           className="flex items-center justify-center space-x-2 flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 px-6 py-3 rounded-lg font-medium text-lg transition-all"
         >
           <ArrowLeft className="h-5 w-5" />
-          <span>Atrás (Terug)</span>
+          <span>Atrás</span>
         </button>
         <button
           onClick={handleStartTrial}
           className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-4 rounded-lg font-bold text-lg transition-all shadow-lg hover:shadow-xl"
         >
-          Iniciar Período de Prueba de 14 Días (Start 14-Daagse Proefperiode)
+          Iniciar Período de Prueba de 14 Días
         </button>
       </div>
     </div>

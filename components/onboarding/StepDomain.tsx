@@ -28,7 +28,7 @@ export default function StepDomain({ data, onNext }: Props) {
       
       setLoading(false);
     } catch (err) {
-      setError("No se pudo obtener el favicon (Kon favicon niet ophalen)");
+      setError("No se pudo obtener el favicon");
       setLoading(false);
     }
   };
@@ -45,7 +45,7 @@ export default function StepDomain({ data, onNext }: Props) {
 
   const handleContinue = () => {
     if (!domain) {
-      setError("Ingresa tu dominio (Voer je domein in)");
+      setError("Ingresa tu dominio");
       return;
     }
     
@@ -74,7 +74,7 @@ export default function StepDomain({ data, onNext }: Props) {
         </div>
         <CardTitle className="text-2xl">¿Cuál es el dominio de tu marca?</CardTitle>
         <CardDescription className="text-base">
-          Usamos esto para obtener el logo de tu marca y analizar tu presencia web (We gebruiken dit om je merklogo op te halen en je webpresentie te analyseren)
+          Usamos esto para obtener el logo de tu marca y analizar tu presencia web
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -89,7 +89,7 @@ export default function StepDomain({ data, onNext }: Props) {
           {loading && (
             <div className="flex items-center justify-center text-sm text-gray-600 dark:text-gray-400">
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              Obteniendo favicon... (Favicon ophalen...)
+              Obteniendo favicon...
             </div>
           )}
           {error && (
@@ -104,11 +104,11 @@ export default function StepDomain({ data, onNext }: Props) {
           disabled={!domain}
           className="w-full bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Continuar (Doorgaan)
+          Continuar
         </button>
 
         <p className="text-xs text-center text-gray-500 dark:text-gray-500">
-          No te preocupes, puedes ajustar esto más tarde en la configuración (Geen zorgen, je kunt dit later aanpassen in de instellingen)
+          No te preocupes, puedes ajustar esto más tarde en la configuración
         </p>
       </CardContent>
     </Card>

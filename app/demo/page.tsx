@@ -24,318 +24,318 @@ import Link from "next/link";
 const DEMO_STEPS = [
   {
     id: 1,
-    title: "Why GEO?",
+    title: "¿Por Qué GEO?",
     icon: Lightbulb,
     bgColor: "from-yellow-50 to-orange-50 dark:from-yellow-950/20 dark:to-orange-950/20",
     borderColor: "border-yellow-200 dark:border-yellow-800",
     content: {
-      problem: "The Problem",
-      problemText: "Millions of people now ask AI chatbots (ChatGPT, Claude, Gemini) instead of Google. If your brand isn't mentioned in AI responses, you're invisible to these potential customers.",
-      solution: "The Solution: GEO (Generative Engine Optimization)",
-      solutionText: "Just like SEO helps you rank on Google, GEO helps you get mentioned and recommended by AI chatbots. When someone asks 'What are the best [your product category]?', you want YOUR brand in that AI response.",
-      example: "Example: Someone asks ChatGPT 'What are the best project management tools?' - You want YOUR tool mentioned in positions 1-3!",
+      problem: "El Problema",
+      problemText: "Millones de personas ahora preguntan a chatbots IA (ChatGPT, Claude, Gemini) en lugar de Google. Si tu marca no se menciona en las respuestas IA, eres invisible para estos clientes potenciales.",
+      solution: "La Solución: GEO (Optimización de Motores Generativos)",
+      solutionText: "Así como SEO te ayuda a posicionarte en Google, GEO te ayuda a ser mencionado y recomendado por chatbots IA. Cuando alguien pregunta '¿Cuáles son los mejores [tu categoría de producto]?', quieres que TU marca esté en esa respuesta IA.",
+      example: "Ejemplo: Alguien pregunta a ChatGPT '¿Cuáles son las mejores herramientas de gestión de proyectos?' - ¡Quieres que TU herramienta sea mencionada en las posiciones 1-3!",
       stats: [
-        { label: "AI Searches Daily", value: "1B+" },
-        { label: "Growth Rate", value: "350%" },
-        { label: "Conversion Rate", value: "2.5x higher" }
+        { label: "Búsquedas IA Diarias", value: "1B+" },
+        { label: "Tasa de Crecimiento", value: "350%" },
+        { label: "Tasa de Conversión", value: "2.5x mayor" }
       ]
     }
   },
   {
     id: 2,
-    title: "Dashboard Overview",
+    title: "Resumen del Panel",
     icon: BarChart3,
     bgColor: "from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20",
     borderColor: "border-purple-200 dark:border-purple-800",
     content: {
-      problem: "What You See",
-      problemText: "Your Dashboard shows your overall AI visibility performance at a glance.",
-      solution: "Key Metrics Explained",
+      problem: "Lo Que Ves",
+      problemText: "Tu Panel muestra tu rendimiento general de visibilidad IA de un vistazo.",
+      solution: "Métricas Clave Explicadas",
       metrics: [
         {
-          name: "Visibility Score",
+          name: "Puntuación de Visibilidad",
           icon: Eye,
-          description: "How often your brand appears in AI responses",
-          why: "Shows if your GEO efforts are working",
-          calculation: "Detection rate × Average position × Top-3 prominence"
+          description: "Con qué frecuencia aparece tu marca en respuestas IA",
+          why: "Muestra si tus esfuerzos GEO están funcionando",
+          calculation: "Tasa de detección × Posición promedio × Prominencia Top-3"
         },
         {
-          name: "Brand Sentiment",
+          name: "Sentimiento de Marca",
           icon: Award,
-          description: "How positively AI talks about your brand",
-          why: "Positive mentions = more trust = more customers",
-          calculation: "Sentiment analysis of all brand mentions"
+          description: "Qué tan positivo habla la IA sobre tu marca",
+          why: "Menciones positivas = más confianza = más clientes",
+          calculation: "Análisis de sentimiento de todas las menciones de marca"
         },
         {
-          name: "Average Position",
+          name: "Posición Promedio",
           icon: TrendingUp,
-          description: "Where you rank in AI responses (1-10)",
-          why: "Position 1-3 gets 80% of attention",
-          calculation: "Average ranking when mentioned"
+          description: "Dónde clasificas en respuestas IA (1-10)",
+          why: "La posición 1-3 obtiene el 80% de la atención",
+          calculation: "Clasificación promedio cuando se menciona"
         },
         {
-          name: "Detection Rate",
+          name: "Tasa de Detección",
           icon: Target,
-          description: "% of relevant queries where you're mentioned",
-          why: "Higher rate = more opportunities captured",
-          calculation: "Mentions ÷ Total relevant queries"
+          description: "% de consultas relevantes donde eres mencionado",
+          why: "Mayor tasa = más oportunidades capturadas",
+          calculation: "Menciones ÷ Total de consultas relevantes"
         }
       ],
-      example: "Goal: Get mentioned in 80%+ of relevant queries, ranked in top 3 positions, with positive sentiment."
+      example: "Objetivo: Ser mencionado en 80%+ de consultas relevantes, clasificado en las 3 primeras posiciones, con sentimiento positivo."
     }
   },
   {
     id: 3,
-    title: "Prompt Explorer",
+    title: "Explorador de Prompts",
     icon: Search,
     bgColor: "from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20",
     borderColor: "border-green-200 dark:border-green-800",
     content: {
-      problem: "The Core: What Are Prompts?",
-      problemText: "Prompts are the QUESTIONS your potential customers ask AI chatbots. For example: 'What are the best GEO tools for 2025?'",
-      solution: "How Prompt Tracking Works",
+      problem: "El Núcleo: ¿Qué Son los Prompts?",
+      problemText: "Los prompts son las PREGUNTAS que tus clientes potenciales hacen a los chatbots IA. Por ejemplo: '¿Cuáles son las mejores herramientas GEO para 2025?'",
+      solution: "Cómo Funciona el Seguimiento de Prompts",
       steps: [
         {
-          step: "1. AI Suggests Prompts",
-          description: "We analyze your industry and generate relevant prompts your customers might ask",
+          step: "1. La IA Sugiere Prompts",
+          description: "Analizamos tu industria y generamos prompts relevantes que tus clientes podrían preguntar",
           icon: Sparkles
         },
         {
-          step: "2. You Subscribe",
-          description: "Choose which prompts to track (questions relevant to your business)",
+          step: "2. Te Suscribes",
+          description: "Elige qué prompts rastrear (preguntas relevantes para tu negocio)",
           icon: CheckCircle2
         },
         {
-          step: "3. Daily Monitoring",
-          description: "We automatically run these prompts on ChatGPT, Claude, Gemini, Perplexity every day",
+          step: "3. Monitoreo Diario",
+          description: "Ejecutamos automáticamente estos prompts en ChatGPT, Claude, Gemini, Perplexity todos los días",
           icon: Zap
         },
         {
-          step: "4. Track Results",
-          description: "See if you're mentioned, your position, sentiment, and full AI response",
+          step: "4. Rastrea Resultados",
+          description: "Ve si eres mencionado, tu posición, sentimiento y respuesta completa de la IA",
           icon: BarChart3
         }
       ],
-      why: "WHY THIS MATTERS: If you're not mentioned when people ask these questions, you're losing customers to competitors who ARE mentioned.",
-      example: "Example Prompt: 'What are the best AI optimization tools?' → You want your brand in the AI's answer!"
+      why: "POR QUÉ ESTO IMPORTA: Si no eres mencionado cuando las personas hacen estas preguntas, estás perdiendo clientes frente a competidores que SÍ son mencionados.",
+      example: "Ejemplo de Prompt: '¿Cuáles son las mejores herramientas de optimización IA?' → ¡Quieres tu marca en la respuesta de la IA!"
     }
   },
   {
     id: 4,
-    title: "Competitors Analysis",
+    title: "Análisis de Competidores",
     icon: Users,
     bgColor: "from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20",
     borderColor: "border-blue-200 dark:border-blue-800",
     content: {
-      problem: "Know Your Competition",
-      problemText: "Who else is being mentioned in AI responses for YOUR prompts? Are they ranking higher than you?",
-      solution: "What Competitor Analysis Shows",
+      problem: "Conoce Tu Competencia",
+      problemText: "¿Quién más está siendo mencionado en respuestas IA para TUS prompts? ¿Están clasificando más alto que tú?",
+      solution: "Qué Muestra el Análisis de Competidores",
       metrics: [
         {
-          name: "Visibility Score",
-          description: "Compare how often you vs competitors get mentioned",
-          action: "If competitor ranks higher → analyze their content strategy"
+          name: "Puntuación de Visibilidad",
+          description: "Compara con qué frecuencia tú vs competidores son mencionados",
+          action: "Si el competidor clasifica más alto → analiza su estrategia de contenido"
         },
         {
-          name: "Average Position",
-          description: "See who ranks #1, #2, #3 in AI responses",
-          action: "If you're #5 → optimize content to reach top 3"
+          name: "Posición Promedio",
+          description: "Ve quién clasifica #1, #2, #3 en respuestas IA",
+          action: "Si estás #5 → optimiza contenido para alcanzar el top 3"
         },
         {
-          name: "Detection Rate",
-          description: "Who appears most frequently in relevant queries",
-          action: "If competitor has 90% vs your 40% → you're missing opportunities"
+          name: "Tasa de Detección",
+          description: "Quién aparece con más frecuencia en consultas relevantes",
+          action: "Si el competidor tiene 90% vs tu 40% → estás perdiendo oportunidades"
         },
         {
-          name: "Sentiment",
-          description: "How positively AI talks about each brand",
-          action: "Negative sentiment → improve reviews, content quality"
+          name: "Sentimiento",
+          description: "Qué tan positivo habla la IA sobre cada marca",
+          action: "Sentimiento negativo → mejora reseñas, calidad de contenido"
         }
       ],
-      why: "WHY THIS MATTERS: You can't improve what you don't measure. See exactly where competitors beat you and close those gaps.",
-      example: "If Competitor X ranks #1-3 in 80% of prompts while you're at 30%, you know you need to optimize!"
+      why: "POR QUÉ ESTO IMPORTA: No puedes mejorar lo que no mides. Ve exactamente dónde los competidores te superan y cierra esas brechas.",
+      example: "Si el Competidor X clasifica #1-3 en 80% de prompts mientras tú estás en 30%, sabes que necesitas optimizar!"
     }
   },
   {
     id: 5,
-    title: "Citations & Sources",
+    title: "Citas y Fuentes",
     icon: FileText,
     bgColor: "from-orange-50 to-red-50 dark:from-orange-950/20 dark:to-red-950/20",
     borderColor: "border-orange-200 dark:border-orange-800",
     content: {
-      problem: "Where Do AI Models Get Their Info?",
-      problemText: "AI models cite specific websites as sources. If YOUR website is cited, you get mentioned!",
-      solution: "Citation Tracking Shows You",
+      problem: "¿De Dónde Obtienen Información los Modelos IA?",
+      problemText: "Los modelos IA citan sitios web específicos como fuentes. Si TU sitio web es citado, ¡eres mencionado!",
+      solution: "El Seguimiento de Citas Te Muestra",
       insights: [
         {
-          name: "Domain Authority",
-          description: "Which websites AI trusts most as sources",
-          action: "Get featured/mentioned on these high-authority sites",
+          name: "Autoridad de Dominio",
+          description: "Qué sitios web la IA confía más como fuentes",
+          action: "Consigue ser destacado/mencionado en estos sitios de alta autoridad",
           icon: Award
         },
         {
-          name: "Top URLs",
-          description: "Specific pages AI cites most frequently",
-          action: "Create similar high-quality content on your site",
+          name: "URLs Principales",
+          description: "Páginas específicas que la IA cita con más frecuencia",
+          action: "Crea contenido similar de alta calidad en tu sitio",
           icon: FileText
         },
         {
-          name: "Your Citations",
-          description: "When AI directly cites YOUR website",
-          action: "These pages are doing it right - replicate their structure",
+          name: "Tus Citas",
+          description: "Cuando la IA cita directamente TU sitio web",
+          action: "Estas páginas lo están haciendo bien - replica su estructura",
           icon: Target
         },
         {
-          name: "Brand Mentions",
-          description: "Other sites that mention your brand + get cited",
-          action: "Build relationships with these sites for more mentions",
+          name: "Menciones de Marca",
+          description: "Otros sitios que mencionan tu marca + son citados",
+          action: "Construye relaciones con estos sitios para más menciones",
           icon: MessageSquare
         }
       ],
-      why: "WHY THIS MATTERS: Getting cited = getting mentioned. If AI cites Forbes and Forbes mentions you, you get recommended. Build citations strategically!",
-      example: "If TechCrunch is cited 500x and they mention your tool, AI will recommend you based on that authority."
+      why: "POR QUÉ ESTO IMPORTA: Ser citado = ser mencionado. Si la IA cita Forbes y Forbes te menciona, eres recomendado. ¡Construye citas estratégicamente!",
+      example: "Si TechCrunch es citado 500 veces y mencionan tu herramienta, la IA te recomendará basándose en esa autoridad."
     }
   },
   {
     id: 6,
-    title: "Audit Tool",
+    title: "Herramienta de Auditoría",
     icon: Search,
     bgColor: "from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20",
     borderColor: "border-purple-200 dark:border-purple-800",
     content: {
-      problem: "Is Your Website AI-Friendly?",
-      problemText: "Not all content is created equal. AI models prefer content that's clear, structured, factual, and citable.",
-      solution: "What the Audit Checks",
+      problem: "¿Es Tu Sitio Web Amigable con IA?",
+      problemText: "No todo el contenido se crea igual. Los modelos IA prefieren contenido que sea claro, estructurado, factual y citable.",
+      solution: "Qué Verifica la Auditoría",
       dimensions: [
         {
-          name: "Citation Likelihood",
-          description: "How likely AI is to cite this page as a source",
-          improve: "Add clear facts, data, expert quotes, proper structure"
+          name: "Probabilidad de Citación",
+          description: "Qué tan probable es que la IA cite esta página como fuente",
+          improve: "Agrega hechos claros, datos, citas de expertos, estructura adecuada"
         },
         {
-          name: "Readability",
-          description: "How easy it is for AI to understand your content",
-          improve: "Use clear language, short paragraphs, bullet points"
+          name: "Legibilidad",
+          description: "Qué tan fácil es para la IA entender tu contenido",
+          improve: "Usa lenguaje claro, párrafos cortos, viñetas"
         },
         {
-          name: "Structure",
-          description: "Proper headings, sections, logical flow",
-          improve: "Add H1/H2/H3 tags, organize content logically"
+          name: "Estructura",
+          description: "Encabezados adecuados, secciones, flujo lógico",
+          improve: "Agrega etiquetas H1/H2/H3, organiza el contenido lógicamente"
         },
         {
-          name: "Entity Coverage",
-          description: "Mentions of key terms, brands, concepts",
-          improve: "Include industry terms, related concepts, context"
+          name: "Cobertura de Entidades",
+          description: "Menciones de términos clave, marcas, conceptos",
+          improve: "Incluye términos de la industria, conceptos relacionados, contexto"
         },
         {
-          name: "Factual Density",
-          description: "Facts, statistics, concrete information",
-          improve: "Add numbers, dates, specific details, research"
+          name: "Densidad Factual",
+          description: "Hechos, estadísticas, información concreta",
+          improve: "Agrega números, fechas, detalles específicos, investigación"
         },
         {
-          name: "Source Quality",
-          description: "Links to authoritative sources",
-          improve: "Cite reputable sources, add external links"
+          name: "Calidad de Fuentes",
+          description: "Enlaces a fuentes autorizadas",
+          improve: "Cita fuentes reputables, agrega enlaces externos"
         }
       ],
-      why: "WHY THIS MATTERS: Two websites can say the same thing, but AI will cite the one that's better structured, more factual, and easier to understand.",
-      example: "Page A: 'We're great!' → GEO Score: 45/100\nPage B: 'We increased customer ROI by 85% (Harvard study, 2024)' → GEO Score: 92/100"
+      why: "POR QUÉ ESTO IMPORTA: Dos sitios web pueden decir lo mismo, pero la IA citará el que esté mejor estructurado, sea más factual y más fácil de entender.",
+      example: "Página A: '¡Somos geniales!' → Puntuación GEO: 45/100\nPágina B: 'Aumentamos el ROI del cliente en 85% (estudio de Harvard, 2024)' → Puntuación GEO: 92/100"
     }
   },
   {
     id: 7,
-    title: "Content Studio",
+    title: "Estudio de Contenido",
     icon: FileText,
     bgColor: "from-green-50 to-teal-50 dark:from-green-950/20 dark:to-teal-950/20",
     borderColor: "border-green-200 dark:border-green-800",
     content: {
-      problem: "Write AI-Optimized Content",
-      problemText: "Before publishing, check if your content will perform well in AI search results.",
-      solution: "Real-Time GEO Scoring",
+      problem: "Escribe Contenido Optimizado para IA",
+      problemText: "Antes de publicar, verifica si tu contenido funcionará bien en resultados de búsqueda IA.",
+      solution: "Puntuación GEO en Tiempo Real",
       features: [
         {
-          name: "Live GEO Score",
-          description: "See your score update as you write (0-100)",
+          name: "Puntuación GEO en Vivo",
+          description: "Ve tu puntuación actualizarse mientras escribes (0-100)",
           icon: BarChart3
         },
         {
-          name: "Dimension Breakdown",
-          description: "Which areas are strong/weak (same 6 as Audit)",
+          name: "Desglose por Dimensiones",
+          description: "Qué áreas son fuertes/débiles (las mismas 6 que la Auditoría)",
           icon: TrendingUp
         },
         {
-          name: "Actionable Suggestions",
-          description: "Specific improvements: 'Add more facts', 'Improve structure'",
+          name: "Sugerencias Accionables",
+          description: "Mejoras específicas: 'Agrega más hechos', 'Mejora la estructura'",
           icon: Lightbulb
         },
         {
-          name: "Before/After Comparison",
-          description: "See how edits improve your score",
+          name: "Comparación Antes/Después",
+          description: "Ve cómo las ediciones mejoran tu puntuación",
           icon: CheckCircle2
         }
       ],
       workflow: [
-        "1. Write your content in the editor",
-        "2. Click 'Analyze' to get GEO score",
-        "3. Review suggestions",
-        "4. Make improvements",
-        "5. Re-analyze until score is 85+",
-        "6. Publish optimized content"
+        "1. Escribe tu contenido en el editor",
+        "2. Haz clic en 'Analizar' para obtener la puntuación GEO",
+        "3. Revisa las sugerencias",
+        "4. Realiza mejoras",
+        "5. Re-analiza hasta que la puntuación sea 85+",
+        "6. Publica contenido optimizado"
       ],
-      why: "WHY THIS MATTERS: Optimize BEFORE publishing. Don't waste time publishing content that AI won't cite. Get it right the first time!",
-      example: "Draft article GEO score: 62/100 → Follow suggestions → Final score: 91/100 → 3x more likely to be cited by AI!"
+      why: "POR QUÉ ESTO IMPORTA: Optimiza ANTES de publicar. No pierdas tiempo publicando contenido que la IA no citará. ¡Hazlo bien desde la primera vez!",
+      example: "Borrador del artículo puntuación GEO: 62/100 → Sigue sugerencias → Puntuación final: 91/100 → ¡3x más probable de ser citado por la IA!"
     }
   },
   {
     id: 8,
-    title: "How It All Connects",
+    title: "Cómo Todo Se Conecta",
     icon: Zap,
     bgColor: "from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20",
     borderColor: "border-indigo-200 dark:border-indigo-800",
     content: {
-      problem: "The Complete GEO Strategy",
-      problemText: "All features work together to maximize your AI visibility:",
-      solution: "The GEO Workflow",
+      problem: "La Estrategia GEO Completa",
+      problemText: "Todas las funciones trabajan juntas para maximizar tu visibilidad IA:",
+      solution: "El Flujo de Trabajo GEO",
       workflow: [
         {
-          step: "1. DISCOVER",
-          tools: "Prompt Explorer",
-          action: "Find questions your customers are asking AI",
-          result: "Know what prompts to optimize for"
+          step: "1. DESCUBRIR",
+          tools: "Explorador de Prompts",
+          action: "Encuentra preguntas que tus clientes hacen a la IA",
+          result: "Saber qué prompts optimizar"
         },
         {
-          step: "2. BENCHMARK",
-          tools: "Dashboard + Competitors",
-          action: "See where you stand vs competition",
-          result: "Identify gaps and opportunities"
+          step: "2. COMPARAR",
+          tools: "Panel + Competidores",
+          action: "Ve dónde te encuentras vs competencia",
+          result: "Identifica brechas y oportunidades"
         },
         {
-          step: "3. RESEARCH",
-          tools: "Citations",
-          action: "Find which sources AI trusts",
-          result: "Know what content to create and where to get mentioned"
+          step: "3. INVESTIGAR",
+          tools: "Citas",
+          action: "Encuentra qué fuentes confía la IA",
+          result: "Saber qué contenido crear y dónde ser mencionado"
         },
         {
-          step: "4. OPTIMIZE",
-          tools: "Audit + Content Studio",
-          action: "Create AI-friendly content",
-          result: "High GEO score pages that get cited"
+          step: "4. OPTIMIZAR",
+          tools: "Auditoría + Estudio de Contenido",
+          action: "Crea contenido amigable con IA",
+          result: "Páginas con alta puntuación GEO que son citadas"
         },
         {
-          step: "5. MONITOR",
-          tools: "Prompt Tracking",
-          action: "Daily checks if you're mentioned",
-          result: "Track improvements, catch problems early"
+          step: "5. MONITOREAR",
+          tools: "Seguimiento de Prompts",
+          action: "Verificaciones diarias si eres mencionado",
+          result: "Rastrea mejoras, detecta problemas temprano"
         },
         {
-          step: "6. IMPROVE",
-          tools: "All Tools",
-          action: "Use data to refine strategy",
-          result: "Continuous improvement cycle"
+          step: "6. MEJORAR",
+          tools: "Todas las Herramientas",
+          action: "Usa datos para refinar estrategia",
+          result: "Ciclo de mejora continua"
         }
       ],
-      why: "WHY THIS MATTERS: GEO is not a one-time thing. It's a continuous process of monitoring, optimizing, and improving.",
-      finalMessage: "Goal: When someone asks AI a question in your domain, YOUR brand is mentioned, ranked in top 3, with positive sentiment, driving qualified traffic to your site."
+      why: "POR QUÉ ESTO IMPORTA: GEO no es algo de una sola vez. Es un proceso continuo de monitoreo, optimización y mejora.",
+      finalMessage: "Objetivo: Cuando alguien pregunta a la IA algo en tu dominio, TU marca es mencionada, clasificada en el top 3, con sentimiento positivo, dirigiendo tráfico calificado a tu sitio."
     }
   }
 ];
@@ -371,10 +371,10 @@ export default function DemoPage() {
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center space-x-2"
             >
               <ArrowLeft className="h-4 w-4" />
-              <span>Back to Home</span>
+              <span>Volver al Inicio</span>
             </Link>
             <div className="text-sm text-gray-600 dark:text-gray-400">
-              Step {currentStep + 1} of {DEMO_STEPS.length}
+              Paso {currentStep + 1} de {DEMO_STEPS.length}
             </div>
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
@@ -599,7 +599,7 @@ export default function DemoPage() {
                             {item.description}
                           </p>
                           <div className="text-xs text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20 px-2 py-1 rounded inline-block">
-                            ✅ How to improve: {item.improve}
+                            ✅ Cómo mejorar: {item.improve}
                           </div>
                         </div>
                       </div>
@@ -654,7 +654,7 @@ export default function DemoPage() {
 
                   {step.content.workflow && (
                     <div className="mt-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
-                      <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-3">Workflow:</h4>
+                      <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-3">Flujo de Trabajo:</h4>
                       <div className="space-y-2">
                         {step.content.workflow.map((w, idx) => (
                           <div key={idx} className="text-sm text-blue-800 dark:text-blue-200">
@@ -703,15 +703,15 @@ export default function DemoPage() {
                             </h4>
                             <div className="grid grid-cols-1 gap-2 text-sm">
                               <div className="flex items-start space-x-2">
-                                <span className="text-gray-600 dark:text-gray-400 font-medium min-w-[80px]">Tools:</span>
+                                <span className="text-gray-600 dark:text-gray-400 font-medium min-w-[80px]">Herramientas:</span>
                                 <span className="text-gray-900 dark:text-white font-semibold">{w.tools}</span>
                               </div>
                               <div className="flex items-start space-x-2">
-                                <span className="text-gray-600 dark:text-gray-400 font-medium min-w-[80px]">Action:</span>
+                                <span className="text-gray-600 dark:text-gray-400 font-medium min-w-[80px]">Acción:</span>
                                 <span className="text-gray-700 dark:text-gray-300">{w.action}</span>
                               </div>
                               <div className="flex items-start space-x-2">
-                                <span className="text-green-600 dark:text-green-400 font-medium min-w-[80px]">Result:</span>
+                                <span className="text-green-600 dark:text-green-400 font-medium min-w-[80px]">Resultado:</span>
                                 <span className="text-green-700 dark:text-green-300 font-medium">{w.result}</span>
                               </div>
                             </div>
@@ -741,7 +741,7 @@ export default function DemoPage() {
                 className="px-6 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-xl font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <ArrowLeft className="h-5 w-5" />
-                <span>Back</span>
+                <span>Atrás</span>
               </button>
 
               {currentStep < DEMO_STEPS.length - 1 ? (
@@ -749,7 +749,7 @@ export default function DemoPage() {
                   onClick={handleNext}
                   className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-semibold text-lg transition-all flex items-center space-x-3 shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
-                  <span>Next</span>
+                  <span>Siguiente</span>
                   <ArrowRight className="h-5 w-5" />
                 </button>
               ) : (
@@ -757,7 +757,7 @@ export default function DemoPage() {
                   href="/onboarding"
                   className="px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl font-semibold text-lg transition-all flex items-center space-x-3 shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
-                  <span>Start Free Trial</span>
+                  <span>Iniciar Prueba Gratuita</span>
                   <Sparkles className="h-5 w-5" />
                 </Link>
               )}

@@ -40,7 +40,7 @@ export default function StepSetup({ data, onNext }: Props) {
               Configurando la inteligencia de tu marca
             </h2>
             <p className="text-gray-600 dark:text-gray-400">
-              Esto solo tomará un momento... (Dit duurt slechts een moment...)
+              Esto solo tomará un momento...
             </p>
           </div>
 
@@ -52,19 +52,19 @@ export default function StepSetup({ data, onNext }: Props) {
             <div className="flex items-center space-x-3 text-sm">
               <div className="w-2 h-2 rounded-full bg-green-500"></div>
               <span className="text-gray-600 dark:text-gray-400">
-                Procesando información de marca (Merkinformatie verwerken)
+                Procesando información de marca
               </span>
             </div>
             <div className="flex items-center space-x-3 text-sm">
               <Loader2 className="w-2 h-2 text-purple-600 animate-spin" />
               <span className="text-gray-600 dark:text-gray-400">
-                Analizando tu dominio (Je domein analyseren)
+                Analizando tu dominio
               </span>
             </div>
             <div className="flex items-center space-x-3 text-sm">
               <div className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-700"></div>
               <span className="text-gray-400 dark:text-gray-600">
-                Generando sugerencias de prompts (Prompt suggesties genereren)
+                Generando sugerencias de prompts
               </span>
             </div>
           </div>

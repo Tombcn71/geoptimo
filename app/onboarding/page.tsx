@@ -116,15 +116,15 @@ export default function OnboardingPage() {
       console.log('Brand creation result:', result);
 
       if (response.ok && result.success) {
-        alert('✅ ¡Marca creada exitosamente! ¡Bienvenido a Geoptimo! (Merk succesvol aangemaakt! Welkom bij Geoptimo!)');
+        alert('✅ ¡Marca creada exitosamente! ¡Bienvenido a Geoptimo!');
         router.push('/dashboard');
       } else {
-        alert(`❌ Error al crear marca: ${result.error || 'Error desconocido'}\n\nDetalles: ${result.details || 'Sin detalles'} (Aanmaken merk mislukt: ${result.error || 'Onbekende fout'}\n\nDetails: ${result.details || 'Geen details'})`);
+        alert(`❌ Error al crear marca: ${result.error || 'Error desconocido'}\n\nDetalles: ${result.details || 'Sin detalles'}`);
         console.error('Failed to create brand:', result);
       }
     } catch (error) {
       console.error('Error creating brand:', error);
-      alert(`❌ Error al crear marca: ${(error as Error).message} (Fout bij aanmaken merk: ${(error as Error).message})`);
+      alert(`❌ Error al crear marca: ${(error as Error).message}`);
     }
   };
 

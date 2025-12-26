@@ -209,7 +209,7 @@ export default function Home() {
                 <Rocket className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Content Optimalisatie
+                Optimización de Contenido
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Optimiza tu contenido para mejor comprensión y citación por IA. 
@@ -223,7 +223,7 @@ export default function Home() {
                 <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Analyse Dashboard
+                Panel de Análisis
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Visualiza menciones, tendencias y rendimiento en todos los motores IA. 
@@ -237,7 +237,7 @@ export default function Home() {
                 <Target className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Keyword Onderzoek
+                Investigación de Palabras Clave
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Descubre qué búsquedas activan menciones de marca. Identifica brechas de contenido 
@@ -251,7 +251,7 @@ export default function Home() {
                 <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Concurrent Analyse
+                Análisis de Competidores
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Compara tu rendimiento con competidores. Ve qué funciona en tu sector 
@@ -303,7 +303,7 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <h4 className="text-black dark:text-white font-semibold mb-4">Bronnen</h4>
+              <h4 className="text-black dark:text-white font-semibold mb-4">Recursos</h4>
               <ul className="space-y-2 text-sm">
                 <li><Link href="/demo" className="hover:text-black dark:hover:text-white transition-colors">Demo</Link></li>
                 <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Blog</Link></li>
@@ -311,7 +311,7 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <h4 className="text-black dark:text-white font-semibold mb-4">Bedrijf</h4>
+              <h4 className="text-black dark:text-white font-semibold mb-4">Empresa</h4>
               <ul className="space-y-2 text-sm">
                 <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Sobre Nosotros</Link></li>
                 <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Contacto</Link></li>

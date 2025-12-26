@@ -129,13 +129,13 @@ export default function SettingsPage() {
                   Profile Complete
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Tu perfil está configurado y optimizado (Tu profiel is geconfigureerd en geoptimaliseerd)
+                  Tu perfil está configurado y optimizado
                 </p>
               </div>
             </div>
             <div className="text-right">
               <div className="text-4xl font-bold text-green-600">100%</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Completado (Voltooid)</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Completado</div>
             </div>
           </div>
         </CardContent>
@@ -149,7 +149,7 @@ export default function SettingsPage() {
             <span>Basic Information</span>
           </CardTitle>
           <CardDescription>
-            Detalles fundamentales sobre tu marca (Fundamentele details over je merk)
+            Detalles fundamentales sobre tu marca
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -228,7 +228,7 @@ export default function SettingsPage() {
             <span>Audiencia y Competencia</span>
           </CardTitle>
           <CardDescription>
-            Ayuda a la IA a entender tu mercado (Helpt de IA je markt te begrijpen)
+            Ayuda a la IA a entender tu mercado
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -277,7 +277,7 @@ export default function SettingsPage() {
               />
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              Palabras clave principales por las que quieres ser conocido (Belangrijkste zoekwoorden waar je bekend om wilt worden)
+              Palabras clave principales por las que quieres ser conocido
             </p>
           </div>
 
@@ -292,7 +292,7 @@ export default function SettingsPage() {
                 onChange={(e) => setBrandProfile({...brandProfile, uniqueValue: e.target.value})}
                 rows={2}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
-                placeholder="¿Qué te diferencia de la competencia? (Wat maakt je uniek ten opzichte van de concurrentie?)"
+                placeholder="¿Qué te diferencia de la competencia?"
               />
             </div>
           </div>
@@ -314,12 +314,12 @@ export default function SettingsPage() {
           ) : saved ? (
             <>
               <CheckCircle2 className="h-5 w-5" />
-              <span>¡Guardado! (Opgeslagen!)</span>
+              <span>¡Guardado!</span>
             </>
           ) : (
             <>
               <Save className="h-5 w-5" />
-              <span>Guardar Cambios (Wijzigingen Opslaan)</span>
+              <span>Guardar Cambios</span>
             </>
           )}
         </button>
@@ -333,7 +333,7 @@ export default function SettingsPage() {
             <span>AI-Generated Insights</span>
           </CardTitle>
           <CardDescription>
-            Basado en tu perfil de marca (Gebaseerd op je merkprofiel)
+            Basado en tu perfil de marca
           </CardDescription>
         </CardHeader>
         <CardContent>
