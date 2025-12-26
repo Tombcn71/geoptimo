@@ -70,12 +70,12 @@ export default function ProfilePage() {
     }
 
     if (newPassword !== confirmPassword) {
-      setError('Nieuwe wachtwoorden komen niet overeen');
+      setError('Las nuevas contraseñas no coinciden');
       return;
     }
 
     if (newPassword.length < 6) {
-      setError('Wachtwoord moet minimaal 6 tekens bevatten');
+      setError('La contraseña debe tener al menos 6 caracteres');
       return;
     }
 
@@ -115,7 +115,7 @@ export default function ProfilePage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <Loader2 className="h-12 w-12 text-purple-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400">Laden...</p>
+          <p className="text-gray-600 dark:text-gray-400">Cargando...</p>
         </div>
       </div>
     );
@@ -125,9 +125,9 @@ export default function ProfilePage() {
     <div className="space-y-6 max-w-4xl">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Profiel Instellingen</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Configuración de Perfil</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Manage your account information and security
+          Administra la información de tu cuenta y seguridad
         </p>
       </div>
 
@@ -142,7 +142,7 @@ export default function ProfilePage() {
       {saved && (
         <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-300 px-4 py-3 rounded-lg flex items-center space-x-2">
           <CheckCircle2 className="h-5 w-5" />
-          <span>Wijzigingen succesvol opgeslagen!</span>
+          <span>¡Cambios guardados exitosamente!</span>
         </div>
       )}
 
@@ -151,17 +151,17 @@ export default function ProfilePage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <User className="h-5 w-5 text-purple-600" />
-            <span>Profiel Informatie</span>
+            <span>Información del Perfil</span>
           </CardTitle>
           <CardDescription>
-            Werk je accountgegevens bij
+            Actualiza los datos de tu cuenta
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Volledige Naam
-            </label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Nombre Completo
+              </label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
@@ -169,15 +169,15 @@ export default function ProfilePage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                placeholder="Jan Jansen"
+                placeholder="Juan Pérez"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              E-mailadres
-            </label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Correo Electrónico
+              </label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
@@ -188,7 +188,7 @@ export default function ProfilePage() {
               />
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              E-mail kan niet worden gewijzigd
+              El correo electrónico no se puede cambiar
             </p>
           </div>
 
@@ -201,12 +201,12 @@ export default function ProfilePage() {
               {saving ? (
                 <>
                   <Loader2 className="h-5 w-5 animate-spin" />
-                  <span>Opslaan...</span>
+                  <span>Guardando...</span>
                 </>
               ) : (
                 <>
                   <Save className="h-5 w-5" />
-                  <span>Wijzigingen Opslaan</span>
+                  <span>Guardar Cambios</span>
                 </>
               )}
             </button>
@@ -219,17 +219,17 @@ export default function ProfilePage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Lock className="h-5 w-5 text-purple-600" />
-            <span>Wachtwoord Wijzigen</span>
+            <span>Cambiar Contraseña</span>
           </CardTitle>
           <CardDescription>
-            Werk je wachtwoord bij om je account veilig te houden
+            Actualiza tu contraseña para mantener tu cuenta segura
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Huidig Wachtwoord
-            </label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Contraseña Actual
+              </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
@@ -243,9 +243,9 @@ export default function ProfilePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Nieuw Wachtwoord
-            </label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Nueva Contraseña
+              </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
@@ -260,9 +260,9 @@ export default function ProfilePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Bevestig Nieuw Wachtwoord
-            </label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Confirmar Nueva Contraseña
+              </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
@@ -285,12 +285,12 @@ export default function ProfilePage() {
               {saving ? (
                 <>
                   <Loader2 className="h-5 w-5 animate-spin" />
-                  <span>Bijwerken...</span>
+                  <span>Actualizando...</span>
                 </>
               ) : (
                 <>
                   <Lock className="h-5 w-5" />
-                  <span>Wachtwoord Wijzigen</span>
+                  <span>Cambiar Contraseña</span>
                 </>
               )}
             </button>

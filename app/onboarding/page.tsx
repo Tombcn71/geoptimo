@@ -26,12 +26,12 @@ interface BrandData {
 }
 
 const STEPS = [
-  { id: 1, title: "Domein", component: StepDomain },
-  { id: 2, title: "Details", component: StepBrandDetails },
-  { id: 3, title: "Aliassen", component: StepAliases },
-  { id: 4, title: "Setup", component: StepSetup },
+  { id: 1, title: "Dominio", component: StepDomain },
+  { id: 2, title: "Detalles", component: StepBrandDetails },
+  { id: 3, title: "Alias", component: StepAliases },
+  { id: 4, title: "Configuración", component: StepSetup },
   { id: 5, title: "Prompts", component: StepPrompts },
-  { id: 6, title: "Prijzen", component: StepPricing },
+  { id: 6, title: "Precios", component: StepPricing },
 ];
 
 export default function OnboardingPage() {
@@ -77,7 +77,7 @@ export default function OnboardingPage() {
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="h-12 w-12 text-purple-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400">Laden...</p>
+          <p className="text-gray-600 dark:text-gray-400">Cargando...</p>
         </div>
       </div>
     );
@@ -116,15 +116,15 @@ export default function OnboardingPage() {
       console.log('Brand creation result:', result);
 
       if (response.ok && result.success) {
-        alert('✅ Merk succesvol aangemaakt! Welkom bij Geoptimo!');
+        alert('✅ ¡Marca creada exitosamente! ¡Bienvenido a Geoptimo! (Merk succesvol aangemaakt! Welkom bij Geoptimo!)');
         router.push('/dashboard');
       } else {
-        alert(`❌ Aanmaken merk mislukt: ${result.error || 'Onbekende fout'}\n\nDetails: ${result.details || 'Geen details'}`);
+        alert(`❌ Error al crear marca: ${result.error || 'Error desconocido'}\n\nDetalles: ${result.details || 'Sin detalles'} (Aanmaken merk mislukt: ${result.error || 'Onbekende fout'}\n\nDetails: ${result.details || 'Geen details'})`);
         console.error('Failed to create brand:', result);
       }
     } catch (error) {
       console.error('Error creating brand:', error);
-      alert(`❌ Fout bij aanmaken merk: ${(error as Error).message}`);
+      alert(`❌ Error al crear marca: ${(error as Error).message} (Fout bij aanmaken merk: ${(error as Error).message})`);
     }
   };
 

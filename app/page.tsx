@@ -35,20 +35,20 @@ export default function Home() {
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
               <Link href="#features" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                Functies
+                Funciones
               </Link>
               <Link href="#pricing" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                Prijzen
+                Precios
               </Link>
               <Link href="/dashboard" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                Dashboard
+                Panel
               </Link>
               <ThemeToggle />
               <Link 
                 href="/onboarding" 
                 className="bg-black dark:bg-white text-white dark:text-black px-6 py-2 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors font-medium"
               >
-                Start Gratis
+                Comenzar Gratis
               </Link>
             </div>
 
@@ -78,28 +78,28 @@ export default function Home() {
                 className="block px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Functies
+                Funciones
               </Link>
               <Link 
                 href="#pricing" 
                 className="block px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Prijzen
+                Precios
               </Link>
               <Link 
                 href="/dashboard" 
                 className="block px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Dashboard
+                Panel
               </Link>
               <Link 
                 href="/onboarding" 
                 className="block bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors text-center font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Start Gratis
+                Comenzar Gratis
               </Link>
             </div>
           </div>
@@ -114,14 +114,14 @@ export default function Home() {
             <span className="text-xs sm:text-sm font-medium">AI Engine Optimization</span>
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 px-2">
-            Word Ontdekt Door
+            Sé Descubierto Por
             <span className="block mt-2 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 bg-clip-text text-transparent animate-gradient">
-              AI Zoekmachines
+              Motores de Búsqueda IA
             </span>
           </h1>
           <p className="text-base sm:text-xl text-gray-600 dark:text-gray-400 mb-8 sm:mb-12 max-w-3xl mx-auto px-4">
-            Optimaliseer je content om geciteerd en aanbevolen te worden door ChatGPT, Claude, Perplexity, 
-            Google AI en andere generatieve zoekmachines.
+            Optimiza tu contenido para ser citado y recomendado por ChatGPT, Claude, Perplexity, 
+            Google AI y otros motores de búsqueda generativos.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
@@ -129,13 +129,13 @@ export default function Home() {
               href="/register"
               className="bg-black dark:bg-white text-white dark:text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors shadow-lg"
             >
-              Start Gratis
+              Comenzar Gratis
             </Link>
             <Link
               href="/demo"
               className="bg-white dark:bg-black text-gray-900 dark:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors border-2 border-gray-200 dark:border-gray-800"
             >
-              Bekijk Demo
+              Ver Demo
             </Link>
           </div>
 
@@ -148,15 +148,15 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 mt-12 sm:mt-20 max-w-4xl mx-auto px-4">
             <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
               <div className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">50M+</div>
-              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">AI Zoekopdrachten Gemonitord</div>
+              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Búsquedas IA Monitoreadas</div>
             </div>
             <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
               <div className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">98%</div>
-              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Verbeteringspercentage</div>
+              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Tasa de Mejora</div>
             </div>
             <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
               <div className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">500+</div>
-              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Merken Vertrouwen Ons</div>
+              <div className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Marcas Confían en Nosotros</div>
             </div>
           </div>
         </div>
@@ -167,10 +167,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-              Krachtige GEO Functies
+              Funciones GEO Poderosas
             </h2>
             <p className="text-base sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-4">
-              Alles wat je nodig hebt om je aanwezigheid in AI-zoekmachines te optimaliseren
+              Todo lo que necesitas para optimizar tu presencia en motores de búsqueda IA
             </p>
           </div>
 
@@ -184,8 +184,8 @@ export default function Home() {
                 Real-Time AI Monitoring
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Volg merkvermeldingen in ChatGPT, Claude, Perplexity en meer. 
-                Ontvang directe meldingen wanneer je merk wordt geciteerd.
+                Rastrea menciones de marca en ChatGPT, Claude, Perplexity y más. 
+                Recibe notificaciones instantáneas cuando tu marca sea citada.
               </p>
             </div>
 
@@ -198,8 +198,8 @@ export default function Home() {
                 Website Audit
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Diepgaande analyse van je site voor AI-optimalisatie. Identificeer problemen 
-                en krijg concrete aanbevelingen.
+                Análisis profundo de tu sitio para optimización IA. Identifica problemas 
+                y obtén recomendaciones concretas.
               </p>
             </div>
 
@@ -212,8 +212,8 @@ export default function Home() {
                 Content Optimalisatie
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Optimaliseer je content voor beter begrip en citatie door AI. 
-                Geavanceerde NLP-analyse en suggesties.
+                Optimiza tu contenido para mejor comprensión y citación por IA. 
+                Análisis NLP avanzado y sugerencias.
               </p>
             </div>
 
@@ -226,8 +226,8 @@ export default function Home() {
                 Analyse Dashboard
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Visualiseer vermeldingen, trends en prestaties over alle AI-engines. 
-                Vergelijk met concurrenten.
+                Visualiza menciones, tendencias y rendimiento en todos los motores IA. 
+                Compara con competidores.
               </p>
             </div>
 
@@ -240,8 +240,8 @@ export default function Home() {
                 Keyword Onderzoek
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Ontdek welke zoekopdrachten merkvermeldingen triggeren. Identificeer content-gaps 
-                en kansen.
+                Descubre qué búsquedas activan menciones de marca. Identifica brechas de contenido 
+                y oportunidades.
               </p>
             </div>
 
@@ -254,8 +254,8 @@ export default function Home() {
                 Concurrent Analyse
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                Vergelijk je prestaties met concurrenten. Zie wat werkt in jouw sector 
-                en blijf voorop.
+                Compara tu rendimiento con competidores. Ve qué funciona en tu sector 
+                y mantente a la vanguardia.
               </p>
             </div>
           </div>
@@ -267,16 +267,16 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <Shield className="h-12 w-12 sm:h-16 sm:w-16 text-white mx-auto mb-4 sm:mb-6" />
           <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4 sm:mb-6">
-            Klaar Om Je AI Aanwezigheid Te Optimaliseren?
+            ¿Listo Para Optimizar Tu Presencia IA?
           </h2>
           <p className="text-base sm:text-xl text-gray-300 mb-6 sm:mb-8 px-4">
-            Sluit je aan bij honderden merken die al domineren in generatieve engine optimalisatie
+            Únete a cientos de marcas que ya dominan la optimización de motores generativos
           </p>
           <Link
             href="/onboarding"
             className="inline-block bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
           >
-            Start Gratis Proefperiode
+            Iniciar Prueba Gratuita
           </Link>
         </div>
       </section>
@@ -291,15 +291,15 @@ export default function Home() {
                 <span className="text-black dark:text-white text-xl font-bold">Geoptimo</span>
               </div>
               <p className="text-sm">
-                Optimalisatie voor generatieve AI-engines. Word ontdekt, geciteerd en aanbevolen.
+                Optimización para motores IA generativos. Sé descubierto, citado y recomendado.
               </p>
             </div>
             <div>
               <h4 className="text-black dark:text-white font-semibold mb-4">Product</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="#features" className="hover:text-black dark:hover:text-white transition-colors">Functies</Link></li>
-                <li><Link href="#pricing" className="hover:text-black dark:hover:text-white transition-colors">Prijzen</Link></li>
-                <li><Link href="/dashboard" className="hover:text-black dark:hover:text-white transition-colors">Dashboard</Link></li>
+                <li><Link href="#features" className="hover:text-black dark:hover:text-white transition-colors">Funciones</Link></li>
+                <li><Link href="#pricing" className="hover:text-black dark:hover:text-white transition-colors">Precios</Link></li>
+                <li><Link href="/dashboard" className="hover:text-black dark:hover:text-white transition-colors">Panel</Link></li>
               </ul>
             </div>
             <div>
@@ -307,15 +307,15 @@ export default function Home() {
               <ul className="space-y-2 text-sm">
                 <li><Link href="/demo" className="hover:text-black dark:hover:text-white transition-colors">Demo</Link></li>
                 <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Blog</Link></li>
-                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Gidsen</Link></li>
+                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Guías</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="text-black dark:text-white font-semibold mb-4">Bedrijf</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Over Ons</Link></li>
-                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Contact</Link></li>
-                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Privacy</Link></li>
+                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Sobre Nosotros</Link></li>
+                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Contacto</Link></li>
+                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Privacidad</Link></li>
               </ul>
             </div>
           </div>

@@ -29,7 +29,7 @@ function LoginForm() {
       });
 
       if (result?.error) {
-        setError("Ongeldig e-mailadres of wachtwoord");
+        setError("Correo electrónico o contraseña inválidos");
       } else {
         // Check if user has a brand
         const brandResponse = await fetch('/api/brands/info');
@@ -45,7 +45,7 @@ function LoginForm() {
         router.refresh();
       }
     } catch (error) {
-      setError("Er is een fout opgetreden. Probeer het opnieuw.");
+      setError("Ha ocurrido un error. Inténtalo de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -60,9 +60,9 @@ function LoginForm() {
               <LogIn className="h-8 w-8 text-purple-600" />
             </div>
           </div>
-          <CardTitle className="text-2xl">Welkom Terug</CardTitle>
+          <CardTitle className="text-2xl">Bienvenido de Nuevo</CardTitle>
           <CardDescription className="text-base">
-            Log in op je Geoptimo account
+            Inicia sesión en tu cuenta de Geoptimo
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -75,7 +75,7 @@ function LoginForm() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                E-mail
+                Correo Electrónico
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -85,14 +85,14 @@ function LoginForm() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                  placeholder="jij@voorbeeld.nl"
+                  placeholder="tu@ejemplo.com"
                 />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Wachtwoord
+                Contraseña
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -115,17 +115,17 @@ function LoginForm() {
               {loading ? (
                 <>
                   <Loader2 className="h-5 w-5 animate-spin" />
-                  <span>Inloggen...</span>
+                  <span>Iniciando sesión...</span>
                 </>
               ) : (
-                <span>Inloggen</span>
+                <span>Iniciar Sesión</span>
               )}
             </button>
 
             <div className="text-center text-sm text-gray-600 dark:text-gray-400">
-              Nog geen account?{" "}
+              ¿Aún no tienes cuenta?{" "}
               <Link href="/register" className="text-purple-600 hover:text-purple-700 font-medium">
-                Registreer
+                Regístrate
               </Link>
             </div>
           </form>

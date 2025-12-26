@@ -23,13 +23,13 @@ import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Prompt Verkenner", href: "/dashboard/prompts", icon: Sparkles },
-  { name: "Concurrenten", href: "/dashboard/competitors", icon: Users },
-  { name: "Citaten", href: "/dashboard/citations", icon: LinkIcon },
-  { name: "Content Studio", href: "/dashboard/content", icon: Edit },
-  { name: "Audit", href: "/dashboard/audit", icon: FileSearch },
-  { name: "Instellingen", href: "/dashboard/settings", icon: Settings },
+  { name: "Panel", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Explorador de Prompts", href: "/dashboard/prompts", icon: Sparkles },
+  { name: "Competidores", href: "/dashboard/competitors", icon: Users },
+  { name: "Citas", href: "/dashboard/citations", icon: LinkIcon },
+  { name: "Estudio de Contenido", href: "/dashboard/content", icon: Edit },
+  { name: "Auditoría", href: "/dashboard/audit", icon: FileSearch },
+  { name: "Configuración", href: "/dashboard/settings", icon: Settings },
 ];
 
 export default function DashboardLayout({
@@ -108,14 +108,14 @@ export default function DashboardLayout({
               }`}
             >
               <User className="h-5 w-5" />
-              <span className="font-medium">Profiel</span>
+              <span className="font-medium">Perfil</span>
             </Link>
             <button
               onClick={handleLogout}
               className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
             >
               <LogOut className="h-5 w-5" />
-              <span className="font-medium">Uitloggen</span>
+              <span className="font-medium">Cerrar Sesión</span>
             </button>
           </div>
         </div>
@@ -140,7 +140,7 @@ export default function DashboardLayout({
               <div className="hidden sm:block">
                 <input
                   type="search"
-                  placeholder="Zoeken..."
+                  placeholder="Buscar..."
                   className="px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
                 />
               </div>
@@ -148,7 +148,7 @@ export default function DashboardLayout({
               <Link
                 href="/dashboard/profile"
                 className="h-10 w-10 rounded-full bg-black dark:bg-white flex items-center justify-center text-white dark:text-black font-semibold hover:opacity-80 transition-opacity"
-                title="Profiel"
+                title="Perfil"
               >
                 {session?.user?.name?.[0]?.toUpperCase() || 'U'}
               </Link>

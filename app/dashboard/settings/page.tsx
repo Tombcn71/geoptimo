@@ -100,7 +100,7 @@ export default function SettingsPage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <Loader2 className="h-12 w-12 text-purple-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400">Laden...</p>
+          <p className="text-gray-600 dark:text-gray-400">Cargando...</p>
         </div>
       </div>
     );
@@ -110,9 +110,9 @@ export default function SettingsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Merk Profiel Instellingen</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Configuración de Perfil de Marca</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Configure your brand profile to get better insights and AI suggestions
+          Configura el perfil de tu marca para obtener mejores insights y sugerencias IA
         </p>
       </div>
 
@@ -129,13 +129,13 @@ export default function SettingsPage() {
                   Profile Complete
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Tu perfil está configurado y optimizado
+                  Tu perfil está configurado y optimizado (Tu profiel is geconfigureerd en geoptimaliseerd)
                 </p>
               </div>
             </div>
             <div className="text-right">
               <div className="text-4xl font-bold text-green-600">100%</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Completado</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Completado (Voltooid)</div>
             </div>
           </div>
         </CardContent>
@@ -149,14 +149,14 @@ export default function SettingsPage() {
             <span>Basic Information</span>
           </CardTitle>
           <CardDescription>
-            Fundamentele details over je merk
+            Detalles fundamentales sobre tu marca (Fundamentele details over je merk)
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Bedrijfsnaam
+                Nombre de la Empresa
               </label>
               <div className="relative">
                 <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -201,9 +201,9 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Merk Beschrijving
-            </label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Descripción de la Marca
+              </label>
             <div className="relative">
               <FileText className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <textarea
@@ -214,7 +214,7 @@ export default function SettingsPage() {
               />
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              Describe what your company does and what makes it unique
+              Describe qué hace tu empresa y qué la hace única
             </p>
           </div>
         </CardContent>
@@ -228,7 +228,7 @@ export default function SettingsPage() {
             <span>Audiencia y Competencia</span>
           </CardTitle>
           <CardDescription>
-            Ayuda a la IA a entender tu mercado
+            Ayuda a la IA a entender tu mercado (Helpt de IA je markt te begrijpen)
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -277,7 +277,7 @@ export default function SettingsPage() {
               />
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              Palabras clave principales por las que quieres ser conocido
+              Palabras clave principales por las que quieres ser conocido (Belangrijkste zoekwoorden waar je bekend om wilt worden)
             </p>
           </div>
 
@@ -292,7 +292,7 @@ export default function SettingsPage() {
                 onChange={(e) => setBrandProfile({...brandProfile, uniqueValue: e.target.value})}
                 rows={2}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
-                placeholder="¿Qué te diferencia de la competencia?"
+                placeholder="¿Qué te diferencia de la competencia? (Wat maakt je uniek ten opzichte van de concurrentie?)"
               />
             </div>
           </div>
@@ -309,17 +309,17 @@ export default function SettingsPage() {
           {saving ? (
             <>
               <Loader2 className="h-5 w-5 animate-spin" />
-              <span>Saving...</span>
+              <span>Guardando...</span>
             </>
           ) : saved ? (
             <>
               <CheckCircle2 className="h-5 w-5" />
-              <span>Opgeslagen!</span>
+              <span>¡Guardado! (Opgeslagen!)</span>
             </>
           ) : (
             <>
               <Save className="h-5 w-5" />
-              <span>Wijzigingen Opslaan</span>
+              <span>Guardar Cambios (Wijzigingen Opslaan)</span>
             </>
           )}
         </button>
@@ -333,7 +333,7 @@ export default function SettingsPage() {
             <span>AI-Generated Insights</span>
           </CardTitle>
           <CardDescription>
-            Basado en tu perfil de marca
+            Basado en tu perfil de marca (Gebaseerd op je merkprofiel)
           </CardDescription>
         </CardHeader>
         <CardContent>

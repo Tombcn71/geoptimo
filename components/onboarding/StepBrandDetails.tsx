@@ -33,12 +33,12 @@ export default function StepBrandDetails({ data, onNext, onBack }: Props) {
 
   const handleContinue = () => {
     if (!name || !category || !description) {
-      setError("Vul alle velden in");
+      setError("Completa todos los campos (Vul alle velden in)");
       return;
     }
     
     if (description.length < 20) {
-      setError("Geef een meer gedetailleerde beschrijving (minimaal 20 tekens)");
+      setError("Proporciona una descripción más detallada (mínimo 20 caracteres) (Geef een meer gedetailleerde beschrijving (minimaal 20 tekens))");
       return;
     }
     
@@ -65,20 +65,20 @@ export default function StepBrandDetails({ data, onNext, onBack }: Props) {
             </div>
           )}
         </div>
-        <CardTitle className="text-2xl">Merk Details</CardTitle>
+        <CardTitle className="text-2xl">Detalles de la Marca</CardTitle>
         <CardDescription className="text-base">
-          Vertel ons over je merk zodat we betere inzichten kunnen bieden
+          Cuéntanos sobre tu marca para que podamos ofrecer mejores insights (Vertel ons over je merk zodat we betere inzichten kunnen bieden)
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Brand Name */}
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Merknaam <span className="text-red-500">*</span>
+            Nombre de la Marca <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
-            placeholder="Mijn Bedrijf B.V."
+            placeholder="Mi Empresa S.L."
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
@@ -95,7 +95,7 @@ export default function StepBrandDetails({ data, onNext, onBack }: Props) {
             onChange={(e) => setCategory(e.target.value)}
             className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
           >
-            <option value="">Selecteer een categorie</option>
+            <option value="">Selecciona una categoría (Selecteer een categorie)</option>
             {CATEGORIES.map((cat) => (
               <option key={cat} value={cat}>
                 {cat}
@@ -103,24 +103,24 @@ export default function StepBrandDetails({ data, onNext, onBack }: Props) {
             ))}
           </select>
           <p className="text-xs text-gray-500">
-            bijv., Maaltijdbezorging, E-commerce, SaaS
+            ej., Entrega de Comida, E-commerce, SaaS (bijv., Maaltijdbezorging, E-commerce, SaaS)
           </p>
         </div>
 
         {/* Description */}
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Beschrijving <span className="text-red-500">*</span>
+            Descripción <span className="text-red-500">*</span>
           </label>
           <textarea
-            placeholder="Korte beschrijving van je merk..."
+            placeholder="Breve descripción de tu marca... (Korte beschrijving van je merk...)"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={4}
             className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white resize-none"
           />
           <p className="text-xs text-gray-500">
-            {description.length} / 500 tekens
+            {description.length} / 500 caracteres (tekens)
           </p>
         </div>
 
@@ -137,14 +137,14 @@ export default function StepBrandDetails({ data, onNext, onBack }: Props) {
             className="flex items-center justify-center space-x-2 flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 px-6 py-3 rounded-lg font-medium text-lg transition-all"
           >
             <ArrowLeft className="h-5 w-5" />
-            <span>Terug</span>
+            <span>Atrás (Terug)</span>
           </button>
           <button
             onClick={handleContinue}
             disabled={!name || !category || !description}
             className="flex-1 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Volgende
+            Siguiente (Volgende)
           </button>
         </div>
       </CardContent>

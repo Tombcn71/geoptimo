@@ -77,16 +77,16 @@ Check your current website text with this tool. You'll immediately see what's go
         console.error('❌ API error:', response.status, errorData);
         
         setError({
-          title: errorData.error || 'Analyse mislukt',
-          message: errorData.message || 'Er ging iets mis tijdens het analyseren',
+          title: errorData.error || 'Análisis fallido',
+          message: errorData.message || 'Algo salió mal durante el análisis',
           details: errorData.details || errorData.stack
         });
       }
     } catch (error) {
       console.error('❌ Network error:', error);
       setError({
-        title: 'Netwerkfout',
-        message: 'Could not connect to the server. Check if the dev server is running.',
+        title: 'Error de Red',
+        message: 'No se pudo conectar al servidor. Verifica si el servidor de desarrollo está ejecutándose.',
         details: (error as Error).message
       });
     } finally {
@@ -100,9 +100,9 @@ Check your current website text with this tool. You'll immediately see what's go
       {/* Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">✨ Content Checker</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">✨ Verificador de Contenido</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2 text-lg">
-            Test how well your content scores with AI search engines like ChatGPT and Gemini
+            Prueba qué tan bien puntúa tu contenido con motores de búsqueda IA como ChatGPT y Gemini
           </p>
         </div>
         <button
@@ -111,7 +111,7 @@ Check your current website text with this tool. You'll immediately see what's go
           className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 whitespace-nowrap"
         >
           <Sparkles className={`h-6 w-6 ${analyzing ? 'animate-pulse' : ''}`} />
-          <span>{analyzing ? 'Analyzing...' : 'Check My Score'}</span>
+          <span>{analyzing ? 'Analizando...' : 'Verificar Mi Puntuación'}</span>
         </button>
       </div>
 
@@ -138,7 +138,7 @@ Check your current website text with this tool. You'll immediately see what's go
             <div className="flex items-start space-x-2 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
               <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
               <div className="text-sm text-blue-700 dark:text-blue-300">
-                <p className="font-semibold mb-2">💡 Oplossing:</p>
+                <p className="font-semibold mb-2">💡 Solución:</p>
                 <ol className="list-decimal list-inside space-y-1">
                   <li>Create a file <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">.env.local</code> in your project root</li>
                   <li>Add: <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">GOOGLE_AI_API_KEY=your_key</code></li>
@@ -158,10 +158,10 @@ Check your current website text with this tool. You'll immediately see what's go
             <CardHeader>
               <CardTitle className="flex items-center space-x-2 text-xl">
                 <Edit className="h-6 w-6 text-purple-600" />
-                <span>Jouw Content</span>
+                <span>Tu Contenido</span>
               </CardTitle>
               <CardDescription className="text-base">
-                Plak de tekst die je wilt checken - bijvoorbeeld een blogartikel, productbeschrijving of websitetekst
+                Pega el texto que quieres verificar - por ejemplo, un artículo de blog, descripción de producto o texto del sitio web
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -169,19 +169,19 @@ Check your current website text with this tool. You'll immediately see what's go
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 className="w-full h-[600px] px-4 py-3 border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-base leading-relaxed resize-none"
-                placeholder="Paste your text here... 
+                placeholder="Pega tu texto aquí... 
 
-For example:
-- A blog article
-- Product description  
-- Website text
-- Social media post
+Por ejemplo:
+- Un artículo de blog
+- Descripción de producto  
+- Texto del sitio web
+- Publicación en redes sociales
 
-We'll check how well AI search engines like ChatGPT can find and understand your content."
+Verificaremos qué tan bien los motores de búsqueda IA como ChatGPT pueden encontrar y entender tu contenido."
               />
               <div className="mt-4 flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
                 <span className="font-medium">📊 {content.length.toLocaleString()} characters • {content.split(' ').filter(w => w.length > 0).length} words</span>
-                <span className="text-xs">💡 Tip: Longer content (500+ words) gives better results</span>
+                <span className="text-xs">💡 Consejo: Contenido más largo (500+ palabras) da mejores resultados</span>
               </div>
             </CardContent>
           </Card>
@@ -192,7 +192,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
           {/* AI Score */}
           <Card className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30 border-2 border-purple-200 dark:border-purple-900 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-center text-xl">🎯 Your AI Score</CardTitle>
+              <CardTitle className="text-center text-xl">🎯 Tu Puntuación IA</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-center">
@@ -200,7 +200,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                   {analysis.geoScore}
                 </div>
                 <div className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
-                  out of 100 points
+                  de 100 puntos
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-4 mb-4 overflow-hidden">
                   <div
@@ -210,11 +210,11 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                 </div>
                 <div className="mt-4 p-3 bg-white dark:bg-gray-900 rounded-lg">
                   <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {analyzing ? '⏳ Analyzing...' : 
-                     analysis.geoScore === 0 ? '👆 Click Check My Score to start' :
-                     analysis.geoScore >= 80 ? '🎉 Excellent! AI finds your content easily' :
-                     analysis.geoScore >= 60 ? '👍 Good! Room for improvement' :
-                     '💡 Check the tips below for better results'}
+                    {analyzing ? '⏳ Analizando...' : 
+                     analysis.geoScore === 0 ? '👆 Haz clic en Verificar Mi Puntuación para comenzar' :
+                     analysis.geoScore >= 80 ? '🎉 ¡Excelente! La IA encuentra tu contenido fácilmente' :
+                     analysis.geoScore >= 60 ? '👍 ¡Bien! Hay margen de mejora' :
+                     '💡 Revisa los consejos a continuación para mejores resultados'}
                   </p>
                 </div>
               </div>
@@ -224,8 +224,8 @@ We'll check how well AI search engines like ChatGPT can find and understand your
           {/* Dimension Scores */}
           <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
             <CardHeader>
-              <CardTitle className="text-base">📊 Gedetailleerde Scores</CardTitle>
-              <CardDescription>Hoe goed je content scoort op verschillende aspecten</CardDescription>
+              <CardTitle className="text-base">📊 Puntuaciones Detalladas</CardTitle>
+              <CardDescription>Cómo puntúa tu contenido en diferentes aspectos</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -240,7 +240,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                       style={{ width: `${analysis.citationLikelihood}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">How easily AI can find your content</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Qué tan fácilmente la IA puede encontrar tu contenido</p>
                 </div>
 
                 <div>
@@ -254,7 +254,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                       style={{ width: `${analysis.structure}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">How well-organized your content is</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Qué tan bien organizado está tu contenido</p>
                 </div>
 
                 <div>
@@ -268,7 +268,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                       style={{ width: `${analysis.factualDensity}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">How many concrete facts you use</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Cuántos hechos concretos usas</p>
                 </div>
 
                 <div>
@@ -282,7 +282,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                       style={{ width: `${analysis.readability}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">How easy your text is to understand</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Qué tan fácil es entender tu texto</p>
                 </div>
 
                 <div>
@@ -296,7 +296,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                       style={{ width: `${analysis.entityCoverage}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">How clearly you explain important terms</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Qué tan claramente explicas términos importantes</p>
                 </div>
 
                 <div>
@@ -310,7 +310,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
                       style={{ width: `${analysis.sourceQuality}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Quality of sources you use</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Calidad de las fuentes que usas</p>
                 </div>
               </div>
             </CardContent>
@@ -321,9 +321,9 @@ We'll check how well AI search engines like ChatGPT can find and understand your
             <CardHeader>
               <CardTitle className="text-base flex items-center space-x-2">
                 <Sparkles className="h-5 w-5 text-yellow-600" />
-                <span>💡 Tips om te Verbeteren</span>
+                <span>💡 Consejos para Mejorar</span>
               </CardTitle>
-              <CardDescription>Direct uitvoerbare verbeterpunten</CardDescription>
+              <CardDescription>Puntos de mejora directamente aplicables</CardDescription>
             </CardHeader>
             <CardContent>
               {analysis.suggestions && analysis.suggestions.length > 0 ? (
@@ -375,7 +375,7 @@ We'll check how well AI search engines like ChatGPT can find and understand your
               ) : (
                 <div className="text-center py-8">
                   <p className="text-gray-500 dark:text-gray-400">
-                    ⬆️ Click &quot;Check My Score&quot; to get AI suggestions
+                    ⬆️ Haz clic en &quot;Verificar Mi Puntuación&quot; para obtener sugerencias IA
                   </p>
                 </div>
               )}

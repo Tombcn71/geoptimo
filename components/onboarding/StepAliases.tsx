@@ -44,9 +44,9 @@ export default function StepAliases({ data, onNext, onBack }: Props) {
             <Tag className="h-8 w-8 text-purple-600" />
           </div>
         </div>
-        <CardTitle className="text-2xl">Merk Aliassen</CardTitle>
+        <CardTitle className="text-2xl">Alias de Marca</CardTitle>
         <CardDescription className="text-base">
-          Voeg alternatieve namen of variaties van je merk toe
+          Agrega nombres alternativos o variaciones de tu marca (Voeg alternatieve namen of variaties van je merk toe)
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -55,7 +55,7 @@ export default function StepAliases({ data, onNext, onBack }: Props) {
           <div className="flex space-x-2">
             <input
               type="text"
-              placeholder="Voeg een alias toe (bijv., deliveroo, roo)"
+              placeholder="Agrega un alias (ej., deliveroo, roo) (Voeg een alias toe (bijv., deliveroo, roo))"
               value={newAlias}
               onChange={(e) => setNewAlias(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -67,11 +67,11 @@ export default function StepAliases({ data, onNext, onBack }: Props) {
               className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
             >
               <Plus className="h-5 w-5" />
-              <span>Toevoegen</span>
+              <span>Agregar (Toevoegen)</span>
             </button>
           </div>
           <p className="text-xs text-gray-500">
-            Druk op Enter of klik Toevoegen om de alias toe te voegen
+            Presiona Enter o haz clic en Agregar para añadir el alias (Druk op Enter of klik Toevoegen om de alias toe te voegen)
           </p>
         </div>
 
@@ -81,10 +81,10 @@ export default function StepAliases({ data, onNext, onBack }: Props) {
             <div className="flex flex-col items-center justify-center h-full text-center py-8">
               <Tag className="h-12 w-12 text-gray-400 mb-3" />
               <p className="text-gray-500 dark:text-gray-400 font-medium mb-1">
-                Nog geen aliassen toegevoegd
+                Aún no se han agregado alias (Nog geen aliassen toegevoegd)
               </p>
               <p className="text-sm text-gray-400 dark:text-gray-500">
-                Voeg veelvoorkomende spelfouten, afkortingen of alternatieve namen toe
+                Agrega errores ortográficos comunes, abreviaciones o nombres alternativos (Voeg veelvoorkomende spelfouten, afkortingen of alternatieve namen toe)
               </p>
             </div>
           ) : (
@@ -109,8 +109,8 @@ export default function StepAliases({ data, onNext, onBack }: Props) {
 
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
           <p className="text-sm text-blue-700 dark:text-blue-300">
-            💡 <strong>Tip:</strong> Voeg veelvoorkomende spelfouten, afkortingen of hoe klanten naar je merk verwijzen toe. 
-            Bijvoorbeeld, &quot;Deliveroo&quot; kan ook &quot;deliveroo&quot;, &quot;Roo&quot;, of &quot;delivery roo&quot; zijn.
+            💡 <strong>Consejo:</strong> Agrega errores ortográficos comunes, abreviaciones o cómo los clientes se refieren a tu marca. 
+            Por ejemplo, &quot;Deliveroo&quot; también puede ser &quot;deliveroo&quot;, &quot;Roo&quot;, o &quot;delivery roo&quot;. (Tip: Voeg veelvoorkomende spelfouten, afkortingen of hoe klanten naar je merk verwijzen toe. Bijvoorbeeld, &quot;Deliveroo&quot; kan ook &quot;deliveroo&quot;, &quot;Roo&quot;, of &quot;delivery roo&quot; zijn.)
           </p>
         </div>
 
@@ -121,13 +121,13 @@ export default function StepAliases({ data, onNext, onBack }: Props) {
             className="flex items-center justify-center space-x-2 flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 px-6 py-3 rounded-lg font-medium text-lg transition-all"
           >
             <ArrowLeft className="h-5 w-5" />
-            <span>Terug</span>
+            <span>Atrás (Terug)</span>
           </button>
           <button
             onClick={handleContinue}
             className="flex-1 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium text-lg transition-all"
           >
-            Doorgaan
+            Continuar (Doorgaan)
           </button>
         </div>
       </CardContent>
