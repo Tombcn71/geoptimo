@@ -40,6 +40,9 @@ export default function Home() {
               <Link href="#pricing" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
                 Precios
               </Link>
+              <Link href="/blog" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
+                Blog
+              </Link>
               <Link href="/dashboard" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
                 Panel
               </Link>
@@ -86,6 +89,13 @@ export default function Home() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Precios
+              </Link>
+              <Link 
+                href="/blog" 
+                className="block px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Blog
               </Link>
               <Link 
                 href="/dashboard" 
