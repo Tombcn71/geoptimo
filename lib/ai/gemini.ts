@@ -14,24 +14,24 @@ export async function runPromptOnGemini(prompt: string) {
     const model = 'gemini-flash-lite-latest'
     
     // System instruction matching Google AI Overview style
-    const systemInstruction = `You are Google's AI Overview assistant. Respond EXACTLY like Google's AI Overview feature in search results.
+    const systemInstruction = `Eres el asistente de AI Overview de Google. Responde EXACTAMENTE como la función AI Overview de Google en los resultados de búsqueda.
 
-CRITICAL RULES (Match real Google AI Overview):
-- Respond with the SAME LENGTH and DETAIL as real Google AI Overview shows
-- Answer the question directly and comprehensively
-- Use markdown formatting: **bold** for brands/key terms, bullet points for lists
-- Include relevant context and explanations
-- Be helpful and informative like real Google results
-- Natural conversational tone
+REGLAS CRÍTICAS (Coincidir con el AI Overview real de Google):
+- Responde con la MISMA LONGITUD y DETALLE que muestra el AI Overview real de Google
+- Responde la pregunta directamente y de manera integral
+- Usa formato markdown: **negrita** para marcas/términos clave, viñetas para listas
+- Incluye contexto relevante y explicaciones
+- Sé útil e informativo como los resultados reales de Google
+- Tono conversacional natural
 
-STYLE EXAMPLES from real Google AI Overview:
-- Direct answer in opening
-- 2-5 paragraphs with proper structure
-- Bullet points when listing options/features
-- Bold text for emphasis on brands/products
-- Practical, actionable information
+EJEMPLOS DE ESTILO del AI Overview real de Google:
+- Respuesta directa en la apertura
+- 2-5 párrafos con estructura adecuada
+- Viñetas al enumerar opciones/características
+- Texto en negrita para énfasis en marcas/productos
+- Información práctica y accionable
 
-Respond as users would see in real Google Search - comprehensive but focused.`
+Responde como los usuarios verían en la Búsqueda real de Google: integral pero enfocado.`
 
     const contents = [
       {
@@ -80,19 +80,19 @@ export async function analyzeBrandMention(response: string, brandName: string) {
   try {
     const model = 'gemini-flash-lite-latest'
     
-    const prompt = `Analyze this AI response for mentions of "${brandName}":
+    const prompt = `Analiza esta respuesta de IA para menciones de "${brandName}":
 
 ${response}
 
-Return ONLY valid JSON with this exact structure:
+Devuelve SOLO JSON válido con esta estructura exacta:
 {
-  "mentioned": true or false,
-  "position": number from 1-10 or null,
-  "sentiment": "positive" or "neutral" or "negative",
-  "snippet": "quote from text" or null
+  "mentioned": true o false,
+  "position": número del 1-10 o null,
+  "sentiment": "positive" o "neutral" o "negative",
+  "snippet": "cita del texto" o null
 }
 
-Do not include any other text, only the JSON.`
+No incluyas ningún otro texto, solo el JSON.`
 
     const contents = [
       {
@@ -147,34 +147,34 @@ export async function analyzeContentWithGemini(content: string) {
   try {
     const model = 'gemini-flash-lite-latest'
     
-    const prompt = `You are a GEO (Generative Engine Optimization) expert.
+    const prompt = `Eres un experto en GEO (Optimización de Motores Generativos).
 
-STEP 1: First determine the CONTENT TYPE:
-- Product/Service page (e-commerce, SaaS, services, apps)
-- Informative content (blog, guide, tutorial, article)
-- Business page (about us, contact, team)
+PASO 1: Primero determina el TIPO DE CONTENIDO:
+- Página de Producto/Servicio (e-commerce, SaaS, servicios, apps)
+- Contenido Informativo (blog, guía, tutorial, artículo)
+- Página de Negocio (sobre nosotros, contacto, equipo)
 
-STEP 2: Give scores (0-100) adapted to the content type:
+PASO 2: Da puntuaciones (0-100) adaptadas al tipo de contenido:
 
-For PRODUCT/SERVICE pages (like apps, services):
-- citationLikelihood: Focus on brand authority, USP clarity, social proof (70-90 expected)
-- readability: Clarity of product description and benefits (70-95 expected)
-- structure: Logical product flow - problem → solution → action (65-90 expected)
-- entityCoverage: Product features, use cases, target audience description (60-85 expected)
-- factualDensity: Concrete specs, prices, results, examples (50-80 expected)
-- sourceQuality: Reviews, testimonials, case studies, social proof (40-75 expected)
+Para páginas de PRODUCTO/SERVICIO (como apps, servicios):
+- citationLikelihood: Enfócate en autoridad de marca, claridad de USP, prueba social (70-90 esperado)
+- readability: Claridad de descripción del producto y beneficios (70-95 esperado)
+- structure: Flujo lógico del producto - problema → solución → acción (65-90 esperado)
+- entityCoverage: Características del producto, casos de uso, descripción de audiencia objetivo (60-85 esperado)
+- factualDensity: Especificaciones concretas, precios, resultados, ejemplos (50-80 esperado)
+- sourceQuality: Reseñas, testimonios, casos de estudio, prueba social (40-75 esperado)
 
-For INFORMATIVE content:
-- citationLikelihood: Expert authority, source citation, depth (60-95 expected)
-- readability: Text complexity for broad audience (70-95 expected)
-- structure: Hierarchy and content organization (70-95 expected)
-- entityCoverage: Concepts, definitions, terminology (65-90 expected)
-- factualDensity: Facts, data, statistics (60-90 expected)
-- sourceQuality: External sources and references (50-85 expected)
+Para contenido INFORMATIVO:
+- citationLikelihood: Autoridad experta, citación de fuentes, profundidad (60-95 esperado)
+- readability: Complejidad del texto para audiencia amplia (70-95 esperado)
+- structure: Jerarquía y organización del contenido (70-95 esperado)
+- entityCoverage: Conceptos, definiciones, terminología (65-90 esperado)
+- factualDensity: Hechos, datos, estadísticas (60-90 esperado)
+- sourceQuality: Fuentes externas y referencias (50-85 esperado)
 
-STEP 3: Give 3-5 UNIQUE, DIFFERENT suggestions specific to the content type. NO DUPLICATES! ALL IN ENGLISH!
+PASO 3: Da 3-5 sugerencias ÚNICAS y DIFERENTES específicas para el tipo de contenido. ¡SIN DUPLICADOS! ¡TODO EN ESPAÑOL!
 
-Return ONLY valid JSON (no markdown, no extra text):
+Devuelve SOLO JSON válido (sin markdown, sin texto extra):
 {
   "contentType": "product|informative|business",
   "citationLikelihood": 85,
@@ -184,13 +184,13 @@ Return ONLY valid JSON (no markdown, no extra text):
   "factualDensity": 80,
   "sourceQuality": 85,
   "suggestions": [
-    {"type": "high", "category": "USP", "message": "Unique tip 1 in English", "impact": "+10"},
-    {"type": "medium", "category": "Trust", "message": "Unique tip 2 in English", "impact": "+5"},
-    {"type": "low", "category": "SEO", "message": "Unique tip 3 in English", "impact": "+3"}
+    {"type": "high", "category": "USP", "message": "Consejo único 1 en español", "impact": "+10"},
+    {"type": "medium", "category": "Trust", "message": "Consejo único 2 en español", "impact": "+5"},
+    {"type": "low", "category": "SEO", "message": "Consejo único 3 en español", "impact": "+3"}
   ]
 }
 
-Content to analyze:
+Contenido a analizar:
 ${content.substring(0, 4000)}`
 
     const contents = [
@@ -250,57 +250,57 @@ export async function detectAllBrands(response: string, yourBrandName: string) {
   try {
     const model = 'gemini-flash-lite-latest'
     
-    const prompt = `You are a brand detection expert. Extract ALL company and product names from this AI response.
+    const prompt = `Eres un experto en detección de marcas. Extrae TODOS los nombres de empresas y productos de esta respuesta de IA.
 
-Your Brand (for reference): "${yourBrandName}"
+Tu Marca (como referencia): "${yourBrandName}"
 
-AI Response to analyze:
+Respuesta de IA a analizar:
 """
 ${response}
 """
 
-CRITICAL INSTRUCTIONS:
-1. Find EVERY brand/company/product name mentioned ANYWHERE in the text
-2. Look for:
-   - Company names (Asana, Trello, Monday.com, HeadshotPro)
-   - Product names (Photoshop, Lightroom, Aragon AI)
-   - Software/service names (even with spaces: "Aragon AI", "Topaz Photo AI")
-   - Both in numbered lists AND in running text
-3. EXCLUDE generic terms: "software", "tool", "photographer", "camera", "app" (without brand)
-4. INCLUDE specific branded tools: "Adobe Photoshop", "Canva Pro", "Remove.bg"
-5. Extract position from context (if mentioned as #1, #2, first, second, etc.)
-6. Determine sentiment from surrounding text (pros/recommended = positive, cons/issues = negative)
+INSTRUCCIONES CRÍTICAS:
+1. Encuentra CADA nombre de marca/empresa/producto mencionado EN CUALQUIER LUGAR del texto
+2. Busca:
+   - Nombres de empresas (Asana, Trello, Monday.com, HeadshotPro)
+   - Nombres de productos (Photoshop, Lightroom, Aragon AI)
+   - Nombres de software/servicios (incluso con espacios: "Aragon AI", "Topaz Photo AI")
+   - Tanto en listas numeradas COMO en texto corrido
+3. EXCLUYE términos genéricos: "software", "herramienta", "fotógrafo", "cámara", "app" (sin marca)
+4. INCLUYE herramientas con marca específica: "Adobe Photoshop", "Canva Pro", "Remove.bg"
+5. Extrae la posición del contexto (si se menciona como #1, #2, primero, segundo, etc.)
+6. Determina el sentimiento del texto circundante (pros/recomendado = positivo, contras/problemas = negativo)
 
-Examples of what TO extract:
-✅ "Aragon AI" (brand name)
-✅ "HeadshotPro" (service name)  
-✅ "Monday.com" (company)
-✅ "Adobe Lightroom" (product)
+Ejemplos de lo que SÍ extraer:
+✅ "Aragon AI" (nombre de marca)
+✅ "HeadshotPro" (nombre de servicio)  
+✅ "Monday.com" (empresa)
+✅ "Adobe Lightroom" (producto)
 ✅ "Topaz Gigapixel AI" (software)
 
-Examples of what NOT to extract:
-❌ "software" (generic)
-❌ "photographer" (profession)
-❌ "AI" (technology)
-❌ "headshot" (generic term)
+Ejemplos de lo que NO extraer:
+❌ "software" (genérico)
+❌ "fotógrafo" (profesión)
+❌ "IA" (tecnología)
+❌ "headshot" (término genérico)
 
-Return ONLY this JSON structure (no markdown, no explanation):
+Devuelve SOLO esta estructura JSON (sin markdown, sin explicación):
 {
   "yourBrand": {
     "mentioned": true/false,
-    "position": number or null,
+    "position": número o null,
     "sentiment": "positive"/"neutral"/"negative"
   },
   "competitors": [
     {
-      "name": "Exact Brand Name",
-      "position": number or null,
+      "name": "Nombre Exacto de la Marca",
+      "position": número o null,
       "sentiment": "positive"/"neutral"/"negative"
     }
   ]
 }
 
-IMPORTANT: Do NOT include "${yourBrandName}" in competitors array. Extract ALL other brands exhaustively.`
+IMPORTANTE: NO incluyas "${yourBrandName}" en el array de competidores. Extrae TODAS las demás marcas exhaustivamente.`
 
     const contents = [
       {

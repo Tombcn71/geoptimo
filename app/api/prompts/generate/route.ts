@@ -25,28 +25,28 @@ export async function POST(request: Request) {
     console.log('🤖 Generating AI prompt suggestions for:', { category, description: description.substring(0, 50) })
 
     // Generate prompts using AI
-    const prompt = `You are a GEO (Generative Engine Optimization) expert. Generate 10 highly relevant search prompts that potential customers would ask AI chatbots (ChatGPT, Claude, Gemini, Perplexity) when looking for a service/product like this:
+    const prompt = `Eres un experto en GEO (Optimización de Motores Generativos). Genera 10 prompts de búsqueda altamente relevantes que los clientes potenciales harían a chatbots de IA (ChatGPT, Claude, Gemini, Perplexity) cuando buscan un servicio/producto como este:
 
-Category: ${category}
-Description: ${description}
+Categoría: ${category}
+Descripción: ${description}
 
-Generate 10 natural, conversational prompts that:
-1. Match how real users talk to AI assistants
-2. Are specific enough to be actionable
-3. Vary in intent (comparison, how-to, product discovery, problem-solving)
-4. Would naturally trigger mentions of this type of business
-5. Range from 10-25 words
+Genera 10 prompts naturales y conversacionales que:
+1. Coincidan con cómo los usuarios reales hablan con asistentes de IA
+2. Sean lo suficientemente específicos para ser accionables
+3. Varíen en intención (comparación, cómo hacer, descubrimiento de productos, resolución de problemas)
+4. Naturalmente desencadenarían menciones de este tipo de negocio
+5. Tengan entre 10-25 palabras
 
-Return ONLY a valid JSON array of objects with this exact format:
+Devuelve SOLO un array JSON válido de objetos con este formato exacto:
 [
   {
-    "text": "the full prompt text",
+    "text": "el texto completo del prompt",
     "category": "${category}",
-    "estimatedImpressions": a number between 500 and 8000
+    "estimatedImpressions": un número entre 500 y 8000
   }
 ]
 
-No markdown, no explanations, just the JSON array.`
+Sin markdown, sin explicaciones, solo el array JSON.`
 
     const model = 'gemini-flash-lite-latest'
     const contents = [
