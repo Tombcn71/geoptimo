@@ -47,52 +47,52 @@ export async function POST(request: Request) {
       strengths: string[];
     }> = [
       {
-        name: 'Citation Likelihood',
+        name: 'Probabilidad de Citación',
         score: analysis.citationLikelihood,
         status: analysis.citationLikelihood >= 85 ? 'excellent' : analysis.citationLikelihood >= 70 ? 'good' : 'fair',
-        description: 'Probability that AI models will cite this content',
+        description: 'Probabilidad de que los modelos de IA citen este contenido',
         issues: [],
-        strengths: analysis.citationLikelihood >= 70 ? ['Good citation potential', 'Content is AI-friendly'] : []
+        strengths: analysis.citationLikelihood >= 70 ? ['Buena probabilidad de citación', 'Contenido amigable para IA'] : []
       },
       {
-        name: 'Readability',
+        name: 'Legibilidad',
         score: analysis.readability,
         status: analysis.readability >= 85 ? 'excellent' : analysis.readability >= 70 ? 'good' : 'fair',
-        description: 'How easy it is for AI to understand your content',
+        description: 'Qué tan fácil es para la IA entender tu contenido',
         issues: [],
-        strengths: analysis.readability >= 70 ? ['Clear and understandable text', 'Good sentence structure'] : []
+        strengths: analysis.readability >= 70 ? ['Texto claro y comprensible', 'Buena estructura de oraciones'] : []
       },
       {
-        name: 'Structure',
+        name: 'Estructura',
         score: analysis.structure,
         status: analysis.structure >= 85 ? 'excellent' : analysis.structure >= 70 ? 'good' : 'fair',
-        description: 'Content organization and hierarchy',
+        description: 'Organización y jerarquía del contenido',
         issues: [],
-        strengths: analysis.structure >= 70 ? ['Well-organized content', 'Logical flow'] : []
+        strengths: analysis.structure >= 70 ? ['Contenido bien organizado', 'Flujo lógico'] : []
       },
       {
-        name: 'Entity Coverage',
+        name: 'Cobertura de Entidades',
         score: analysis.entityCoverage,
         status: analysis.entityCoverage >= 85 ? 'excellent' : analysis.entityCoverage >= 70 ? 'good' : 'fair',
-        description: 'Coverage of key concepts and terms',
+        description: 'Cobertura de conceptos y términos clave',
         issues: [],
-        strengths: analysis.entityCoverage >= 70 ? ['Good keyword coverage', 'Relevant terminology'] : []
+        strengths: analysis.entityCoverage >= 70 ? ['Buena cobertura de palabras clave', 'Terminología relevante'] : []
       },
       {
-        name: 'Factual Density',
+        name: 'Densidad Factual',
         score: analysis.factualDensity,
         status: analysis.factualDensity >= 85 ? 'excellent' : analysis.factualDensity >= 70 ? 'good' : 'fair',
-        description: 'Amount of verifiable facts and data',
+        description: 'Cantidad de hechos y datos verificables',
         issues: [],
-        strengths: analysis.factualDensity >= 70 ? ['Good use of data and facts', 'Evidence-based content'] : []
+        strengths: analysis.factualDensity >= 70 ? ['Buen uso de datos y hechos', 'Contenido basado en evidencia'] : []
       },
       {
-        name: 'Source Quality',
+        name: 'Calidad de Fuentes',
         score: analysis.sourceQuality,
         status: analysis.sourceQuality >= 85 ? 'excellent' : analysis.sourceQuality >= 70 ? 'good' : 'fair',
-        description: 'Quality of external sources cited',
+        description: 'Calidad de las fuentes externas citadas',
         issues: [],
-        strengths: analysis.sourceQuality >= 70 ? ['Links to reputable sources', 'Good source diversity'] : []
+        strengths: analysis.sourceQuality >= 70 ? ['Enlaces a fuentes reputables', 'Buena diversidad de fuentes'] : []
       }
     ]
 
@@ -118,7 +118,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       score: overallScore,
-      title: title || 'Your Content',
+      title: title || 'Tu Contenido',
       contentType: analysis.contentType || 'unknown',
       dimensions
     })
