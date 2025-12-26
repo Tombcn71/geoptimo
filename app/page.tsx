@@ -306,7 +306,7 @@ export default function Home() {
               <h4 className="text-black dark:text-white font-semibold mb-4">Recursos</h4>
               <ul className="space-y-2 text-sm">
                 <li><Link href="/demo" className="hover:text-black dark:hover:text-white transition-colors">Demo</Link></li>
-                <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Blog</Link></li>
+                <li><Link href="/blog" className="hover:text-black dark:hover:text-white transition-colors">Blog</Link></li>
                 <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Guías</Link></li>
               </ul>
             </div>
