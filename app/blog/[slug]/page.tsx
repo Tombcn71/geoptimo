@@ -7,6 +7,11 @@ import { Rocket, ArrowLeft } from 'lucide-react';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 export default function GEOArticleBlog() {
+  // Obtener fecha de hoy
+  const today = new Date();
+  const todayFormatted = today.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+  const todayISO = today.toISOString().split('T')[0];
+
   // Datos para estadísticas
   const adoptionData = [
     { year: '2023', seo: 95, geo: 15 },
@@ -36,11 +41,11 @@ export default function GEOArticleBlog() {
     "headline": "Optimización para Motores Generativos: La Guía Definitiva de GEO 2026",
     "description": "Descubre cómo la Optimización para Motores Generativos (GEO) está revolucionando la búsqueda de información. Aprende estrategias prácticas para optimizar tu contenido para IA.",
     "author": {
-      "@type": "Organization",
-      "name": "Geoptimo"
+      "@type": "Person",
+      "name": "Tom"
     },
-    "datePublished": "2025-12-26",
-    "dateModified": "2025-12-26",
+    "datePublished": todayISO,
+    "dateModified": todayISO,
     "publisher": {
       "@type": "Organization",
       "name": "Geoptimo",
@@ -127,7 +132,7 @@ export default function GEOArticleBlog() {
             Descubre cómo la revolución de la IA está transformando la búsqueda de información y cómo tu contenido puede dominar en esta nueva era digital
           </p>
           <div className="flex items-center justify-center gap-6 text-sm text-gray-500 dark:text-gray-400">
-            <span>📅 26 de diciembre, 2025</span>
+            <span>📅 {todayFormatted}</span>
             <span>⏱️ 12 min de lectura</span>
             <span>🎯 Guía Completa</span>
           </div>

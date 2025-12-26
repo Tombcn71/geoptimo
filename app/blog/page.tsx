@@ -3,19 +3,22 @@
 import Link from "next/link";
 import { Rocket, Calendar, ArrowRight } from "lucide-react";
 
-const blogPosts = [
-  {
-    slug: "que-es-generative-engine-optimization",
-    title: "¿Qué es la Generative Engine Optimization? Tu Guía Completa de GEO",
-    excerpt: "Descubre la guía definitiva sobre GEO: cómo optimizar tu presencia digital para motores de búsqueda generativos y modelos de IA.",
-    date: "29 de septiembre de 2025",
-    author: "omer",
-    category: "GEO",
-    readTime: "8 min lectura"
-  }
-];
-
 export default function BlogPage() {
+  // Obtener fecha de hoy
+  const today = new Date();
+  const todayFormatted = today.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  const blogPosts = [
+    {
+      slug: "que-es-generative-engine-optimization",
+      title: "¿Qué es la Generative Engine Optimization? Tu Guía Completa de GEO",
+      excerpt: "Descubre la guía definitiva sobre GEO: cómo optimizar tu presencia digital para motores de búsqueda generativos y modelos de IA.",
+      date: todayFormatted,
+      author: "Tom",
+      category: "GEO",
+      readTime: "8 min lectura"
+    }
+  ];
   return (
     <div className="min-h-screen bg-white dark:bg-black transition-colors">
       {/* Header */}
