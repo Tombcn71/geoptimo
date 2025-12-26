@@ -25,29 +25,29 @@ const defaultScores = {
 // No default suggestions - only show real AI suggestions
 
 export default function ContentStudioPage() {
-  const [content, setContent] = useState(`Why AI Optimization Matters
+  const [content, setContent] = useState(`Por Qué Importa la Optimización para IA
 
-AI search engines like ChatGPT and Gemini are becoming increasingly popular. People ask questions to these AI systems instead of Google. If your business doesn't appear in these AI answers, you're missing out on many potential customers.
+Los motores de búsqueda IA como ChatGPT y Gemini se están volviendo cada vez más populares. Las personas hacen preguntas a estos sistemas de IA en lugar de Google. Si tu negocio no aparece en estas respuestas de IA, te estás perdiendo muchos clientes potenciales.
 
-How AI Finds Your Content
+Cómo la IA Encuentra Tu Contenido
 
-AI systems read millions of websites and remember which content is best. They look for:
+Los sistemas de IA leen millones de sitios web y recuerdan qué contenido es el mejor. Buscan:
 
-- Clear structure with headings
-- Concrete facts and examples  
-- Reliable sources
-- Good readability
+- Estructura clara con encabezados
+- Hechos concretos y ejemplos
+- Fuentes confiables
+- Buena legibilidad
 
-Tips for Better Results
+Consejos para Mejores Resultados
 
-1. Use short sentences that are easy to understand
-2. Provide concrete examples and numbers
-3. Explain technical terms as if talking to a beginner
-4. Divide your text into short paragraphs with subheadings
+1. Usa oraciones cortas que sean fáciles de entender
+2. Proporciona ejemplos concretos y números
+3. Explica términos técnicos como si hablaras con un principiante
+4. Divide tu texto en párrafos cortos con subtítulos
 
-Start Today
+Comienza Hoy
 
-Check your current website text with this tool. You'll immediately see what's good and what can be improved. Improve step by step and watch your AI score rise!`);
+Verifica el texto actual de tu sitio web con esta herramienta. Inmediatamente verás qué está bien y qué se puede mejorar. ¡Mejora paso a paso y observa cómo aumenta tu puntuación de IA!`);
 
   const [analyzing, setAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState(defaultScores);
@@ -140,10 +140,10 @@ Check your current website text with this tool. You'll immediately see what's go
               <div className="text-sm text-blue-700 dark:text-blue-300">
                 <p className="font-semibold mb-2">💡 Solución:</p>
                 <ol className="list-decimal list-inside space-y-1">
-                  <li>Create a file <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">.env.local</code> in your project root</li>
-                  <li>Add: <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">GOOGLE_AI_API_KEY=your_key</code></li>
-                  <li>Get your key from: <a href="https://aistudio.google.com/apikey" target="_blank" className="underline font-medium">aistudio.google.com/apikey</a></li>
-                  <li>Restart the dev server (Ctrl+C then <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">npm run dev</code>)</li>
+                  <li>Crea un archivo <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">.env.local</code> en la raíz de tu proyecto</li>
+                  <li>Agrega: <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">GOOGLE_AI_API_KEY=tu_clave</code></li>
+                  <li>Obtén tu clave desde: <a href="https://aistudio.google.com/apikey" target="_blank" className="underline font-medium">aistudio.google.com/apikey</a></li>
+                  <li>Reinicia el servidor de desarrollo (Ctrl+C y luego <code className="bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">npm run dev</code>)</li>
                 </ol>
               </div>
             </div>
@@ -180,7 +180,7 @@ Por ejemplo:
 Verificaremos qué tan bien los motores de búsqueda IA como ChatGPT pueden encontrar y entender tu contenido."
               />
               <div className="mt-4 flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
-                <span className="font-medium">📊 {content.length.toLocaleString()} characters • {content.split(' ').filter(w => w.length > 0).length} words</span>
+                <span className="font-medium">📊 {content.length.toLocaleString()} caracteres • {content.split(' ').filter(w => w.length > 0).length} palabras</span>
                 <span className="text-xs">💡 Consejo: Contenido más largo (500+ palabras) da mejores resultados</span>
               </div>
             </CardContent>
@@ -231,7 +231,7 @@ Verificaremos qué tan bien los motores de búsqueda IA como ChatGPT pueden enco
               <div className="space-y-4">
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">🔗 Discoverability</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">🔗 Descubribilidad</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">{analysis.citationLikelihood}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
@@ -245,7 +245,7 @@ Verificaremos qué tan bien los motores de búsqueda IA como ChatGPT pueden enco
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">📋 Structure</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">📋 Estructura</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">{analysis.structure}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
@@ -259,7 +259,7 @@ Verificaremos qué tan bien los motores de búsqueda IA como ChatGPT pueden enco
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">📊 Facts & Data</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">📊 Hechos y Datos</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">{analysis.factualDensity}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
@@ -273,7 +273,7 @@ Verificaremos qué tan bien los motores de búsqueda IA como ChatGPT pueden enco
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">📖 Readability</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">📖 Legibilidad</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">{analysis.readability}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
@@ -287,7 +287,7 @@ Verificaremos qué tan bien los motores de búsqueda IA como ChatGPT pueden enco
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">🏷️ Clarity</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">🏷️ Claridad</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">{analysis.entityCoverage}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
@@ -301,7 +301,7 @@ Verificaremos qué tan bien los motores de búsqueda IA como ChatGPT pueden enco
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">⭐ Reliability</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">⭐ Confiabilidad</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">{analysis.sourceQuality}</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
@@ -358,7 +358,7 @@ Verificaremos qué tan bien los motores de búsqueda IA como ChatGPT pueden enco
                             suggestion.type === 'medium' ? 'bg-yellow-200 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200' :
                             'bg-blue-200 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
                           }`}>
-                            {suggestion.type === 'high' ? 'IMPORTANT' : suggestion.type === 'medium' ? 'TIP' : 'GOOD JOB'}
+                            {suggestion.type === 'high' ? 'IMPORTANTE' : suggestion.type === 'medium' ? 'CONSEJO' : 'BIEN HECHO'}
                           </span>
                           <span className="text-sm font-bold text-green-600 dark:text-green-400">
                             {suggestion.impact}

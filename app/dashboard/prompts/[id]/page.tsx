@@ -189,7 +189,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Loading prompt details...</div>
+        <div className="text-xl text-gray-600 dark:text-gray-400">Cargando detalles del prompt...</div>
       </div>
     );
   }
@@ -203,10 +203,10 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
             <CheckCircle2 className="h-6 w-6 text-green-600 dark:text-green-400" />
             <div>
               <p className="font-semibold text-green-900 dark:text-green-100">
-                ✅ Prompt Succesvol Uitgevoerd!
+                ✅ ¡Prompt Ejecutado Exitosamente!
               </p>
               <p className="text-sm text-green-700 dark:text-green-300">
-                Resultaten worden hieronder weergegeven. De AI heeft deze prompt uitgevoerd.
+                Los resultados se muestran a continuación. La IA ha ejecutado este prompt.
               </p>
             </div>
           </div>
@@ -222,7 +222,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
       {/* Back Button */}
       <Link href="/dashboard/prompts" className="inline-flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
         <ArrowLeft className="h-4 w-4" />
-        <span>Back to Prompts</span>
+        <span>Volver a Prompts</span>
       </Link>
 
       {/* Prompt Header */}
@@ -239,7 +239,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
               {promptData?.subscribed && (
                 <span className="flex items-center space-x-1 text-green-600 dark:text-green-400">
                   <CheckCircle2 className="h-4 w-4" />
-                  <span>Geabonneerd</span>
+                  <span>Suscrito</span>
                 </span>
               )}
             </div>
@@ -252,7 +252,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
             <CardContent className="pt-6">
               <div className="flex items-center space-x-2 mb-2">
                 <Calendar className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">Total Runs</p>
+                <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">Ejecuciones Totales</p>
               </div>
               <p className="text-3xl font-bold text-blue-900 dark:text-blue-100">{promptData?.totalRuns}</p>
             </CardContent>
@@ -262,7 +262,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
             <CardContent className="pt-6">
               <div className="flex items-center space-x-2 mb-2">
                 <Hash className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                <p className="text-sm text-purple-700 dark:text-purple-300 font-medium">Gem. Positie</p>
+                <p className="text-sm text-purple-700 dark:text-purple-300 font-medium">Pos. Promedio</p>
               </div>
               <p className="text-3xl font-bold text-purple-900 dark:text-purple-100">#{promptData?.avgPosition}</p>
             </CardContent>
@@ -272,7 +272,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
             <CardContent className="pt-6">
               <div className="flex items-center space-x-2 mb-2">
                 <Eye className="h-4 w-4 text-green-600 dark:text-green-400" />
-                <p className="text-sm text-green-700 dark:text-green-300 font-medium">Detection Rate</p>
+                <p className="text-sm text-green-700 dark:text-green-300 font-medium">Tasa de Detección</p>
               </div>
               <p className="text-3xl font-bold text-green-900 dark:text-green-100">{promptData?.detectionRate}%</p>
             </CardContent>
@@ -282,7 +282,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
             <CardContent className="pt-6">
               <div className="flex items-center space-x-2 mb-2">
                 <TrendingUp className="h-4 w-4 text-orange-600 dark:text-orange-400" />
-                <p className="text-sm text-orange-700 dark:text-orange-300 font-medium">Total Mentions</p>
+                <p className="text-sm text-orange-700 dark:text-orange-300 font-medium">Menciones Totales</p>
               </div>
               <p className="text-3xl font-bold text-orange-900 dark:text-orange-100">{promptData?.totalMentions}</p>
             </CardContent>
@@ -295,7 +295,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
         <CardContent className="pt-6">
           <div className="flex items-center space-x-3">
             <Filter className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Filter op Provider:</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Filtrar por Proveedor:</span>
             <button
               onClick={() => setFilterProvider(null)}
               className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
@@ -304,7 +304,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                   : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
               }`}
             >
-              Alle
+              Todos
             </button>
             {Object.keys(providerLogos).map((provider) => (
               <button
@@ -326,21 +326,21 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
       {/* Prompt Runs Timeline */}
       <Card>
         <CardHeader>
-          <CardTitle>Prompt Runs Timeline</CardTitle>
+          <CardTitle>Línea de Tiempo de Ejecuciones</CardTitle>
         </CardHeader>
         <CardContent>
           {filteredRuns.length === 0 ? (
             <div className="text-center py-12">
               <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                Nog Geen Resultaten
+                Aún No Hay Resultados
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-4">
-                Deze prompt is nog niet uitgevoerd. 
+                Este prompt aún no se ha ejecutado. 
                 {promptData?.subscribed ? (
-                  <span> Het wordt automatisch dagelijks uitgevoerd, of je kunt het handmatig uitvoeren vanaf de Prompts pagina.</span>
+                  <span> Se ejecuta automáticamente diariamente, o puedes ejecutarlo manualmente desde la página de Prompts.</span>
                 ) : (
-                  <span> Abonneer je op deze prompt en voer het handmatig uit om resultaten te zien.</span>
+                  <span> Suscríbete a este prompt y ejecútalo manualmente para ver resultados.</span>
                 )}
               </p>
               <Link 
@@ -348,7 +348,7 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                 className="inline-flex items-center space-x-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
               >
                 <ArrowLeft className="h-4 w-4" />
-                <span>Back to Prompts</span>
+                <span>Volver a Prompts</span>
               </Link>
             </div>
           ) : (
@@ -384,12 +384,12 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                       <div className="flex items-center space-x-3">
                         <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-sm font-medium flex items-center space-x-1">
                           <CheckCircle2 className="h-4 w-4" />
-                          <span>Positie #{run.position}</span>
+                          <span>Posición #{run.position}</span>
                         </span>
                       </div>
                     ) : (
                       <span className="px-3 py-1 bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full text-sm font-medium">
-                        Niet Vermeld
+                        No Mencionado
                       </span>
                     )}
                   </div>
@@ -404,13 +404,13 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
                           <FileText className="h-4 w-4 text-white" />
                         </div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white">AI Antwoord</h4>
+                        <h4 className="font-semibold text-gray-900 dark:text-white">Respuesta de IA</h4>
                       </div>
                       <button
                         onClick={() => toggleRunExpansion(run.id)}
                         className="flex items-center space-x-1 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors px-3 py-1.5 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20"
                       >
-                        <span>{expandedRuns.has(run.id) ? 'Toon Minder' : 'Toon Volledig Antwoord'}</span>
+                        <span>{expandedRuns.has(run.id) ? 'Mostrar Menos' : 'Mostrar Respuesta Completa'}</span>
                         {expandedRuns.has(run.id) ? (
                           <ChevronUp className="h-4 w-4" />
                         ) : (
@@ -443,11 +443,11 @@ export default function PromptDetailPage({ params }: { params: Promise<{ id: str
                     <div className="mt-4 pt-3 border-t border-blue-100 dark:border-blue-900/30 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                       <span className="flex items-center space-x-1">
                         <span>📊</span>
-                        <span>{Math.ceil(run.response.length / 5)} woorden</span>
+                        <span>{Math.ceil(run.response.length / 5)} palabras</span>
                       </span>
                       <span className="flex items-center space-x-1">
                         <span>✨</span>
-                        <span>AI-Gegenereerd</span>
+                        <span>Generado por IA</span>
                       </span>
                     </div>
                   </div>

@@ -75,11 +75,11 @@ export default function PromptsPage() {
         window.location.href = `/dashboard/prompts/${promptId}?justRan=true`;
       } else {
         const error = await response.json();
-        alert(`❌ Failed: ${error.error}`);
+        alert(`❌ Error: ${error.error}`);
       }
     } catch (error) {
       console.error('Error running prompt:', error);
-      alert('❌ Failed to run prompt');
+      alert('❌ Error al ejecutar el prompt');
     } finally {
       setRunningPrompts(prev => {
         const next = new Set(prev);
@@ -103,17 +103,17 @@ export default function PromptsPage() {
       if (response.ok) {
         await fetchPrompts(); // Refresh the list
       } else {
-        alert('❌ Failed to update subscription');
+        alert('❌ Error al actualizar la suscripción');
       }
     } catch (error) {
       console.error('Error subscribing:', error);
-      alert('❌ Failed to update subscription');
+      alert('❌ Error al actualizar la suscripción');
     }
   };
 
   const handleCreateCustomPrompt = async () => {
     if (!customPrompt.trim()) {
-      alert('❌ Please enter a prompt');
+      alert('❌ Por favor ingresa un prompt');
       return;
     }
 
@@ -133,13 +133,13 @@ export default function PromptsPage() {
         setCustomPrompt('');
         setShowCustomPrompt(false);
         await fetchPrompts();
-        alert('✅ Aangepaste prompt aangemaakt!');
+        alert('✅ ¡Prompt personalizado creado!');
       } else {
-        alert('❌ Failed to create prompt');
+        alert('❌ Error al crear el prompt');
       }
     } catch (error) {
       console.error('Error creating prompt:', error);
-      alert('❌ Failed to create prompt');
+      alert('❌ Error al crear el prompt');
     }
   };
 
@@ -149,7 +149,7 @@ export default function PromptsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Loading prompts...</div>
+        <div className="text-xl text-gray-600 dark:text-gray-400">Cargando prompts...</div>
       </div>
     );
   }
@@ -159,9 +159,9 @@ export default function PromptsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Prompt Verkenner</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Explorador de Prompts</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Discover and subscribe to relevant prompts for your brand
+            Descubre y suscríbete a prompts relevantes para tu marca
           </p>
         </div>
         <div className="flex items-center space-x-3">
@@ -170,14 +170,14 @@ export default function PromptsPage() {
             className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-colors flex items-center space-x-2"
           >
             <Sparkles className="h-5 w-5" />
-            <span>Verken AI Prompts</span>
+            <span>Explorar Prompts de IA</span>
           </Link>
           <button
             onClick={() => setShowCustomPrompt(true)}
             className="bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center space-x-2"
           >
             <Plus className="h-5 w-5" />
-            <span>Aangepaste Prompt</span>
+            <span>Prompt Personalizado</span>
           </button>
         </div>
       </div>
@@ -187,10 +187,10 @@ export default function PromptsPage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Sparkles className="h-5 w-5 text-purple-600" />
-            <span>AI-Gegenereerde Suggesties</span>
+            <span>Sugerencias Generadas por IA</span>
           </CardTitle>
           <CardDescription>
-            Gebaseerd op je merkinformatie en sector
+            Basadas en la información de tu marca y sector
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -208,7 +208,7 @@ export default function PromptsPage() {
                     </span>
                   </div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {prompt.impressions.toLocaleString()} community impressions
+                    {prompt.impressions.toLocaleString()} impresiones de la comunidad
                   </p>
                 </div>
                 {prompt.isSubscribed ? (
@@ -217,20 +217,20 @@ export default function PromptsPage() {
                     className="flex items-center space-x-2 text-green-600 hover:text-green-700 px-4 py-2 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800 transition-colors"
                   >
                     <Check className="h-5 w-5" />
-                    <span className="text-sm font-medium">Subscribed</span>
+                    <span className="text-sm font-medium">Suscrito</span>
                   </button>
                 ) : (
                   <button 
                     onClick={() => handleSubscribe(prompt.id, prompt.isSubscribed)}
                     className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
                   >
-                    Subscribe
+                    Suscribirse
                   </button>
                 )}
               </div>
             )) : (
               <div className="text-center py-8 text-gray-600 dark:text-gray-400">
-                Geen voorgestelde prompts beschikbaar. Bezoek Verken Prompts voor meer!
+                No hay prompts sugeridos disponibles. ¡Visita Explorar Prompts para más!
               </div>
             )}
           </div>
@@ -240,9 +240,9 @@ export default function PromptsPage() {
       {/* Your Subscribed Prompts */}
       <Card>
         <CardHeader>
-          <CardTitle>Jouw Geabonneerde Prompts</CardTitle>
+          <CardTitle>Tus Prompts Suscritos</CardTitle>
           <CardDescription>
-            Dagelijks uitgevoerd op meerdere AI-providers
+            Ejecutados diariamente en múltiples proveedores de IA
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -260,15 +260,15 @@ export default function PromptsPage() {
                       <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors" />
                     </h3>
                     <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
-                      <span>Laatste run: {prompt.lastRun}</span>
+                      <span>Última ejecución: {prompt.lastRun}</span>
                       <span>•</span>
                       <span className="flex items-center space-x-1">
                         <TrendingUp className="h-4 w-4 text-green-600" />
-                        <span>{prompt.mentions} vermeldingen</span>
+                        <span>{prompt.mentions} menciones</span>
                       </span>
                       <span>•</span>
                       <span className="font-semibold text-purple-600 dark:text-purple-400">
-                        Gem. Positie: #{prompt.position}
+                        Pos. Prom: #{prompt.position}
                       </span>
                     </div>
                   </div>
@@ -280,18 +280,18 @@ export default function PromptsPage() {
                     {runningPrompts.has(prompt.id) ? (
                       <>
                         <Loader2 className="h-4 w-4 animate-spin" />
-                        <span>Bezig...</span>
+                        <span>Ejecutando...</span>
                       </>
                     ) : (
                       <>
                         <Play className="h-4 w-4" />
-                        <span>Nu Uitvoeren</span>
+                        <span>Ejecutar Ahora</span>
                       </>
                     )}
                   </button>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="text-xs text-gray-600 dark:text-gray-400">AI-engines:</span>
+                  <span className="text-xs text-gray-600 dark:text-gray-400">Motores de IA:</span>
                   {prompt.providers.map((provider) => (
                     <span
                       key={provider}
@@ -304,9 +304,9 @@ export default function PromptsPage() {
               </Link>
             )) : (
               <div className="text-center py-8 text-gray-600 dark:text-gray-400">
-                <p className="mb-4">You haven&apos;t subscribed to any prompts yet.</p>
+                <p className="mb-4">Aún no te has suscrito a ningún prompt.</p>
                 <Link href="/dashboard/prompts/explore" className="text-purple-600 dark:text-purple-400 hover:underline">
-                  Explore available prompts →
+                  Explora prompts disponibles →
                 </Link>
               </div>
             )}
@@ -319,27 +319,27 @@ export default function PromptsPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <Card className="w-full max-w-2xl">
             <CardHeader>
-              <CardTitle>Maak Aangepaste Prompt</CardTitle>
+              <CardTitle>Crear Prompt Personalizado</CardTitle>
               <CardDescription>
-                Maak je eigen aangepaste prompt om te monitoren
+                Crea tu propio prompt personalizado para monitorear
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Prompt Text
+                  Texto del Prompt
                 </label>
                 <textarea
                   value={customPrompt}
                   onChange={(e) => setCustomPrompt(e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
                   rows={4}
-                  placeholder="What are the best tools for..."
+                  placeholder="¿Cuáles son las mejores herramientas para..."
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  AI-engines
+                  Motores de IA
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   {["ChatGPT", "Gemini", "Perplexity"].map((provider) => (
@@ -358,14 +358,14 @@ export default function PromptsPage() {
                   }}
                   className="px-6 py-2 border border-gray-300 dark:border-gray-700 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
                 >
-                  Cancel
+                  Cancelar
                 </button>
                 <button
                   onClick={handleCreateCustomPrompt}
                   disabled={!customPrompt.trim()}
                   className="px-6 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Aanmaken & Abonneren
+                  Crear y Suscribirse
                 </button>
               </div>
             </CardContent>

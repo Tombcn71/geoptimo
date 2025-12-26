@@ -50,7 +50,7 @@ export default function CitationsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Loading citations...</div>
+        <div className="text-xl text-gray-600 dark:text-gray-400">Cargando citaciones...</div>
       </div>
     );
   }
@@ -59,9 +59,9 @@ export default function CitationsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Citations</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Citaciones</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Track where AI models cite your content
+          Rastrea dónde los modelos de IA citan tu contenido
         </p>
       </div>
 
@@ -70,10 +70,10 @@ export default function CitationsPage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <TrendingUp className="h-5 w-5 text-green-600" />
-            <span>Jouw Merk Citaten</span>
+            <span>Citaciones de Tu Marca</span>
           </CardTitle>
           <CardDescription>
-            Wanneer AI-modellen je website citeren
+            Cuando los modelos de IA citan tu sitio web
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -100,7 +100,7 @@ export default function CitationsPage() {
                   </div>
                   <div className="text-right">
                     <div className="text-2xl font-bold text-green-600">{citation.citationCount}</div>
-                    <div className="text-xs text-gray-600 dark:text-gray-400">citations</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">citaciones</div>
                   </div>
                 </div>
                 {citation.snippet && (
@@ -110,10 +110,10 @@ export default function CitationsPage() {
                 )}
                 <div className="space-y-1">
                   <p className="text-xs text-gray-600 dark:text-gray-400">
-                    Domain Authority: {citation.domainAuthority} • Last seen: {new Date(citation.lastSeen).toLocaleDateString()}
+                    Autoridad de Dominio: {citation.domainAuthority} • Última vez visto: {new Date(citation.lastSeen).toLocaleDateString()}
                   </p>
                   <div className="flex items-center space-x-2 mt-2">
-                    <span className="text-xs text-gray-600 dark:text-gray-400">Providers:</span>
+                    <span className="text-xs text-gray-600 dark:text-gray-400">Proveedores:</span>
                     {citation.providers.map((provider: string) => (
                       <span
                         key={provider}
@@ -128,10 +128,10 @@ export default function CitationsPage() {
             )) : (
               <div className="text-center py-12">
                 <p className="text-gray-600 dark:text-gray-400 mb-2">
-                  No citations found yet
+                  Aún no se encontraron citaciones
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-500">
-                  Citations will appear here when AI models reference your content
+                  Las citaciones aparecerán aquí cuando los modelos de IA referencien tu contenido
                 </p>
               </div>
             )}

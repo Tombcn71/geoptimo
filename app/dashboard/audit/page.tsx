@@ -13,11 +13,11 @@ import {
 import { useState, useEffect } from "react";
 
 const progressSteps = [
-  { id: 1, label: "Preparing", duration: 500 },
-  { id: 2, label: "Crawling", duration: 1500 },
-  { id: 3, label: "Processing", duration: 1200 },
-  { id: 4, label: "Analyzing", duration: 1800 },
-  { id: 5, label: "Finalizing", duration: 1000 }
+  { id: 1, label: "Preparando", duration: 500 },
+  { id: 2, label: "Rastreando", duration: 1500 },
+  { id: 3, label: "Procesando", duration: 1200 },
+  { id: 4, label: "Analizando", duration: 1800 },
+  { id: 5, label: "Finalizando", duration: 1000 }
 ];
 
 export default function AuditPage() {
@@ -50,7 +50,7 @@ export default function AuditPage() {
       const data = await response.json();
       
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to fetch URL');
+        throw new Error(data.error || 'Error al obtener la URL');
       }
       
       setContent(data.content);
@@ -62,7 +62,7 @@ export default function AuditPage() {
       
     } catch (err) {
       console.error('Fetch error:', err);
-      setError((err as Error).message || 'Could not fetch URL. Please check if the URL is accessible.');
+      setError((err as Error).message || 'No se pudo obtener la URL. Por favor verifica que la URL sea accesible.');
       setIsFetching(false);
     }
   };
@@ -121,7 +121,7 @@ export default function AuditPage() {
       })
       .catch(err => {
         console.error('Audit error:', err);
-        setError('Failed to analyze the page. Please try again.');
+        setError('Error al analizar la página. Por favor intenta de nuevo.');
         setIsAuditing(false);
       });
   }, [isAuditing, content, title]);
@@ -137,18 +137,18 @@ export default function AuditPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">GEO Website Audit</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Auditoría GEO del Sitio Web</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Analyze your site with the 6 GEO dimensions
+          Analiza tu sitio con las 6 dimensiones GEO
         </p>
       </div>
 
       {/* Audit Input */}
       <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
         <CardHeader>
-          <CardTitle>Website GEO Audit</CardTitle>
+          <CardTitle>Auditoría GEO del Sitio Web</CardTitle>
           <CardDescription>
-            Analyseer elke webpagina door de URL in te voeren - we halen en auditeren de content automatisch
+            Analiza cualquier página web ingresando la URL - obtenemos y auditamos el contenido automáticamente
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -156,7 +156,7 @@ export default function AuditPage() {
             <div>
               <label className="block text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center space-x-2">
                 <Globe className="h-6 w-6 text-purple-600" />
-                <span>Enter Website URL</span>
+                <span>Ingresa la URL del Sitio Web</span>
               </label>
               <div className="flex gap-3">
                 <input
@@ -179,12 +179,12 @@ export default function AuditPage() {
                   {isFetching ? (
                     <>
                       <Loader2 className="h-6 w-6 animate-spin" />
-                      <span>Fetching...</span>
+                      <span>Obteniendo...</span>
                     </>
                   ) : (
                     <>
                       <Search className="h-6 w-6" />
-                      <span>Audit Page</span>
+                      <span>Auditar Página</span>
                     </>
                   )}
                 </button>
@@ -195,8 +195,8 @@ export default function AuditPage() {
               <p className="text-sm text-blue-900 dark:text-blue-300 flex items-start space-x-2">
                 <span className="text-lg">💡</span>
                 <span>
-                  <strong>Tip:</strong> This will fetch the entire webpage and analyze it across 6 GEO dimensions. 
-                  For quick content checks, use <a href="/dashboard/content" className="underline font-semibold">Content Checker</a> instead.
+                  <strong>Consejo:</strong> Esto obtendrá toda la página web y la analizará en 6 dimensiones GEO. 
+                  Para verificaciones rápidas de contenido, usa <a href="/dashboard/content" className="underline font-semibold">Verificador de Contenido</a> en su lugar.
                 </span>
               </p>
             </div>
@@ -210,7 +210,7 @@ export default function AuditPage() {
           <CardContent className="pt-8 pb-8">
             <div className="max-w-2xl mx-auto">
               <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-8">
-                Analyzing Your Website...
+                Analizando Tu Sitio Web...
               </h3>
               
               {/* Progress Bar */}
@@ -279,7 +279,7 @@ export default function AuditPage() {
               <AlertTriangle className="h-6 w-6 text-red-600 flex-shrink-0 mt-1" />
               <div>
                 <h3 className="text-lg font-semibold text-red-900 dark:text-red-200 mb-2">
-                  Audit Failed
+                  Auditoría Fallida
                 </h3>
                 <p className="text-red-700 dark:text-red-300">{error}</p>
               </div>
@@ -297,12 +297,12 @@ export default function AuditPage() {
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                    GEO Audit Score
+                    Puntuación de Auditoría GEO
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400">{auditResults.title}</p>
                   {auditResults.contentType && (
                     <p className="text-sm text-purple-600 dark:text-purple-400 mt-1">
-                      Content Type: {auditResults.contentType === 'product' ? '📦 Product/Service' : auditResults.contentType === 'informative' ? '📚 Informative' : '🏢 Business'}
+                      Tipo de Contenido: {auditResults.contentType === 'product' ? '📦 Producto/Servicio' : auditResults.contentType === 'informative' ? '📚 Informativo' : '🏢 Negocio'}
                     </p>
                   )}
                 </div>
@@ -310,14 +310,14 @@ export default function AuditPage() {
                   <div className="text-7xl font-bold text-purple-600 dark:text-purple-400">
                     {auditResults.score}
                   </div>
-                  <div className="text-lg text-gray-600 dark:text-gray-400 mt-1">out of 100</div>
+                  <div className="text-lg text-gray-600 dark:text-gray-400 mt-1">de 100</div>
                   <div className={`mt-3 px-4 py-2 rounded-full text-sm font-semibold ${
                     auditResults.score >= 85 ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' :
                     auditResults.score >= 70 ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300' :
                     auditResults.score >= 50 ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300' :
                     'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300'
                   }`}>
-                    {auditResults.score >= 85 ? 'Excellent' : auditResults.score >= 70 ? 'Good' : auditResults.score >= 50 ? 'Fair' : 'Needs Improvement'}
+                    {auditResults.score >= 85 ? 'Excelente' : auditResults.score >= 70 ? 'Bueno' : auditResults.score >= 50 ? 'Regular' : 'Necesita Mejora'}
                   </div>
                 </div>
               </div>
@@ -327,7 +327,7 @@ export default function AuditPage() {
           {/* 6 Dimensions */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-              Analysis by Dimension
+              Análisis por Dimensión
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {auditResults.dimensions.map((dimension: any, index: number) => (
@@ -362,7 +362,7 @@ export default function AuditPage() {
                       <div className="mb-4">
                         <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center space-x-1">
                           <AlertTriangle className="h-4 w-4 text-yellow-600" />
-                          <span>Issues to Fix</span>
+                          <span>Problemas a Corregir</span>
                         </h4>
                         <div className="space-y-2">
                           {dimension.issues.map((issue: { text: string; priority: string }, idx: number) => (
@@ -386,7 +386,7 @@ export default function AuditPage() {
                       <div>
                         <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center space-x-1">
                           <CheckCircle2 className="h-4 w-4 text-green-600" />
-                          <span>Strengths</span>
+                          <span>Fortalezas</span>
                         </h4>
                         <div className="space-y-1">
                           {dimension.strengths.map((strength: string, idx: number) => (
@@ -410,7 +410,7 @@ export default function AuditPage() {
               Descargar Informe Completo (PDF)
             </button>
             <button className="border-2 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white px-8 py-3 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-              Export to CSV
+              Exportar a CSV
             </button>
           </div>
         </>

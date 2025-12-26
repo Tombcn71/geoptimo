@@ -103,11 +103,11 @@ export default function ExplorePromptsPage() {
       if (response.ok) {
         await fetchPrompts(); // Refresh the list
       } else {
-        alert('❌ Failed to update subscription');
+        alert('❌ Error al actualizar la suscripción');
       }
     } catch (error) {
       console.error('Error subscribing:', error);
-      alert('❌ Failed to update subscription');
+      alert('❌ Error al actualizar la suscripción');
     }
   };
 
@@ -121,20 +121,20 @@ export default function ExplorePromptsPage() {
       const result = await response.json();
       
       if (response.status === 404 && result.needsOnboarding) {
-        alert('❌ Please complete onboarding first to create your brand');
+        alert('❌ Por favor completa el onboarding primero para crear tu marca');
         window.location.href = '/onboarding';
         return;
       }
       
       if (response.ok) {
         await fetchPrompts();
-        alert('✅ Prompts seeded successfully!');
+        alert('✅ ¡Prompts generados exitosamente!');
       } else {
-        alert(`❌ ${result.error || 'Failed to seed prompts'}`);
+        alert(`❌ ${result.error || 'Error al generar prompts'}`);
       }
     } catch (error) {
       console.error('Error seeding prompts:', error);
-      alert('❌ Failed to seed prompts');
+      alert('❌ Error al generar prompts');
     } finally {
       setSeeding(false);
     }
@@ -142,7 +142,7 @@ export default function ExplorePromptsPage() {
 
   const handleCreatePrompt = async () => {
     if (!newPromptText.trim()) {
-      alert('❌ Please enter a prompt text');
+      alert('❌ Por favor ingresa un texto de prompt');
       return;
     }
 
@@ -164,21 +164,21 @@ export default function ExplorePromptsPage() {
         setShowCreateModal(false);
         setNewPromptText("");
         setNewPromptCategory("Product Discovery");
-        alert('✅ Custom prompt created successfully!');
+        alert('✅ ¡Prompt personalizado creado exitosamente!');
       } else {
         const error = await response.json();
-        alert(`❌ ${error.error || 'Failed to create prompt'}`);
+        alert(`❌ ${error.error || 'Error al crear el prompt'}`);
       }
     } catch (error) {
       console.error('Error creating prompt:', error);
-      alert('❌ Failed to create prompt');
+      alert('❌ Error al crear el prompt');
     } finally {
       setCreating(false);
     }
   };
 
   const handleDeletePrompt = async (id: number, text: string) => {
-    if (!confirm(`Are you sure you want to delete this prompt?\n\n"${text}"`)) {
+    if (!confirm(`¿Estás seguro de que quieres eliminar este prompt?\n\n"${text}"`)) {
       return;
     }
 
@@ -189,14 +189,14 @@ export default function ExplorePromptsPage() {
 
       if (response.ok) {
         await fetchPrompts();
-        alert('✅ Prompt deleted successfully!');
+        alert('✅ ¡Prompt eliminado exitosamente!');
       } else {
         const error = await response.json();
-        alert(`❌ ${error.error || 'Failed to delete prompt'}`);
+        alert(`❌ ${error.error || 'Error al eliminar el prompt'}`);
       }
     } catch (error) {
       console.error('Error deleting prompt:', error);
-      alert('❌ Failed to delete prompt');
+      alert('❌ Error al eliminar el prompt');
     }
   };
 
@@ -208,15 +208,15 @@ export default function ExplorePromptsPage() {
       });
 
       if (response.ok) {
-        alert('✅ Prompt executed successfully! Check the detail page for results.');
+        alert('✅ ¡Prompt ejecutado exitosamente! Revisa la página de detalles para ver los resultados.');
         await fetchPrompts(); // Refresh to show updated data
       } else {
         const error = await response.json();
-        alert(`❌ ${error.error || 'Failed to run prompt'}`);
+        alert(`❌ ${error.error || 'Error al ejecutar el prompt'}`);
       }
     } catch (error) {
       console.error('Error running prompt:', error);
-      alert('❌ Failed to run prompt');
+      alert('❌ Error al ejecutar el prompt');
     } finally {
       setRunningPrompts(prev => {
         const next = new Set(prev);
@@ -234,7 +234,7 @@ export default function ExplorePromptsPage() {
       const brandData = await brandResponse.json();
       
       if (!brandResponse.ok) {
-        alert('❌ Could not fetch brand information');
+        alert('❌ No se pudo obtener la información de la marca');
         return;
       }
 
@@ -249,7 +249,7 @@ export default function ExplorePromptsPage() {
       });
 
       if (!generateResponse.ok) {
-        alert('❌ Failed to generate AI prompts');
+        alert('❌ Error al generar prompts de IA');
         return;
       }
 
@@ -279,10 +279,10 @@ export default function ExplorePromptsPage() {
       }
 
       await fetchPrompts();
-      alert(`✅ Generated ${successCount} AI-powered prompts!`);
+      alert(`✅ ¡Se generaron ${successCount} prompts impulsados por IA!`);
     } catch (error) {
       console.error('Error generating prompts:', error);
-      alert('❌ Failed to generate AI prompts');
+      alert('❌ Error al generar prompts de IA');
     } finally {
       setGenerating(false);
     }

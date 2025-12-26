@@ -59,7 +59,7 @@ export default function CompetitorsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Concurrenten laden...</div>
+        <div className="text-xl text-gray-600 dark:text-gray-400">Cargando competidores...</div>
       </div>
     );
   }
@@ -72,9 +72,9 @@ export default function CompetitorsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Concurrent Analyse</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Análisis de Competidores</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Vergelijk je prestaties met concurrenten in AI-resultaten
+          Compara tu rendimiento con competidores en resultados de IA
         </p>
       </div>
 
@@ -87,24 +87,24 @@ export default function CompetitorsPage() {
                 <Eye className="h-10 w-10 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                Nog Geen Concurrenten Gedetecteerd
+                Aún No Se Han Detectado Competidores
               </h2>
               <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
-                Concurrenten verschijnen hier automatisch wanneer je prompts draait. 
-                AI detecteert welke andere merken naast die van jou worden genoemd en volgt hun prestaties.
+                Los competidores aparecerán aquí automáticamente cuando ejecutes prompts. 
+                La IA detecta qué otras marcas se mencionan junto a la tuya y rastrea su rendimiento.
               </p>
               <div className="flex flex-col items-center space-y-3">
                 <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
                   <span className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold">1</span>
-                  <span>Go to <strong>Prompt Explorer</strong></span>
+                  <span>Ve a <strong>Explorador de Prompts</strong></span>
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
                   <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">2</span>
-                  <span>Klik <strong>&quot;Nu Uitvoeren&quot;</strong> op een prompt</span>
+                  <span>Haz clic en <strong>&quot;Ejecutar Ahora&quot;</strong> en un prompt</span>
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
                   <span className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">3</span>
-                  <span>Concurrenten worden <strong>automatisch</strong> gedetecteerd!</span>
+                  <span>Los competidores se detectan <strong>automáticamente</strong>!</span>
                 </div>
               </div>
               <div className="mt-8">
@@ -112,7 +112,7 @@ export default function CompetitorsPage() {
                   href="/dashboard/prompts/explore"
                   className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
                 >
-                  <span>Ga naar Prompt Verkenner</span>
+                  <span>Ir al Explorador de Prompts</span>
                   <ArrowUpDown className="ml-2 h-5 w-5" />
                 </Link>
               </div>
@@ -127,13 +127,13 @@ export default function CompetitorsPage() {
           <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
             <CardHeader>
               <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Your Ranking
+                Tu Ranking
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-4xl font-bold text-gray-900 dark:text-white">#{yourRanking || '-'}</div>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                Out of {competitors.length} competitors
+                De {competitors.length} competidores
               </p>
             </CardContent>
           </Card>
@@ -141,13 +141,13 @@ export default function CompetitorsPage() {
         <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader>
             <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
-              Gap to Leader
+              Brecha con el Líder
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-bold text-orange-600">{gapToLeader > 0 ? `-${Math.round(gapToLeader)}` : '0'}</div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              Zichtbaarheidsscore punten
+              Puntos de puntuación de visibilidad
             </p>
           </CardContent>
         </Card>
@@ -155,13 +155,13 @@ export default function CompetitorsPage() {
         <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <CardHeader>
             <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
-              Your Strength
+              Tu Fortaleza
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-bold text-green-600">{yourBrand?.sentiment || 0}%</div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              {yourBrand && yourBrand.sentiment === Math.max(...competitors.map(c => c.sentiment)) ? 'Best' : 'Your'} sentiment score
+              {yourBrand && yourBrand.sentiment === Math.max(...competitors.map(c => c.sentiment)) ? 'Mejor' : 'Tu'} puntuación de sentimiento
             </p>
           </CardContent>
         </Card>
@@ -180,13 +180,13 @@ export default function CompetitorsPage() {
               </div>
               <div>
                 <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">
-                  WHY THIS MATTERS
+                  POR QUÉ ESTO ES IMPORTANTE
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  You can&apos;t improve what you don&apos;t measure. See exactly where competitors beat you and close those gaps.
+                  No puedes mejorar lo que no mides. Ve exactamente dónde los competidores te superan y cierra esas brechas.
                 </p>
                 <p className="text-gray-700 dark:text-gray-300 font-medium">
-                  Voorbeeld: Als Concurrent X in 80% van de prompts op #1-3 staat terwijl jij op 30% zit, weet je dat je moet optimaliseren!
+                  Ejemplo: Si el Competidor X está en #1-3 en el 80% de los prompts mientras tú estás en el 30%, sabes que necesitas optimizar!
                 </p>
               </div>
             </div>
@@ -197,9 +197,9 @@ export default function CompetitorsPage() {
       {/* Competitors Table */}
       <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
         <CardHeader>
-          <CardTitle>Detailed Ranking</CardTitle>
+          <CardTitle>Ranking Detallado</CardTitle>
           <CardDescription>
-            All metrics for each competitor
+            Todas las métricas para cada competidor
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -208,34 +208,34 @@ export default function CompetitorsPage() {
               <thead>
                 <tr className="border-b border-gray-200 dark:border-gray-800">
                   <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
-                    Brand
+                    Marca
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
                     <div className="flex items-center justify-center space-x-1">
-                      <span>Zichtbaarheid</span>
+                      <span>Visibilidad</span>
                       <ArrowUpDown className="h-4 w-4" />
                     </div>
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
-                    Sentiment
+                    Sentimiento
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
                     Top 3 %
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
-                    Vermeldingen
+                    Menciones
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
-                    Gem Pos
+                    Pos Prom
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
-                    Detectie
+                    Detección
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
-                    Citaten
+                    Citaciones
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
-                    Trend
+                    Tendencia
                   </th>
                 </tr>
               </thead>
@@ -255,7 +255,7 @@ export default function CompetitorsPage() {
                           </span>
                           {comp.isYou && (
                             <span className="px-2 py-1 bg-purple-600 text-white text-xs rounded-full">
-                              You
+                              Tú
                             </span>
                           )}
                         </div>
@@ -313,33 +313,33 @@ export default function CompetitorsPage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Eye className="h-5 w-5 text-blue-600" />
-            <span>Competitive Insights</span>
+            <span>Insights Competitivos</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             <div className="p-4 bg-white dark:bg-gray-900 rounded-lg">
               <p className="font-medium text-gray-900 dark:text-white mb-1">
-                💡 Opportunity: Improve Detection Rate
+                💡 Oportunidad: Mejorar Tasa de Detección
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Competitor A has 17% better detection rate. Consider subscribing to more relevant prompts.
+                El Competidor A tiene un 17% mejor tasa de detección. Considera suscribirte a más prompts relevantes.
               </p>
             </div>
             <div className="p-4 bg-white dark:bg-gray-900 rounded-lg">
               <p className="font-medium text-gray-900 dark:text-white mb-1">
-                🎯 Strength: Excellent Brand Sentiment
+                🎯 Fortaleza: Excelente Sentimiento de Marca
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Your sentiment score (92%) is the highest. Continue with your current content strategy.
+                Tu puntuación de sentimiento (92%) es la más alta. Continúa con tu estrategia de contenido actual.
               </p>
             </div>
             <div className="p-4 bg-white dark:bg-gray-900 rounded-lg">
               <p className="font-medium text-gray-900 dark:text-white mb-1">
-                📈 Recommended Action: Increase Domain Citations
+                📈 Acción Recomendada: Aumentar Citaciones de Dominio
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Gap of 133 citations vs leader. Focus on creating high-quality citable content.
+                Brecha de 133 citaciones vs líder. Enfócate en crear contenido de alta calidad citable.
               </p>
             </div>
           </div>
