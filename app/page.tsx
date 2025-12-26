@@ -111,7 +111,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto text-center">
           <div className="inline-flex items-center space-x-2 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 sm:px-4 py-2 rounded-full mb-6 sm:mb-8 border border-gray-200 dark:border-gray-800">
             <Zap className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-            <span className="text-xs sm:text-sm font-medium">AI Engine Optimization</span>
+            <span className="text-xs sm:text-sm font-medium">Optimización de Motores IA</span>
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 px-2">
             Sé Descubierto Por
@@ -181,7 +181,7 @@ export default function Home() {
                 <Search className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Real-Time AI Monitoring
+                Monitoreo de IA en Tiempo Real
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Rastrea menciones de marca en ChatGPT, Claude, Perplexity y más. 
@@ -195,7 +195,7 @@ export default function Home() {
                 <FileSearch className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Website Audit
+                Auditoría de Sitio Web
               </h3>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Análisis profundo de tu sitio para optimización IA. Identifica problemas 
@@ -295,7 +295,7 @@ export default function Home() {
               </p>
             </div>
             <div>
-              <h4 className="text-black dark:text-white font-semibold mb-4">Product</h4>
+              <h4 className="text-black dark:text-white font-semibold mb-4">Producto</h4>
               <ul className="space-y-2 text-sm">
                 <li><Link href="#features" className="hover:text-black dark:hover:text-white transition-colors">Funciones</Link></li>
                 <li><Link href="#pricing" className="hover:text-black dark:hover:text-white transition-colors">Precios</Link></li>
@@ -320,7 +320,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-gray-200 dark:border-gray-800 mt-12 pt-8 text-center text-sm">
-            <p>&copy; 2025 Geoptimo. All rights reserved.</p>
+            <p>&copy; 2025 Geoptimo. Todos los derechos reservados.</p>
           </div>
         </div>
       </footer>
