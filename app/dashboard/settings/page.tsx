@@ -85,11 +85,11 @@ export default function SettingsPage() {
         setSaved(true);
         setTimeout(() => setSaved(false), 3000);
       } else {
-        alert('❌ Failed to save changes');
+        alert('❌ Error al guardar los cambios');
       }
     } catch (error) {
       console.error('Error saving brand:', error);
-      alert('❌ Failed to save changes');
+      alert('❌ Error al guardar los cambios');
     } finally {
       setSaving(false);
     }
@@ -126,7 +126,7 @@ export default function SettingsPage() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                  Profile Complete
+                  Perfil Completo
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400">
                   Tu perfil está configurado y optimizado
@@ -146,7 +146,7 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Building2 className="h-5 w-5 text-purple-600" />
-            <span>Basic Information</span>
+            <span>Información Básica</span>
           </CardTitle>
           <CardDescription>
             Detalles fundamentales sobre tu marca
@@ -187,7 +187,7 @@ export default function SettingsPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Industry
+              Industria
             </label>
             <div className="relative">
               <Target className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -234,7 +234,7 @@ export default function SettingsPage() {
         <CardContent className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Target Audience
+              Audiencia Objetivo
             </label>
             <div className="relative">
               <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -243,7 +243,7 @@ export default function SettingsPage() {
                 value={brandProfile.targetAudience}
                 onChange={(e) => setBrandProfile({...brandProfile, targetAudience: e.target.value})}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
-                placeholder="e.g. Marketing teams, SEO professionals"
+                placeholder="ej. Equipos de marketing, profesionales de SEO"
               />
             </div>
           </div>
@@ -255,7 +255,7 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Tag className="h-5 w-5 text-orange-600" />
-            <span>Keywords & Positioning</span>
+            <span>Palabras Clave y Posicionamiento</span>
           </CardTitle>
           <CardDescription>
             Define cómo quieres ser encontrado
@@ -264,7 +264,7 @@ export default function SettingsPage() {
         <CardContent className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Target Keywords
+              Palabras Clave Objetivo
             </label>
             <div className="relative">
               <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -273,7 +273,7 @@ export default function SettingsPage() {
                 value={brandProfile.keywords}
                 onChange={(e) => setBrandProfile({...brandProfile, keywords: e.target.value})}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
-                placeholder="Separate with commas"
+                placeholder="Separar con comas"
               />
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -283,7 +283,7 @@ export default function SettingsPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Unique Value Proposition
+              Propuesta de Valor Única
             </label>
             <div className="relative">
               <FileText className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -330,7 +330,7 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <CheckCircle2 className="h-5 w-5 text-purple-600" />
-            <span>AI-Generated Insights</span>
+            <span>Insights Generados por IA</span>
           </CardTitle>
           <CardDescription>
             Basado en tu perfil de marca
@@ -340,18 +340,18 @@ export default function SettingsPage() {
           <div className="space-y-3">
             <div className="p-4 bg-white dark:bg-gray-900 rounded-lg">
               <p className="font-medium text-gray-900 dark:text-white mb-1">
-                🎯 Recommended Prompts
+                🎯 Prompts Recomendados
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                We&apos;ve generated 12 relevant prompts for your industry. Visit Prompt Explorer to subscribe.
+                Hemos generado 12 prompts relevantes para tu industria. Visita el Explorador de Prompts para suscribirte.
               </p>
             </div>
             <div className="p-4 bg-white dark:bg-gray-900 rounded-lg">
               <p className="font-medium text-gray-900 dark:text-white mb-1">
-                💡 Content Opportunities
+                💡 Oportunidades de Contenido
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                We detected 8 topics where you can improve your AI visibility. Check the Content Studio.
+                Hemos detectado 8 temas donde puedes mejorar tu visibilidad en IA. Revisa el Estudio de Contenido.
               </p>
             </div>
           </div>
